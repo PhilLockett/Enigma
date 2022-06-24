@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" prefHeight="698.0" prefWidth="536.0" spacing="20.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="phillockett65.Enigma.PrimaryController">
+   <children>
+      <TitledPane collapsible="false" layoutX="30.0" layoutY="403.0" text="Reflector">
+         <content>
+            <GridPane hgap="10.0" vgap="10.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <TextField fx:id="pair0" onAction="#reflectorActionPerformed" GridPane.rowIndex="1" />
+                  <TextField fx:id="pair1" onAction="#reflectorActionPerformed" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="pair2" onAction="#reflectorActionPerformed" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <TextField fx:id="pair3" onAction="#reflectorActionPerformed" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <TextField fx:id="pair4" onAction="#reflectorActionPerformed" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                  <TextField fx:id="pair5" onAction="#reflectorActionPerformed" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                  <TextField fx:id="pair6" onAction="#reflectorActionPerformed" GridPane.rowIndex="2" />
+                  <TextField fx:id="pair7" onAction="#reflectorActionPerformed" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="pair8" onAction="#reflectorActionPerformed" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <TextField fx:id="pair9" onAction="#reflectorActionPerformed" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                  <TextField fx:id="pair10" onAction="#reflectorActionPerformed" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                  <TextField fx:id="pair11" onAction="#reflectorActionPerformed" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+                  <ChoiceBox fx:id="reflectorChoicebox" prefWidth="150.0" GridPane.columnSpan="2" />
+                  <CheckBox fx:id="reconfigurableCheckbox" mnemonicParsing="false" onAction="#reconfigurableCheckboxActionPerformed" text="Use Reconfigurable Reflector" GridPane.columnIndex="3" GridPane.columnSpan="3" />
+               </children>
+            </GridPane>
+         </content>
+      </TitledPane>
+      <TitledPane collapsible="false" text="Wheel Order">
+         <content>
+            <VBox spacing="10.0">
+               <children>
+                  <HBox spacing="10.0">
+                     <children>
+                        <ChoiceBox fx:id="wheel0Choicebox" disable="true" layoutX="10.0" layoutY="10.0" prefWidth="150.0" />
+                        <ChoiceBox fx:id="wheel1Choicebox" prefWidth="150.0" />
+                        <ChoiceBox fx:id="wheel2Choicebox" prefWidth="150.0" />
+                        <ChoiceBox fx:id="wheel3Choicebox" prefWidth="150.0" />
+                     </children>
+                  </HBox>
+                  <HBox spacing="10.0">
+                     <children>
+                        <CheckBox fx:id="fourthWheelCheckbox" mnemonicParsing="false" onAction="#fourthWheelCheckboxActionPerformed" text="Fourth Wheel" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </content>
+      </TitledPane>
+      <TitledPane collapsible="false" text="Ring Settings">
+         <content>
+            <VBox spacing="10.0">
+               <children>
+                  <HBox spacing="10.0">
+                     <children>
+                        <Spinner fx:id="ringSetting0Spinner" disable="true" layoutX="10.0" layoutY="10.0" />
+                        <Spinner fx:id="ringSetting1Spinner" />
+                        <Spinner fx:id="ringSetting2Spinner" />
+                        <Spinner fx:id="ringSetting3Spinner" />
+                     </children>
+                  </HBox>
+                  <HBox spacing="10.0">
+                     <children>
+                        <CheckBox fx:id="useLettersCheckbox" mnemonicParsing="false" onAction="#useLettersCheckboxActionPerformed" text="Use Letters" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </content>
+      </TitledPane>
+      <TitledPane collapsible="false" text="Plugboard Connections">
+         <content>
+            <GridPane hgap="10.0" vgap="10.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <TextField fx:id="plug0" onKeyTyped="#plugBoardActionPerformed" />
+                  <TextField fx:id="plug1" onKeyTyped="#plugBoardActionPerformed" GridPane.columnIndex="1" />
+                  <TextField fx:id="plug2" onKeyTyped="#plugBoardActionPerformed" GridPane.columnIndex="2" />
+                  <TextField fx:id="plug3" onKeyTyped="#plugBoardActionPerformed" GridPane.columnIndex="3" />
+                  <TextField fx:id="plug4" onKeyTyped="#plugBoardActionPerformed" GridPane.columnIndex="4" />
+                  <TextField fx:id="plug5" onKeyTyped="#plugBoardActionPerformed" GridPane.rowIndex="1" />
+                  <TextField fx:id="plug6" onKeyTyped="#plugBoardActionPerformed" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="plug7" onKeyTyped="#plugBoardActionPerformed" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <TextField fx:id="plug8" onKeyTyped="#plugBoardActionPerformed" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <TextField fx:id="plug9" onKeyTyped="#plugBoardActionPerformed" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                  <TextField fx:id="plug10" onKeyTyped="#plugBoardActionPerformed" GridPane.rowIndex="2" />
+                  <TextField fx:id="plug11" onKeyTyped="#plugBoardActionPerformed" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="plug12" onKeyTyped="#plugBoardActionPerformed" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+               </children>
+            </GridPane>
+         </content>
+      </TitledPane>
+      <HBox>
+         <children>
+            <ToggleButton fx:id="encipherButton" mnemonicParsing="false" onAction="#encipherButtonActionPerformed" text="Encipher" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Button fx:id="primaryButton" onAction="#buttonActionPerformed" text="Dump" />
+         </children>
+      </HBox>
+      <Label fx:id="mainLabel" text="Configure">
+         <font>
+            <Font size="24.0" />
+         </font></Label>
+   </children>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+</VBox>
