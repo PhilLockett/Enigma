@@ -68,6 +68,7 @@ public class Model {
     /************************************************************************
      * Support code for Rotor definitions.
      */
+
     ObservableList<Rotor> commercial = FXCollections.observableArrayList();
     ObservableList<Rotor> rocket = FXCollections.observableArrayList();
     ObservableList<Rotor> swissK = FXCollections.observableArrayList();
@@ -128,6 +129,130 @@ public class Model {
             System.out.println(rotor.toString());
         System.out.println();
     }
+
+
+
+    /************************************************************************
+     * Support code for "Reflector" panel.
+     */
+
+    ObservableList<String> reflectorList = FXCollections.observableArrayList();
+    private String reflectorChoice;
+    private boolean reconfigurable = false;
+
+    private int[] reflectorLetterCounts = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    private int[] reflectorMap = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+    private ArrayList<Pair> pairs = new ArrayList<Pair>(PrimaryController.PAIR_COUNT);
+
+
+    public ObservableList<String> getReflectorList()   { return reflectorList; }
+    public String getReflectorChoice()   { return reflectorChoice; }
+    public void setReflectorChoice(String choice)   { reflectorChoice = choice; }
+
+    public void setReconfigurable(boolean state) { reconfigurable = state; }
+    public boolean isReconfigurable() { return reconfigurable; }
+
+    public void setPairText(int index, String text) {
+        pairs.get(index).set(text);
+        countLetterUsage(reflectorLetterCounts, pairs);
+    }
+
+	public void sanitizePair(int index) { pairs.get(index).sanitize(); }
+
+	public String getPairText(int index)	{ return pairs.get(index).get(); }
+	public int getPairCount(int index)		{ return pairs.get(index).count(); }
+
+	public boolean isPairValid(int index) {
+        Pair pair = pairs.get(index);
+
+        if (pair.isEmpty())
+			return true;
+
+		if (!pair.isValid())
+			return false;
+
+        final int[] counts = getReflectorLetterCounts();
+		final String text = pair.get();
+		for (int i = 0; i < text.length(); ++i)
+			if (counts[Rotor.charToIndex(text.charAt(i))] > 1)
+				return false;
+
+        System.out.println("pair " + index + " is valid");
+		return true;
+	}
+
+	public void setPairText(String id, String text) { setPairText(idToIndex(id), text); }
+	public void sanitizePair(String id) { sanitizePair(idToIndex(id)); }
+
+	public String getPairText(String id)	{ return getPairText(idToIndex(id)); }
+	public int getPairCount(String id)		{ return getPairCount(idToIndex(id)); }
+	public boolean isPairValid(String id)	{ return isPairValid(idToIndex(id)); }
+
+	public boolean isReflectorValid() {
+		for (Pair pair : pairs)
+			if (!pair.isValid())
+				return false;
+
+        int[] counts = getReflectorLetterCounts();
+        for (int i = 0; i < counts.length; ++i)
+			if (counts[i] > 1)
+				return false;
+
+		return true;
+	}
+
+    public int[] getReflectorLetterCounts() {
+		return reflectorLetterCounts;
+	}
+
+    private void setReflectorMap() {
+		int j = Rotor.charToIndex('j');
+		int y = Rotor.charToIndex('y');
+		reflectorMap[j] = y;
+		reflectorMap[y] = j;
+
+		for (Pair pair : pairs) {
+			if (pair.isEmpty())
+				continue;
+
+			final String text = pair.get();
+			int a = Rotor.charToIndex(text.charAt(0));
+			int b = Rotor.charToIndex(text.charAt(1));
+			reflectorMap[a] = b;
+			reflectorMap[b] = a;
+		}
+	}
+
+    private void fillReflectorList() {
+        reflectorList.clear();
+
+        for (Rotor rotor : m4)
+            if (rotor.isReflector())
+                reflectorList.add(rotor.getId());
+
+        for (Rotor rotor : rocket)
+            if (rotor.isReflector())
+                reflectorList.add(rotor.getId());
+
+        for (Rotor rotor : swissK)
+            if (rotor.isReflector())
+                reflectorList.add(rotor.getId());
+
+        reflectorChoice = reflectorList.get(0);
+    }
+
+	/**
+     * Initialize "Reflector" panel.
+     */
+    private void initializeReflector() {
+        fillReflectorList();
+
+        for (int i = 0; i < PrimaryController.PAIR_COUNT; ++i)
+			pairs.add(new Pair());
+    }
+
+
 
     /************************************************************************
      * Support code for "Wheel Order" panel.
@@ -358,128 +483,6 @@ public class Model {
 
 
     /************************************************************************
-     * Support code for "Reflector" panel.
-     */
-
-    ObservableList<String> reflectorList = FXCollections.observableArrayList();
-    private String reflectorChoice;
-    private boolean reconfigurable = false;
-
-    private int[] reflectorLetterCounts = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-    private int[] reflectorMap = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-
-    private ArrayList<Pair> pairs = new ArrayList<Pair>(PrimaryController.PAIR_COUNT);
-
-
-    public ObservableList<String> getReflectorList()   { return reflectorList; }
-    public String getReflectorChoice()   { return reflectorChoice; }
-    public void setReflectorChoice(String choice)   { reflectorChoice = choice; }
-
-    public void setReconfigurable(boolean state) { reconfigurable = state; }
-    public boolean isReconfigurable() { return reconfigurable; }
-
-    public void setPairText(int index, String text) {
-        pairs.get(index).set(text);
-        countLetterUsage(reflectorLetterCounts, pairs);
-    }
-
-	public void sanitizePair(int index) { pairs.get(index).sanitize(); }
-
-	public String getPairText(int index)	{ return pairs.get(index).get(); }
-	public int getPairCount(int index)		{ return pairs.get(index).count(); }
-
-	public boolean isPairValid(int index) {
-        Pair pair = pairs.get(index);
-
-        if (pair.isEmpty())
-			return true;
-
-		if (!pair.isValid())
-			return false;
-
-        final int[] counts = getReflectorLetterCounts();
-		final String text = pair.get();
-		for (int i = 0; i < text.length(); ++i)
-			if (counts[Rotor.charToIndex(text.charAt(i))] > 1)
-				return false;
-
-        System.out.println("pair " + index + " is valid");
-		return true;
-	}
-
-	public void setPairText(String id, String text) { setPairText(idToIndex(id), text); }
-	public void sanitizePair(String id) { sanitizePair(idToIndex(id)); }
-
-	public String getPairText(String id)	{ return getPairText(idToIndex(id)); }
-	public int getPairCount(String id)		{ return getPairCount(idToIndex(id)); }
-	public boolean isPairValid(String id)	{ return isPairValid(idToIndex(id)); }
-
-	public boolean isReflectorValid() {
-		for (Pair pair : pairs)
-			if (!pair.isValid())
-				return false;
-
-        int[] counts = getReflectorLetterCounts();
-        for (int i = 0; i < counts.length; ++i)
-			if (counts[i] > 1)
-				return false;
-
-		return true;
-	}
-
-    public int[] getReflectorLetterCounts() {
-		return reflectorLetterCounts;
-	}
-
-    private void setReflectorMap() {
-		int j = Rotor.charToIndex('j');
-		int y = Rotor.charToIndex('y');
-		reflectorMap[j] = y;
-		reflectorMap[y] = j;
-
-		for (Pair pair : pairs) {
-			if (pair.isEmpty())
-				continue;
-
-			final String text = pair.get();
-			int a = Rotor.charToIndex(text.charAt(0));
-			int b = Rotor.charToIndex(text.charAt(1));
-			reflectorMap[a] = b;
-			reflectorMap[b] = a;
-		}
-	}
-
-    private void fillReflectorList() {
-        reflectorList.clear();
-
-        for (Rotor rotor : m4)
-            if (rotor.isReflector())
-                reflectorList.add(rotor.getId());
-
-        for (Rotor rotor : rocket)
-            if (rotor.isReflector())
-                reflectorList.add(rotor.getId());
-
-        for (Rotor rotor : swissK)
-            if (rotor.isReflector())
-                reflectorList.add(rotor.getId());
-
-        reflectorChoice = reflectorList.get(0);
-    }
-
-	/**
-     * Initialize "Reflector" panel.
-     */
-    private void initializeReflector() {
-        fillReflectorList();
-
-        for (int i = 0; i < PrimaryController.PAIR_COUNT; ++i)
-			pairs.add(new Pair());
-    }
-
-
-
-    /************************************************************************
      * Support code for "Encipher" panel.
      */
 
@@ -564,29 +567,6 @@ public class Model {
 
         for (int[] map : pipeline)
             dumpMapping(map);
-
-		// Rotor rotor;
-
-		// Rotor rotor0 = getRotor(m3, wheel0Choice);
-		// dumpMapping(rotor0.getMap(getRingIndex0()));
-
-		// Rotor rotor1 = getRotor(m3, wheel1Choice);
-		// Rotor rotor2 = getRotor(m3, wheel2Choice);
-		// Rotor rotor3 = getRotor(m3, wheel3Choice);
-
-        // dumpMapping(plugboardMap);
-
-		// dumpMapping(rotor1.getMap(getRingIndex1()));
-		// dumpMapping(rotor2.getMap(getRingIndex2()));
-		// dumpMapping(rotor3.getMap(getRingIndex3()));
-
-        // dumpMapping(getReflectorMap());
-
-		// dumpMapping(rotor3.getMap(getRingIndex3()));
-		// dumpMapping(rotor2.getMap(getRingIndex2()));
-        // dumpMapping(rotor1.getMap(getRingIndex1()));
-
-        // dumpMapping(plugboardMap);
     }
 
     private void readSettings() {

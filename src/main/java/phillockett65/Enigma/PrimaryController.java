@@ -87,6 +87,124 @@ public class PrimaryController {
 
 
     /************************************************************************
+     * Support code for "Reflector" panel.
+     */
+
+    @FXML
+    private ChoiceBox<String> reflectorChoicebox;
+
+    @FXML
+    private CheckBox reconfigurableCheckbox;
+
+    @FXML
+    void reconfigurableCheckboxActionPerformed(ActionEvent event) {
+        model.setReconfigurable(reconfigurableCheckbox.isSelected());
+    }
+
+    @FXML
+    private TextField pair0;
+
+    @FXML
+    private TextField pair1;
+
+    @FXML
+    private TextField pair2;
+
+    @FXML
+    private TextField pair3;
+
+    @FXML
+    private TextField pair4;
+
+    @FXML
+    private TextField pair5;
+
+    @FXML
+    private TextField pair6;
+
+    @FXML
+    private TextField pair7;
+
+    @FXML
+    private TextField pair8;
+
+    @FXML
+    private TextField pair9;
+
+    @FXML
+    private TextField pair10;
+
+    @FXML
+    private TextField pair11;
+
+    private ArrayList<TextField> pairs = new ArrayList<TextField>(PAIR_COUNT);
+
+    @FXML
+    void reflectorActionPerformed(ActionEvent event) {
+        // System.out.println("reflectorActionPerformed().");
+
+        TextField field = (TextField)event.getSource();
+        model.setPairText(field.getId(), field.getText());
+        
+        checkReflector();
+        checkConfigValid();
+    }
+
+    private void checkReflector() {
+        // System.out.println("checkReflector().");
+
+        for (int i = 0; i < pairs.size(); ++i) {
+            final Boolean valid = model.isPairValid(i);
+            setValidTextField(pairs.get(i), valid);
+        }
+    }
+
+    private void editableReflector(boolean editable) {
+        // System.out.println("editableReflector(" + editable + ")");
+
+        reflectorChoicebox.setDisable(!editable);
+        reconfigurableCheckbox.setDisable(!editable);
+        for (TextField field : pairs)
+            field.setEditable(editable);
+    }
+
+    /**
+     * Initialize "Reflector" panel.
+     */
+    private void initializeReflector() {
+        reconfigurableCheckbox.setSelected(model.isReconfigurable());
+        reflectorChoicebox.setItems(model.getReflectorList());
+        reflectorChoicebox.setValue(model.getReflectorChoice());
+
+        reflectorChoicebox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
+            model.setReflectorChoice(newValue);
+        });
+
+        pairs.add(pair0);
+        pairs.add(pair1);
+        pairs.add(pair2);
+        pairs.add(pair3);
+        pairs.add(pair4);
+        pairs.add(pair5);
+        pairs.add(pair6);
+        pairs.add(pair7);
+        pairs.add(pair8);
+        pairs.add(pair9);
+        pairs.add(pair10);
+        pairs.add(pair11);
+
+        for (int i = 0; i < pairs.size(); ++i) {
+            String id = String.valueOf(i);
+            TextField pair = pairs.get(i);
+            pair.setId(id);         // Use id as an index.
+            
+            setValidTextField(pair, model.isPairValid(i));
+        }
+    }
+
+
+
+    /************************************************************************
      * Support code for "Wheel Order" panel.
      */
 
@@ -323,125 +441,6 @@ public class PrimaryController {
             plug.setId(id);         // Use id as an index.
             
             setValidTextField(plug, model.isPlugValid(i));
-        }
-    }
-
-
-
-
-    /************************************************************************
-     * Support code for "Reflector" panel.
-     */
-
-    @FXML
-    private ChoiceBox<String> reflectorChoicebox;
-
-    @FXML
-    private CheckBox reconfigurableCheckbox;
-
-    @FXML
-    void reconfigurableCheckboxActionPerformed(ActionEvent event) {
-        model.setReconfigurable(reconfigurableCheckbox.isSelected());
-    }
-
-    @FXML
-    private TextField pair0;
-
-    @FXML
-    private TextField pair1;
-
-    @FXML
-    private TextField pair2;
-
-    @FXML
-    private TextField pair3;
-
-    @FXML
-    private TextField pair4;
-
-    @FXML
-    private TextField pair5;
-
-    @FXML
-    private TextField pair6;
-
-    @FXML
-    private TextField pair7;
-
-    @FXML
-    private TextField pair8;
-
-    @FXML
-    private TextField pair9;
-
-    @FXML
-    private TextField pair10;
-
-    @FXML
-    private TextField pair11;
-
-    private ArrayList<TextField> pairs = new ArrayList<TextField>(PAIR_COUNT);
-
-    @FXML
-    void reflectorActionPerformed(ActionEvent event) {
-        // System.out.println("reflectorActionPerformed().");
-
-        TextField field = (TextField)event.getSource();
-        model.setPairText(field.getId(), field.getText());
-        
-        checkReflector();
-        checkConfigValid();
-    }
-
-    private void checkReflector() {
-        // System.out.println("checkReflector().");
-
-        for (int i = 0; i < pairs.size(); ++i) {
-            final Boolean valid = model.isPairValid(i);
-            setValidTextField(pairs.get(i), valid);
-        }
-    }
-
-    private void editableReflector(boolean editable) {
-        // System.out.println("editableReflector(" + editable + ")");
-
-        reflectorChoicebox.setDisable(!editable);
-        reconfigurableCheckbox.setDisable(!editable);
-        for (TextField field : pairs)
-            field.setEditable(editable);
-    }
-
-    /**
-     * Initialize "Reflector" panel.
-     */
-    private void initializeReflector() {
-        reconfigurableCheckbox.setSelected(model.isReconfigurable());
-        reflectorChoicebox.setItems(model.getReflectorList());
-        reflectorChoicebox.setValue(model.getReflectorChoice());
-
-        reflectorChoicebox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
-            model.setReflectorChoice(newValue);
-        });
-
-        pairs.add(pair0);
-        pairs.add(pair1);
-        pairs.add(pair2);
-        pairs.add(pair3);
-        pairs.add(pair4);
-        pairs.add(pair5);
-        pairs.add(pair6);
-        pairs.add(pair7);
-        pairs.add(pair8);
-        pairs.add(pair9);
-        pairs.add(pair10);
-        pairs.add(pair11);
-
-        for (int i = 0; i < pairs.size(); ++i) {
-            String id = String.valueOf(i);
-            TextField pair = pairs.get(i);
-            pair.setId(id);         // Use id as an index.
-            
-            setValidTextField(pair, model.isPairValid(i));
         }
     }
 
