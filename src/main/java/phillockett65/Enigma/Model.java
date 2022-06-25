@@ -310,30 +310,30 @@ public class Model {
     private SpinnerValueFactory<String> ringSetting2SVF;
     private SpinnerValueFactory<String> ringSetting3SVF;
 
-    private String ringSetting0 = "1";
-    private String ringSetting1 = "1";
-    private String ringSetting2 = "1";
-    private String ringSetting3 = "1";
+    private int ringSetting0 = 0;
+    private int ringSetting1 = 0;
+    private int ringSetting2 = 0;
+    private int ringSetting3 = 0;
 
     public SpinnerValueFactory<String> getRingSetting0SVF()   { return ringSetting0SVF; }
     public SpinnerValueFactory<String> getRingSetting1SVF()   { return ringSetting1SVF; }
     public SpinnerValueFactory<String> getRingSetting2SVF()   { return ringSetting2SVF; }
     public SpinnerValueFactory<String> getRingSetting3SVF()   { return ringSetting3SVF; }
 
-    public String getRingSetting0()   { return ringSetting0; }
-    public String getRingSetting1()   { return ringSetting1; }
-    public String getRingSetting2()   { return ringSetting2; }
-    public String getRingSetting3()   { return ringSetting3; }
+    public String getRingSetting0()   { return Rotor.indexToString(ringSetting0); }
+    public String getRingSetting1()   { return Rotor.indexToString(ringSetting1); }
+    public String getRingSetting2()   { return Rotor.indexToString(ringSetting2); }
+    public String getRingSetting3()   { return Rotor.indexToString(ringSetting3); }
 
-    public int getRingIndex0()   { return Integer.valueOf(ringSetting0) - 1; }
-    public int getRingIndex1()   { return Integer.valueOf(ringSetting1) - 1; }
-    public int getRingIndex2()   { return Integer.valueOf(ringSetting2) - 1; }
-    public int getRingIndex3()   { return Integer.valueOf(ringSetting3) - 1; }
+    public int getRingIndex0()   { return ringSetting0; }
+    public int getRingIndex1()   { return ringSetting1; }
+    public int getRingIndex2()   { return ringSetting2; }
+    public int getRingIndex3()   { return ringSetting3; }
 
-    public void setRingSetting0(String value)   { ringSetting0 = value; }
-    public void setRingSetting1(String value)   { ringSetting1 = value; }
-    public void setRingSetting2(String value)   { ringSetting2 = value; }
-    public void setRingSetting3(String value)   { ringSetting3 = value; }
+    public void setRingSetting0(String value)   { ringSetting0 = Integer.valueOf(value) - 1; }
+    public void setRingSetting1(String value)   { ringSetting1 = Integer.valueOf(value) - 1; }
+    public void setRingSetting2(String value)   { ringSetting2 = Integer.valueOf(value) - 1; }
+    public void setRingSetting3(String value)   { ringSetting3 = Integer.valueOf(value) - 1; }
 
 
     private void fillRingSettingsList() {
@@ -380,30 +380,30 @@ public class Model {
     private SpinnerValueFactory<String> rotorOffset2SVF;
     private SpinnerValueFactory<String> rotorOffset3SVF;
 
-    private String rotorOffset0 = "1";
-    private String rotorOffset1 = "1";
-    private String rotorOffset2 = "1";
-    private String rotorOffset3 = "1";
+    private int rotorOffset0 = 0;
+    private int rotorOffset1 = 0;
+    private int rotorOffset2 = 0;
+    private int rotorOffset3 = 0;
 
     public SpinnerValueFactory<String> getRotorOffset0SVF()   { return rotorOffset0SVF; }
     public SpinnerValueFactory<String> getRotorOffset1SVF()   { return rotorOffset1SVF; }
     public SpinnerValueFactory<String> getRotorOffset2SVF()   { return rotorOffset2SVF; }
     public SpinnerValueFactory<String> getRotorOffset3SVF()   { return rotorOffset3SVF; }
 
-    public String getRotorOffset0()   { return rotorOffset0; }
-    public String getRotorOffset1()   { return rotorOffset1; }
-    public String getRotorOffset2()   { return rotorOffset2; }
-    public String getRotorOffset3()   { return rotorOffset3; }
+    public String getRotorOffset0()   { return Rotor.indexToString(rotorOffset0); }
+    public String getRotorOffset1()   { return Rotor.indexToString(rotorOffset1); }
+    public String getRotorOffset2()   { return Rotor.indexToString(rotorOffset2); }
+    public String getRotorOffset3()   { return Rotor.indexToString(rotorOffset3); }
 
-    public int getRotorIndex0()   { return Integer.valueOf(rotorOffset0) - 1; }
-    public int getRotorIndex1()   { return Integer.valueOf(rotorOffset1) - 1; }
-    public int getRotorIndex2()   { return Integer.valueOf(rotorOffset2) - 1; }
-    public int getRotorIndex3()   { return Integer.valueOf(rotorOffset3) - 1; }
+    public int getRotorIndex0()   { return rotorOffset0; }
+    public int getRotorIndex1()   { return rotorOffset1; }
+    public int getRotorIndex2()   { return rotorOffset2; }
+    public int getRotorIndex3()   { return rotorOffset3; }
 
-    public void setRotorOffset0(String value)   { rotorOffset0 = value; }
-    public void setRotorOffset1(String value)   { rotorOffset1 = value; }
-    public void setRotorOffset2(String value)   { rotorOffset2 = value; }
-    public void setRotorOffset3(String value)   { rotorOffset3 = value; }
+    public void setRotorOffset0(String value)   { rotorOffset0 = Integer.valueOf(value) - 1; }
+    public void setRotorOffset1(String value)   { rotorOffset1 = Integer.valueOf(value) - 1; }
+    public void setRotorOffset2(String value)   { rotorOffset2 = Integer.valueOf(value) - 1; }
+    public void setRotorOffset3(String value)   { rotorOffset3 = Integer.valueOf(value) - 1; }
 
     private boolean useLetters = false;
 
