@@ -284,6 +284,14 @@ public class PrimaryController {
     private Spinner<String> ringSetting3Spinner;
 
 
+    private void editableRingSettings(boolean editable) {
+        // System.out.println("editableRingSettings(" + editable + ")");
+
+        ringSetting1Spinner.setDisable(!editable);
+        ringSetting2Spinner.setDisable(!editable);
+        ringSetting3Spinner.setDisable(!editable);
+    }
+
     /**
      * Initialize "Ring Settings" panel.
      */
@@ -524,9 +532,10 @@ public class PrimaryController {
         final boolean encipher = model.isEncipher();
 
         // System.out.println("updateStatus(" + encipher + ").");
-        editablePlugboard(!encipher);
         editableReflector(!encipher);
         editableWheelOrder(!encipher);
+        editableRingSettings(!encipher);
+        editablePlugboard(!encipher);
 
         String message = !encipher ? "Start Translation" : "Change Settings";
         encipherButton.setText("Press to " + message);
