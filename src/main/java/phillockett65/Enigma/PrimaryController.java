@@ -357,10 +357,10 @@ public class PrimaryController {
      * Initialize "Rotor Offsets" panel.
      */
     private void initializeRotorOffsets() {
-        rotorOffset0Spinner.setValueFactory(model.getRingSetting0SVF());
-        rotorOffset1Spinner.setValueFactory(model.getRingSetting1SVF());
-        rotorOffset2Spinner.setValueFactory(model.getRingSetting2SVF());
-        rotorOffset3Spinner.setValueFactory(model.getRingSetting3SVF());
+        rotorOffset0Spinner.setValueFactory(model.getRotorOffset0SVF());
+        rotorOffset1Spinner.setValueFactory(model.getRotorOffset1SVF());
+        rotorOffset2Spinner.setValueFactory(model.getRotorOffset2SVF());
+        rotorOffset3Spinner.setValueFactory(model.getRotorOffset3SVF());
 
         rotorOffset0Spinner.getValueFactory().wrapAroundProperty().set(true);
         rotorOffset1Spinner.getValueFactory().wrapAroundProperty().set(true);
