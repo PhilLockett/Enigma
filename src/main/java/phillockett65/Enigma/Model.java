@@ -610,6 +610,10 @@ public class Model {
     private void advanceRotors() {
     }
 
+    public void test() {
+        advanceRotors();
+    }
+
     private void buildPipeline() {
         
         advanceRotors();

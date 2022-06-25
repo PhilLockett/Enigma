@@ -602,10 +602,11 @@ public class PrimaryController {
 
     @FXML
     void buttonActionPerformed(ActionEvent event) {
-        System.out.println("Button pressed.");
-        model.dumpRotorWiring();
-        dumpPlugboard();
-        dumpReflector();
+        // System.out.println("Button pressed.");
+        // model.dumpRotorWiring();
+        // dumpPlugboard();
+        // dumpReflector();
+        model.test();
     }
 
     
