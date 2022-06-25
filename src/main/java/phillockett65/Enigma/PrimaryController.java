@@ -36,14 +36,12 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.KeyEvent;
-import javafx.stage.Stage;
 
 public class PrimaryController {
 
     public final static int PLUG_COUNT = 13;
     public final static int PAIR_COUNT = 12;
 
-    private Stage stage;
     private Model model;
 
     /************************************************************************
@@ -78,9 +76,8 @@ public class PrimaryController {
      * Called by Application after the stage has been set. Completes any 
      * initialization dependent on other components being initialized.
      */
-    public void init(Stage stage) {
+    public void init() {
         // System.out.println("PrimaryController init.");
-        this.stage = stage;
         model.init();
     }
 

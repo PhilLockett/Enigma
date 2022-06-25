@@ -55,7 +55,7 @@ public class App extends Application {
 
         stage.show();
 
-        controller.init(stage);
+        controller.init();
     }
 
     public static void main(String[] args) {
