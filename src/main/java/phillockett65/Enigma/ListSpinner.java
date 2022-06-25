@@ -29,12 +29,16 @@ import javafx.scene.control.SpinnerValueFactory;
 
 public class ListSpinner {
 
-    ObservableList<String> list = FXCollections.observableArrayList();
+    private ObservableList<String> list = FXCollections.observableArrayList();
     private SpinnerValueFactory<String> SVF;
-    
+
     public ListSpinner(ObservableList<String> list) {
         this.list = list;
         SVF = new SpinnerValueFactory.ListSpinnerValueFactory<String>(list);
+    }
+
+    public ObservableList<String> getList() {
+        return list;
     }
 
     public SpinnerValueFactory<String> getSVF() {
