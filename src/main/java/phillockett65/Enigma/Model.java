@@ -48,10 +48,11 @@ public class Model {
     public void initialize() {
         // System.out.println("Model initialized.");
 
+        initializeReflector();
         initializeWheelOrder();
         initializeRingSettings();
+        initializeRotorOffsets();
         initializePlugboardConnections();
-        initializeReflector();
 		initializeEncipher();
     }
 
@@ -334,14 +335,6 @@ public class Model {
     public void setRingSetting2(String value)   { ringSetting2 = value; }
     public void setRingSetting3(String value)   { ringSetting3 = value; }
 
-    private boolean useLetters = false;
-
-    public void setUseLetters(boolean state) { 
-        useLetters = state; 
-        fillRingSettingsList();
-    }
-
-    public boolean getUseLetters() { return useLetters; }
 
     private void fillRingSettingsList() {
         ringSettingsList.clear();
@@ -372,6 +365,85 @@ public class Model {
         ringSetting1SVF = new SpinnerValueFactory.ListSpinnerValueFactory<String>(ringSettingsList);
         ringSetting2SVF = new SpinnerValueFactory.ListSpinnerValueFactory<String>(ringSettingsList);
         ringSetting3SVF = new SpinnerValueFactory.ListSpinnerValueFactory<String>(ringSettingsList);
+
+    }
+
+
+
+    /************************************************************************
+     * Support code for "Rotor Offsets" panel.
+     */
+
+    ObservableList<String> rotorOffsetsList = FXCollections.observableArrayList();
+    private SpinnerValueFactory<String> rotorOffset0SVF;
+    private SpinnerValueFactory<String> rotorOffset1SVF;
+    private SpinnerValueFactory<String> rotorOffset2SVF;
+    private SpinnerValueFactory<String> rotorOffset3SVF;
+
+    private String rotorOffset0 = "1";
+    private String rotorOffset1 = "1";
+    private String rotorOffset2 = "1";
+    private String rotorOffset3 = "1";
+
+    public SpinnerValueFactory<String> getRotorOffset0SVF()   { return rotorOffset0SVF; }
+    public SpinnerValueFactory<String> getRotorOffset1SVF()   { return rotorOffset1SVF; }
+    public SpinnerValueFactory<String> getRotorOffset2SVF()   { return rotorOffset2SVF; }
+    public SpinnerValueFactory<String> getRotorOffset3SVF()   { return rotorOffset3SVF; }
+
+    public String getRotorOffset0()   { return rotorOffset0; }
+    public String getRotorOffset1()   { return rotorOffset1; }
+    public String getRotorOffset2()   { return rotorOffset2; }
+    public String getRotorOffset3()   { return rotorOffset3; }
+
+    public int getRotorIndex0()   { return Integer.valueOf(rotorOffset0) - 1; }
+    public int getRotorIndex1()   { return Integer.valueOf(rotorOffset1) - 1; }
+    public int getRotorIndex2()   { return Integer.valueOf(rotorOffset2) - 1; }
+    public int getRotorIndex3()   { return Integer.valueOf(rotorOffset3) - 1; }
+
+    public void setRotorOffset0(String value)   { rotorOffset0 = value; }
+    public void setRotorOffset1(String value)   { rotorOffset1 = value; }
+    public void setRotorOffset2(String value)   { rotorOffset2 = value; }
+    public void setRotorOffset3(String value)   { rotorOffset3 = value; }
+
+    private boolean useLetters = false;
+
+    public void setUseLetters(boolean state) { 
+        useLetters = state; 
+        fillRingSettingsList();
+        fillRotorOffsetsList();
+    }
+
+    public boolean getUseLetters() { return useLetters; }
+
+    private void fillRotorOffsetsList() {
+        rotorOffsetsList.clear();
+
+        if (useLetters) {
+            for (int i = 0; i < 26; ++i) {
+                // final String item = String.valueOf(i + 'A');
+                final String item = String.valueOf(Rotor.indexToString(i));
+                // System.out.println(item);
+                rotorOffsetsList.add(item);
+            }
+        } else {
+            for (int i = 0; i < 26; ++i) {
+                // final String item = String.valueOf(i + 1);
+                final String item = String.valueOf(i + 1);
+                // System.out.println(item);
+                rotorOffsetsList.add(item);
+            }
+        }
+    }
+
+    /**
+     * Initialize "Rotor Offsets" panel.
+     */
+    private void initializeRotorOffsets() {
+        fillRotorOffsetsList();
+        rotorOffset0SVF = new SpinnerValueFactory.ListSpinnerValueFactory<String>(rotorOffsetsList);
+        rotorOffset1SVF = new SpinnerValueFactory.ListSpinnerValueFactory<String>(rotorOffsetsList);
+        rotorOffset2SVF = new SpinnerValueFactory.ListSpinnerValueFactory<String>(rotorOffsetsList);
+        rotorOffset3SVF = new SpinnerValueFactory.ListSpinnerValueFactory<String>(rotorOffsetsList);
 
     }
 

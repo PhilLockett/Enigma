@@ -65,10 +65,11 @@ public class PrimaryController {
         // System.out.println("PrimaryController initialized.");
         model.initialize();
 
+        initializeReflector();
         initializeWheelOrder();
         initializeRingSettings();
+        initializeRotorOffsets();
         initializePlugboardConnections();
-        initializeReflector();
         initializeEncipher();
     }
 
@@ -282,13 +283,6 @@ public class PrimaryController {
     @FXML
     private Spinner<String> ringSetting3Spinner;
 
-    @FXML
-    private CheckBox useLettersCheckbox;
-
-    @FXML
-    void useLettersCheckboxActionPerformed(ActionEvent event) {
-        model.setUseLetters(useLettersCheckbox.isSelected());
-    }
 
     /**
      * Initialize "Ring Settings" panel.
@@ -322,6 +316,67 @@ public class PrimaryController {
         ringSetting3Spinner.valueProperty().addListener( (v, oldValue, newValue) -> {
             // System.out.println("ringSetting3Spinner.valueProperty().Listener(" + newValue + "));");
             model.setRingSetting3(newValue);
+        });
+    }
+
+
+
+    /************************************************************************
+     * Support code for "Rotor Offsets" panel.
+     */
+
+    @FXML
+    private Spinner<String> rotorOffset0Spinner;
+
+    @FXML
+    private Spinner<String> rotorOffset1Spinner;
+
+    @FXML
+    private Spinner<String> rotorOffset2Spinner;
+
+    @FXML
+    private Spinner<String> rotorOffset3Spinner;
+
+    @FXML
+    private CheckBox useLettersCheckbox;
+
+    @FXML
+    void useLettersCheckboxActionPerformed(ActionEvent event) {
+        model.setUseLetters(useLettersCheckbox.isSelected());
+    }
+
+    /**
+     * Initialize "Rotor Offsets" panel.
+     */
+    private void initializeRotorOffsets() {
+        rotorOffset0Spinner.setValueFactory(model.getRingSetting0SVF());
+        rotorOffset1Spinner.setValueFactory(model.getRingSetting1SVF());
+        rotorOffset2Spinner.setValueFactory(model.getRingSetting2SVF());
+        rotorOffset3Spinner.setValueFactory(model.getRingSetting3SVF());
+
+        rotorOffset0Spinner.getValueFactory().wrapAroundProperty().set(true);
+        rotorOffset1Spinner.getValueFactory().wrapAroundProperty().set(true);
+        rotorOffset2Spinner.getValueFactory().wrapAroundProperty().set(true);
+        rotorOffset3Spinner.getValueFactory().wrapAroundProperty().set(true);
+
+        rotorOffset0Spinner.valueProperty().addListener( (v, oldValue, newValue) -> {
+            // System.out.println("rotorOffset0Spinner.valueProperty().Listener(" + newValue + "));");
+            model.setRotorOffset0(newValue);
+        });
+
+        rotorOffset1Spinner.valueProperty().addListener( (v, oldValue, newValue) -> {
+            // System.out.println("rotorOffset1Spinner.valueProperty().Listener(" + newValue + "));");
+            model.setRotorOffset1(newValue);
+        });
+
+        rotorOffset2Spinner.valueProperty().addListener( (v, oldValue, newValue) -> {
+            // System.out.println("rotorOffset2Spinner.valueProperty().Listener(" + newValue + "));");
+            model.setRotorOffset2(newValue);
+        });
+
+        rotorOffset3Spinner.valueProperty().addListener( (v, oldValue, newValue) -> {
+            // System.out.println("rotorOffset3Spinner.valueProperty().Listener(" + newValue + "));");
+            model.setRotorOffset3(newValue);
         });
 
         useLettersCheckbox.setSelected(model.getUseLetters());
