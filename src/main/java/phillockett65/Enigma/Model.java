@@ -608,6 +608,9 @@ public class Model {
     private ArrayList<int[]> pipeline = new ArrayList<int[]>(9);
     
     private void advanceRotors() {
+        rotorOffset1SVF.increment(1);
+        rotorOffset2SVF.increment(2);
+        rotorOffset3SVF.increment(5);
     }
 
     public void test() {
