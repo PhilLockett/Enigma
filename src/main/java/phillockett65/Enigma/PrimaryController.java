@@ -296,10 +296,10 @@ public class PrimaryController {
      * Initialize "Ring Settings" panel.
      */
     private void initializeRingSettings() {
-        ringSetting0Spinner.setValueFactory(model.getRingSetting0SVF());
-        ringSetting1Spinner.setValueFactory(model.getRingSetting1SVF());
-        ringSetting2Spinner.setValueFactory(model.getRingSetting2SVF());
-        ringSetting3Spinner.setValueFactory(model.getRingSetting3SVF());
+        ringSetting0Spinner.setValueFactory(model.getRingSettingSVF(0));
+        ringSetting1Spinner.setValueFactory(model.getRingSettingSVF(1));
+        ringSetting2Spinner.setValueFactory(model.getRingSettingSVF(2));
+        ringSetting3Spinner.setValueFactory(model.getRingSettingSVF(3));
 
         ringSetting0Spinner.getValueFactory().wrapAroundProperty().set(true);
         ringSetting1Spinner.getValueFactory().wrapAroundProperty().set(true);
@@ -308,22 +308,22 @@ public class PrimaryController {
 
         ringSetting0Spinner.valueProperty().addListener( (v, oldValue, newValue) -> {
             // System.out.println("ringSetting0Spinner.valueProperty().Listener(" + newValue + "));");
-            model.setRingSetting0(newValue);
+            model.setRingSetting(0, newValue);
         });
 
         ringSetting1Spinner.valueProperty().addListener( (v, oldValue, newValue) -> {
             // System.out.println("ringSetting1Spinner.valueProperty().Listener(" + newValue + "));");
-            model.setRingSetting1(newValue);
+            model.setRingSetting(1, newValue);
         });
 
         ringSetting2Spinner.valueProperty().addListener( (v, oldValue, newValue) -> {
             // System.out.println("ringSetting2Spinner.valueProperty().Listener(" + newValue + "));");
-            model.setRingSetting2(newValue);
+            model.setRingSetting(2, newValue);
         });
 
         ringSetting3Spinner.valueProperty().addListener( (v, oldValue, newValue) -> {
             // System.out.println("ringSetting3Spinner.valueProperty().Listener(" + newValue + "));");
-            model.setRingSetting3(newValue);
+            model.setRingSetting(3, newValue);
         });
     }
 
@@ -357,10 +357,10 @@ public class PrimaryController {
      * Initialize "Rotor Offsets" panel.
      */
     private void initializeRotorOffsets() {
-        rotorOffset0Spinner.setValueFactory(model.getRotorOffset0SVF());
-        rotorOffset1Spinner.setValueFactory(model.getRotorOffset1SVF());
-        rotorOffset2Spinner.setValueFactory(model.getRotorOffset2SVF());
-        rotorOffset3Spinner.setValueFactory(model.getRotorOffset3SVF());
+        rotorOffset0Spinner.setValueFactory(model.getRotorOffsetSVF(0));
+        rotorOffset1Spinner.setValueFactory(model.getRotorOffsetSVF(1));
+        rotorOffset2Spinner.setValueFactory(model.getRotorOffsetSVF(2));
+        rotorOffset3Spinner.setValueFactory(model.getRotorOffsetSVF(3));
 
         rotorOffset0Spinner.getValueFactory().wrapAroundProperty().set(true);
         rotorOffset1Spinner.getValueFactory().wrapAroundProperty().set(true);
@@ -369,22 +369,22 @@ public class PrimaryController {
 
         rotorOffset0Spinner.valueProperty().addListener( (v, oldValue, newValue) -> {
             // System.out.println("rotorOffset0Spinner.valueProperty().Listener(" + newValue + "));");
-            model.setRotorOffset0(newValue);
+            model.setRotorOffset(0, newValue);
         });
 
         rotorOffset1Spinner.valueProperty().addListener( (v, oldValue, newValue) -> {
             // System.out.println("rotorOffset1Spinner.valueProperty().Listener(" + newValue + "));");
-            model.setRotorOffset1(newValue);
+            model.setRotorOffset(1, newValue);
         });
 
         rotorOffset2Spinner.valueProperty().addListener( (v, oldValue, newValue) -> {
             // System.out.println("rotorOffset2Spinner.valueProperty().Listener(" + newValue + "));");
-            model.setRotorOffset2(newValue);
+            model.setRotorOffset(2, newValue);
         });
 
         rotorOffset3Spinner.valueProperty().addListener( (v, oldValue, newValue) -> {
             // System.out.println("rotorOffset3Spinner.valueProperty().Listener(" + newValue + "));");
-            model.setRotorOffset3(newValue);
+            model.setRotorOffset(3, newValue);
         });
 
         useLettersCheckbox.setSelected(model.getUseLetters());
@@ -564,37 +564,37 @@ public class PrimaryController {
      * Support code for debug stuff.
      */
 
-    private boolean dumpPlugboard() {
-        System.out.println("dumpPlugboard().");
+    // private boolean dumpPlugboard() {
+    //     System.out.println("dumpPlugboard().");
 
-        // for (TextField plug : plugs)
-        //     setValidTextField(plug, true);
+    //     // for (TextField plug : plugs)
+    //     //     setValidTextField(plug, true);
 
-        int[] counts = model.getPlugboardLetterCounts();
-        for (int i = 0; i < counts.length; ++i) {
-            String letter = "" + Rotor.indexToString(i) + " ";
-            System.out.println(letter + " " + counts[i]);
-        }
+    //     int[] counts = model.getPlugboardLetterCounts();
+    //     for (int i = 0; i < counts.length; ++i) {
+    //         String letter = "" + Rotor.indexToString(i) + " ";
+    //         System.out.println(letter + " " + counts[i]);
+    //     }
 
-        for (int i = 0; i < plugs.size(); ++i) {
-            final Boolean valid = model.isPlugValid(i);
-            System.out.println(i + " " + valid);
-        }
+    //     for (int i = 0; i < plugs.size(); ++i) {
+    //         final Boolean valid = model.isPlugValid(i);
+    //         System.out.println(i + " " + valid);
+    //     }
 
-        return model.isPlugboardValid();
-    }
+    //     return model.isPlugboardValid();
+    // }
 
-    private boolean dumpReflector() {
-        System.out.println("dumpReflector().");
+    // private boolean dumpReflector() {
+    //     System.out.println("dumpReflector().");
 
-        int[] counts = model.getReflectorLetterCounts();
-        for (int i = 0; i < counts.length; ++i) {
-            String letter = "" + Rotor.indexToString(i) + " ";
-            System.out.println(letter + " " + counts[i]);
-        }
+    //     int[] counts = model.getReflectorLetterCounts();
+    //     for (int i = 0; i < counts.length; ++i) {
+    //         String letter = "" + Rotor.indexToString(i) + " ";
+    //         System.out.println(letter + " " + counts[i]);
+    //     }
 
-        return model.isReflectorValid();
-    }
+    //     return model.isReflectorValid();
+    // }
 
 
     @FXML

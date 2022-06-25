@@ -32,6 +32,7 @@ import javafx.scene.control.SpinnerValueFactory;
 
 public class Model {
 
+    private static final int ROTOR_COUNT = 4;
     /**
      * Responsible for constructing the Model and any local objects. Called by 
      * the controller.
@@ -305,35 +306,13 @@ public class Model {
      */
 
     ObservableList<String> ringSettingsList = FXCollections.observableArrayList();
-    private SpinnerValueFactory<String> ringSetting0SVF;
-    private SpinnerValueFactory<String> ringSetting1SVF;
-    private SpinnerValueFactory<String> ringSetting2SVF;
-    private SpinnerValueFactory<String> ringSetting3SVF;
+    private ArrayList<ListSpinner> ringSettingSpinners = new ArrayList<ListSpinner>(ROTOR_COUNT);
 
-    private int ringSetting0 = 0;
-    private int ringSetting1 = 0;
-    private int ringSetting2 = 0;
-    private int ringSetting3 = 0;
-
-    public SpinnerValueFactory<String> getRingSetting0SVF()   { return ringSetting0SVF; }
-    public SpinnerValueFactory<String> getRingSetting1SVF()   { return ringSetting1SVF; }
-    public SpinnerValueFactory<String> getRingSetting2SVF()   { return ringSetting2SVF; }
-    public SpinnerValueFactory<String> getRingSetting3SVF()   { return ringSetting3SVF; }
-
-    public String getRingSetting0()   { return Rotor.indexToString(ringSetting0); }
-    public String getRingSetting1()   { return Rotor.indexToString(ringSetting1); }
-    public String getRingSetting2()   { return Rotor.indexToString(ringSetting2); }
-    public String getRingSetting3()   { return Rotor.indexToString(ringSetting3); }
-
-    public int getRingIndex0()   { return ringSetting0; }
-    public int getRingIndex1()   { return ringSetting1; }
-    public int getRingIndex2()   { return ringSetting2; }
-    public int getRingIndex3()   { return ringSetting3; }
-
-    public void setRingSetting0(String value)   { ringSetting0 = Integer.valueOf(value) - 1; }
-    public void setRingSetting1(String value)   { ringSetting1 = Integer.valueOf(value) - 1; }
-    public void setRingSetting2(String value)   { ringSetting2 = Integer.valueOf(value) - 1; }
-    public void setRingSetting3(String value)   { ringSetting3 = Integer.valueOf(value) - 1; }
+    public SpinnerValueFactory<String> getRingSettingSVF(int index) { return ringSettingSpinners.get(index).getSVF(); }
+    public String getRingSetting(int index) { return ringSettingSpinners.get(index).getCurrent(); }
+    public int getRingIndex(int index) { return ringSettingSpinners.get(index).getIndex(); }
+    public void setRingSetting(int index, String value) { ringSettingSpinners.get(index).setCurrent(value); }
+    public void incrementRingSetting(int index, int step) { ringSettingSpinners.get(index).increment(step); }
 
 
     private void fillRingSettingsList() {
@@ -355,17 +334,17 @@ public class Model {
             }
         }
     }
+    private void fillRingSettingSpinners() {
+        for (int i = 0; i < ROTOR_COUNT; ++i)
+            ringSettingSpinners.add(new ListSpinner(ringSettingsList));
+    }
 
     /**
      * Initialize "Ring Settings" panel.
      */
     private void initializeRingSettings() {
         fillRingSettingsList();
-        ringSetting0SVF = new SpinnerValueFactory.ListSpinnerValueFactory<String>(ringSettingsList);
-        ringSetting1SVF = new SpinnerValueFactory.ListSpinnerValueFactory<String>(ringSettingsList);
-        ringSetting2SVF = new SpinnerValueFactory.ListSpinnerValueFactory<String>(ringSettingsList);
-        ringSetting3SVF = new SpinnerValueFactory.ListSpinnerValueFactory<String>(ringSettingsList);
-
+        fillRingSettingSpinners();
     }
 
 
@@ -375,35 +354,14 @@ public class Model {
      */
 
     ObservableList<String> rotorOffsetsList = FXCollections.observableArrayList();
-    private SpinnerValueFactory<String> rotorOffset0SVF;
-    private SpinnerValueFactory<String> rotorOffset1SVF;
-    private SpinnerValueFactory<String> rotorOffset2SVF;
-    private SpinnerValueFactory<String> rotorOffset3SVF;
+    private ArrayList<ListSpinner> rotorOffsetSpinners = new ArrayList<ListSpinner>(ROTOR_COUNT);
 
-    private int rotorOffset0 = 0;
-    private int rotorOffset1 = 0;
-    private int rotorOffset2 = 0;
-    private int rotorOffset3 = 0;
+    public SpinnerValueFactory<String> getRotorOffsetSVF(int index) { return rotorOffsetSpinners.get(index).getSVF(); }
+    public String getRotorOffset(int index) { return rotorOffsetSpinners.get(index).getCurrent(); }
+    public int getRotorIndex(int index) { return rotorOffsetSpinners.get(index).getIndex(); }
+    public void setRotorOffset(int index, String value) { rotorOffsetSpinners.get(index).setCurrent(value); }
+    public void incrementRotorOffset(int index, int step) { rotorOffsetSpinners.get(index).increment(step); }
 
-    public SpinnerValueFactory<String> getRotorOffset0SVF()   { return rotorOffset0SVF; }
-    public SpinnerValueFactory<String> getRotorOffset1SVF()   { return rotorOffset1SVF; }
-    public SpinnerValueFactory<String> getRotorOffset2SVF()   { return rotorOffset2SVF; }
-    public SpinnerValueFactory<String> getRotorOffset3SVF()   { return rotorOffset3SVF; }
-
-    public String getRotorOffset0()   { return Rotor.indexToString(rotorOffset0); }
-    public String getRotorOffset1()   { return Rotor.indexToString(rotorOffset1); }
-    public String getRotorOffset2()   { return Rotor.indexToString(rotorOffset2); }
-    public String getRotorOffset3()   { return Rotor.indexToString(rotorOffset3); }
-
-    public int getRotorIndex0()   { return rotorOffset0; }
-    public int getRotorIndex1()   { return rotorOffset1; }
-    public int getRotorIndex2()   { return rotorOffset2; }
-    public int getRotorIndex3()   { return rotorOffset3; }
-
-    public void setRotorOffset0(String value)   { rotorOffset0 = Integer.valueOf(value) - 1; }
-    public void setRotorOffset1(String value)   { rotorOffset1 = Integer.valueOf(value) - 1; }
-    public void setRotorOffset2(String value)   { rotorOffset2 = Integer.valueOf(value) - 1; }
-    public void setRotorOffset3(String value)   { rotorOffset3 = Integer.valueOf(value) - 1; }
 
     private boolean useLetters = false;
 
@@ -434,17 +392,17 @@ public class Model {
             }
         }
     }
+    private void fillRotorOffsetSpinners() {
+        for (int i = 0; i < ROTOR_COUNT; ++i)
+            rotorOffsetSpinners.add(new ListSpinner(rotorOffsetsList));
+    }
 
     /**
      * Initialize "Rotor Offsets" panel.
      */
     private void initializeRotorOffsets() {
         fillRotorOffsetsList();
-        rotorOffset0SVF = new SpinnerValueFactory.ListSpinnerValueFactory<String>(rotorOffsetsList);
-        rotorOffset1SVF = new SpinnerValueFactory.ListSpinnerValueFactory<String>(rotorOffsetsList);
-        rotorOffset2SVF = new SpinnerValueFactory.ListSpinnerValueFactory<String>(rotorOffsetsList);
-        rotorOffset3SVF = new SpinnerValueFactory.ListSpinnerValueFactory<String>(rotorOffsetsList);
-
+        fillRotorOffsetSpinners();
     }
 
 
@@ -608,9 +566,9 @@ public class Model {
     private ArrayList<int[]> pipeline = new ArrayList<int[]>(9);
     
     private void advanceRotors() {
-        rotorOffset1SVF.increment(1);
-        rotorOffset2SVF.increment(2);
-        rotorOffset3SVF.increment(5);
+        incrementRotorOffset(1, 1);
+        incrementRotorOffset(2, 2);
+        incrementRotorOffset(3, 5);
     }
 
     public void test() {
@@ -623,9 +581,9 @@ public class Model {
 
         pipeline.clear();
 
-        int[] map1 = getRotor(m3, wheel1Choice).getMap(getRingIndex1());
-        int[] map2 = getRotor(m3, wheel2Choice).getMap(getRingIndex2());
-        int[] map3 = getRotor(m3, wheel3Choice).getMap(getRingIndex3());
+        int[] map1 = getRotor(m3, wheel1Choice).getMap(getRingIndex(1));
+        int[] map2 = getRotor(m3, wheel2Choice).getMap(getRingIndex(2));
+        int[] map3 = getRotor(m3, wheel3Choice).getMap(getRingIndex(3));
         
         pipeline.add(plugboardMap);
 
