@@ -143,7 +143,9 @@ public class Model {
     private boolean reconfigurable = false;
 
     private int[] reflectorLetterCounts = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-    private int[] reflectorMap = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    private int[] reconfigurableReflectorMap = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+    private int[] reflectorMap;
 
     private ArrayList<Pair> pairs = new ArrayList<Pair>(PrimaryController.PAIR_COUNT);
 
@@ -211,8 +213,8 @@ public class Model {
     private void setReflectorMap() {
         int j = Rotor.charToIndex('j');
         int y = Rotor.charToIndex('y');
-        reflectorMap[j] = y;
-        reflectorMap[y] = j;
+        reconfigurableReflectorMap[j] = y;
+        reconfigurableReflectorMap[y] = j;
 
         for (Pair pair : pairs) {
             if (pair.isEmpty())
@@ -221,8 +223,8 @@ public class Model {
             final String text = pair.get();
             int a = Rotor.charToIndex(text.charAt(0));
             int b = Rotor.charToIndex(text.charAt(1));
-            reflectorMap[a] = b;
-            reflectorMap[b] = a;
+            reconfigurableReflectorMap[a] = b;
+            reconfigurableReflectorMap[b] = a;
         }
     }
 
@@ -545,7 +547,7 @@ public class Model {
     private int[] getReflectorMap() {
         
         if (reconfigurable)
-            return reflectorMap;
+            return reconfigurableReflectorMap;
         else {
             Rotor rotor = getRotor(m4, reflectorChoice);
             if (rotor != null)
@@ -562,6 +564,10 @@ public class Model {
 
         return null;
     }
+
+    private int[] map1;
+    private int[] map2;
+    private int[] map3;
 
     private ArrayList<int[]> pipeline = new ArrayList<int[]>(9);
     
@@ -581,17 +587,13 @@ public class Model {
 
         pipeline.clear();
 
-        int[] map1 = getRotor(m3, wheel1Choice).getMap(getRingIndex(1));
-        int[] map2 = getRotor(m3, wheel2Choice).getMap(getRingIndex(2));
-        int[] map3 = getRotor(m3, wheel3Choice).getMap(getRingIndex(3));
-        
         pipeline.add(plugboardMap);
 
         pipeline.add(map3);
         pipeline.add(map2);
         pipeline.add(map1);
 
-        pipeline.add(getReflectorMap());
+        pipeline.add(reflectorMap);
 
         pipeline.add(map1);
         pipeline.add(map2);
@@ -606,17 +608,22 @@ public class Model {
             dumpMapping(map);
     }
 
-    private void readSettings() {
+    private void lockdownSettings() {
         setPlugboardMap();
         setReflectorMap();
-        buildPipeline();
+        reflectorMap = getReflectorMap();
+        map1 = getRotor(m3, wheel1Choice).getMap(getRingIndex(1));
+        map2 = getRotor(m3, wheel2Choice).getMap(getRingIndex(2));
+        map3 = getRotor(m3, wheel3Choice).getMap(getRingIndex(3));
+        
     }
-
+    
     public void setEncipher(boolean state) {
         encipher = state;
         // System.out.println("setEncipher(" + encipher + ").");
         if (encipher) {
-            readSettings();
+            lockdownSettings();
+            buildPipeline();
             
             dumpMappings();
             System.out.println("Enter text");
