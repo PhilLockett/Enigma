@@ -45,9 +45,9 @@ public class Rotor {
     public static int intTochar(int v) { return indexToChar(v-1); }
     public static String intToString(int v) { return "" + (char)intTochar(v); }
 
-	public boolean is(String target) {
-		return target.equals(id);
-	}
+    public boolean is(String target) {
+        return target.equals(id);
+    }
 
     private int[] buildIndices() {
         int [] alan = new int[26];
@@ -93,7 +93,7 @@ public class Rotor {
         this.date = date;
         this.name = name;
         map = buildIndices();
-		this.turnover = buildTurnover(turnover);
+        this.turnover = buildTurnover(turnover);
         reflect = setReflect();
     }
 
@@ -108,26 +108,26 @@ public class Rotor {
     public int[] getMap(int index) {
         // System.out.println("getMap(" + index + ")");
 
-		int [] alan = new int[26];
+        int [] alan = new int[26];
 
-		int a = 0;
-		for (int i = index; i < map.length; ++i)
+        int a = 0;
+        for (int i = index; i < map.length; ++i)
             alan[a++] = map[i];
-		for (int i = 0; i < index; ++i)
+        for (int i = 0; i < index; ++i)
             alan[a++] = map[i];
 
         return alan;
-	}
+    }
 
     @Override
     public String toString() {
         return "Rotor [" + 
-			"id=" + id + 
-			", map=" + Arrays.toString(map) + 
-			// ", cipher=" + cipher + 
-			", name=" + name + 
-			", reflect=" + reflect + 
-			// ", date=" + date + 
+            "id=" + id + 
+            ", map=" + Arrays.toString(map) + 
+            // ", cipher=" + cipher + 
+            ", name=" + name + 
+            ", reflect=" + reflect + 
+            // ", date=" + date + 
             "]";
     }
 
