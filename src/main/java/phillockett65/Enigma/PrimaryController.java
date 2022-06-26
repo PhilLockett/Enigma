@@ -97,6 +97,7 @@ public class PrimaryController {
     @FXML
     void reconfigurableCheckboxActionPerformed(ActionEvent event) {
         model.setReconfigurable(reconfigurableCheckbox.isSelected());
+        setReconfigurable();
     }
 
     @FXML
@@ -157,13 +158,30 @@ public class PrimaryController {
         }
     }
 
+    private void editablePairs(boolean editable) {
+        // System.out.println("editablePairs(" + editable + ")");
+
+        for (TextField field : pairs)
+            field.setEditable(editable);
+    }
+
     private void editableReflector(boolean editable) {
         // System.out.println("editableReflector(" + editable + ")");
 
-        reflectorChoicebox.setDisable(!editable);
+        if (editable) {
+            setReconfigurable();
+        } else {
+            reflectorChoicebox.setDisable(true);
+            editablePairs(false);
+        }
         reconfigurableCheckbox.setDisable(!editable);
-        for (TextField field : pairs)
-            field.setEditable(editable);
+    }
+
+    private void setReconfigurable() {
+        final boolean reconfigurable = model.isReconfigurable();
+
+        reflectorChoicebox.setDisable(reconfigurable);
+        editablePairs(reconfigurable);
     }
 
     /**
@@ -171,6 +189,8 @@ public class PrimaryController {
      */
     private void initializeReflector() {
         reconfigurableCheckbox.setSelected(model.isReconfigurable());
+        setReconfigurable();
+
         reflectorChoicebox.setItems(model.getReflectorList());
         reflectorChoicebox.setValue(model.getReflectorChoice());
 
