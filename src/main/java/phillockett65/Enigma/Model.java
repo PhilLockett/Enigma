@@ -278,8 +278,8 @@ public class Model {
     private void fillWheelChoices() {
         final String first = wheelList.get(0);
 
-		for (int i = 0; i < ROTOR_COUNT; ++i)
-			wheelChoices.add(first);
+        for (int i = 0; i < ROTOR_COUNT; ++i)
+            wheelChoices.add(first);
     }
 
     /**
@@ -287,7 +287,7 @@ public class Model {
      */
     private void initializeWheelOrder() {
         fillWheelList();
-		fillWheelChoices();
+        fillWheelChoices();
     }
 
 
@@ -608,61 +608,61 @@ public class Model {
 
 
 
-	int[] test1 = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-	int[] test2 = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-	int[] test3 = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    int[] test1 = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    int[] test2 = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    int[] test3 = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 
-	 void rotate(int[] list) {
-		int temp = list[0];
+     void rotate(int[] list) {
+        int temp = list[0];
 
-		for (int i = 0; i < list.length-1; ++i) {
-			list[i] = list[i+1];
-		}
+        for (int i = 0; i < list.length-1; ++i) {
+            list[i] = list[i+1];
+        }
 
-		list[list.length-1] = temp;
-	 }
+        list[list.length-1] = temp;
+     }
 
-	 void display() {
+     void display() {
 
-		for (int i = 0; i < test1.length; ++i) {
-			String a = "" + i;
-			String b = "" + test1[i];
-			String c = "" + test2[i];
-			String d = "" + test3[i];
-			System.out.println(a + " " + d + c + b + " " + a + " " + b + c + d + " " + a);
-		}
-	}
+        for (int i = 0; i < test1.length; ++i) {
+            String a = "" + i;
+            String b = "" + test1[i];
+            String c = "" + test2[i];
+            String d = "" + test3[i];
+            System.out.println(a + " " + d + c + b + " " + a + " " + b + c + d + " " + a);
+        }
+    }
 
     public void testPositions() {
-		display();
-		rotate(test3);
-		if (test3[0] == 3)
-			rotate(test2);
+        display();
+        rotate(test3);
+        if (test3[0] == 3)
+            rotate(test2);
 
         System.out.println();
     }
 
 
 
-	public int test1(char key) {
-		return test(Rotor.charToIndex(key));
+    public int test1(char key) {
+        return test(Rotor.charToIndex(key));
     }
 
-	public int test5() {
-		int output = 0;
-		
+    public int test5() {
+        int output = 0;
+        
         final String input = "AAAAA";
         for (int i = 0; i < input.length(); ++i)
             output = test1(input.charAt(i));
 
-		return output;
+        return output;
     }
 
-	public int test() {
-		lockdownSettings();
+    public int test() {
+        lockdownSettings();
 
-		return test1('A');
-		// return test5();
+        return test1('A');
+        // return test5();
     }
 
     private void buildPipeline() {
@@ -697,29 +697,29 @@ public class Model {
         setReflectorMap();
         reflectorMap = getReflectorMap();
 
-		Rotor rotor = getRotor(m3, getWheelChoice(1));
-		rotor.setRingSetting(getRingIndex(1));
-		leftMap1 = rotor.getLeftMap();
-		rightMap1 = rotor.getRightMap();
+        Rotor rotor = getRotor(m3, getWheelChoice(1));
+        rotor.setRingSetting(getRingIndex(1));
+        leftMap1 = rotor.getLeftMap();
+        rightMap1 = rotor.getRightMap();
 
-		// dumpMapping(rotor.getMap(getRingIndex(1)));
+        // dumpMapping(rotor.getMap(getRingIndex(1)));
 
-		rotor = getRotor(m3, getWheelChoice(2));
-		rotor.setRingSetting(getRingIndex(2));
-		leftMap2 = rotor.getLeftMap();
-		rightMap2 = rotor.getRightMap();
+        rotor = getRotor(m3, getWheelChoice(2));
+        rotor.setRingSetting(getRingIndex(2));
+        leftMap2 = rotor.getLeftMap();
+        rightMap2 = rotor.getRightMap();
 
-		rotor = getRotor(m3, getWheelChoice(3));
-		rotor.setRingSetting(getRingIndex(3));
-		leftMap3 = rotor.getLeftMap();
-		rightMap3 = rotor.getRightMap();
+        rotor = getRotor(m3, getWheelChoice(3));
+        rotor.setRingSetting(getRingIndex(3));
+        leftMap3 = rotor.getLeftMap();
+        rightMap3 = rotor.getRightMap();
 
-		// dumpMapping(rightMap1);
-		// dumpMapping(leftMap1);
-		// dumpMapping(rightMap2);
-		// dumpMapping(leftMap2);
-		// dumpMapping(rightMap3);
-		// dumpMapping(leftMap3);
+        // dumpMapping(rightMap1);
+        // dumpMapping(leftMap1);
+        // dumpMapping(rightMap2);
+        // dumpMapping(leftMap2);
+        // dumpMapping(rightMap3);
+        // dumpMapping(leftMap3);
     }
     
     public void setEncipher(boolean state) {

@@ -33,8 +33,8 @@ public class Rotor {
     private final int[] map;
     private final boolean[] turnover;
     private final boolean reflect;
-	
-	private int ringSetting;
+    
+    private int ringSetting;
     private int[] leftMap;
     private int[] rightMap;
 
@@ -110,7 +110,7 @@ public class Rotor {
     public boolean isTurnoverPoint(int index) { return turnover[index]; }
 
     public int getRingSetting()	{ return ringSetting; }
-	public int[] getLeftMap()	{ return leftMap; }
+    public int[] getLeftMap()	{ return leftMap; }
     public int[] getRightMap()	{ return rightMap; }
 
     public int[] getMap(int index) {
@@ -127,20 +127,20 @@ public class Rotor {
         return alan;
     }
 
-	public void setRingSetting(int index) {
+    public void setRingSetting(int index) {
         // System.out.println("setRingSetting(" + index + ")");
 
-		ringSetting = index;
+        ringSetting = index;
         rightMap = new int[26];
         leftMap = new int[26];
 
         int a = 0;
-		final int max = map.length + index;
+        final int max = map.length + index;
         for (int i = index; i < max; ++i)
-			rightMap[a++] = map[i % 26];
+            rightMap[a++] = map[i % 26];
 
-		for (int i = 0; i < map.length; ++i)
-			leftMap[rightMap[i]] = i;
+        for (int i = 0; i < map.length; ++i)
+            leftMap[rightMap[i]] = i;
     }
 
     @Override
