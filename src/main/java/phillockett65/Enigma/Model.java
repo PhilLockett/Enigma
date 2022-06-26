@@ -606,44 +606,6 @@ public class Model {
 
 
 
-
-
-    int[] test1 = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-    int[] test2 = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-    int[] test3 = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-
-     void rotate(int[] list) {
-        int temp = list[0];
-
-        for (int i = 0; i < list.length-1; ++i) {
-            list[i] = list[i+1];
-        }
-
-        list[list.length-1] = temp;
-     }
-
-     void display() {
-
-        for (int i = 0; i < test1.length; ++i) {
-            String a = "" + i;
-            String b = "" + test1[i];
-            String c = "" + test2[i];
-            String d = "" + test3[i];
-            System.out.println(a + " " + d + c + b + " " + a + " " + b + c + d + " " + a);
-        }
-    }
-
-    public void testPositions() {
-        display();
-        rotate(test3);
-        if (test3[0] == 3)
-            rotate(test2);
-
-        System.out.println();
-    }
-
-
-
     public int test1(char key) {
         return test(Rotor.charToIndex(key));
     }
