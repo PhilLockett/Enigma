@@ -583,24 +583,28 @@ public class Model {
     public int test(int index) {
 
         advanceRotors();
-        int offset1 = getRotorIndex(1);
-        int offset2 = getRotorIndex(2);
-        int offset3 = getRotorIndex(3);
+        
+        final int offsetP = 0;
+        final int offset1 = getRotorIndex(1);
+        final int offset2 = getRotorIndex(2);
+        final int offset3 = getRotorIndex(3);
+        final int offsetR = 0;
+
         System.out.print("Key: " + Rotor.indexToString(index) + "  Positions: " + Rotor.indexToString(offset1) + Rotor.indexToString(offset2) + Rotor.indexToString(offset3) + "  ");
 
-        index = translate(plugboardMap, index, 0);
+        index = translate(plugboardMap, index, offsetP);
 
-        index = translate(rightMap3, index, offset3);
+        index = translate(rightMap3, index, offset3 - offsetP);
         index = translate(rightMap2, index, offset2 - offset3);
         index = translate(rightMap1, index, offset1 - offset2);
 
-        index = translate(reflectorMap, index, -offset1);
+        index = translate(reflectorMap, index, offsetR - offset1);
         
-        index = translate(leftMap1, index, offset1);
+        index = translate(leftMap1, index, offset1 - offsetR);
         index = translate(leftMap2, index, offset2 - offset1);
         index = translate(leftMap3, index, offset3 - offset2);
         
-        index = translate(plugboardMap, index, -offset3);
+        index = translate(plugboardMap, index, offsetP - offset3);
 
         System.out.println("Lamp: " + Rotor.indexToString(index));
 
