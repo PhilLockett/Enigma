@@ -38,6 +38,25 @@ public class Rotor {
     private int[] leftMap;
     private int[] rightMap;
 
+
+    private void dumpMapping(int[] map) {
+        for (int i = 0; i < map.length; ++i)
+            System.out.print(Rotor.indexToString(map[i]));
+
+        System.out.println();
+    }
+
+    public void dumpCipher() { System.out.println(cipher); }
+    public void dumpMap() { dumpMapping(map); }
+    public void dumpLeftMap() { dumpMapping(leftMap); }
+    public void dumpRightMap() { dumpMapping(rightMap); }
+    public void dumpTurnover() {
+        for (int i = 0; i < turnover.length; ++i)
+            System.out.print(turnover[i] ? "1" : "0");
+
+        System.out.println();
+    }
+
     public static final int CASE_DELTA = 'a' - 'A';
 
     public static int charToUpper(int v) { return ((v >= 'A') && (v <= 'Z')) ? v : v - CASE_DELTA; }
