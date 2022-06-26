@@ -130,6 +130,11 @@ public class Rotor {
         return alan;
     }
 
+    /**
+     * Set the ring setting and fill in the left and right mappings using the
+     * map and ring setting.
+     * @param index of the required ring setting.
+     */
     public void setRingSetting(int index) {
         // System.out.println("setRingSetting(" + index + ")");
 
