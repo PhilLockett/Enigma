@@ -228,6 +228,30 @@ public class Model {
         }
     }
 
+    private int[] getReflectorMap() {
+        
+        if (reconfigurable) {
+
+            return reconfigurableReflectorMap;
+        }
+        else {
+            Rotor rotor = getRotor(m4, reflectorChoice);
+            if (rotor != null)
+                return rotor.getMap();
+
+            rotor = getRotor(rocket, reflectorChoice);
+            if (rotor != null)
+                return rotor.getMap();
+
+            rotor = getRotor(swissK, reflectorChoice);
+            if (rotor != null)
+                return rotor.getMap();
+        }
+
+        return null;
+    }
+
+
     private void fillReflectorList() {
         reflectorList.clear();
 
@@ -534,27 +558,6 @@ public class Model {
         return null;
     }
 
-    private int[] getReflectorMap() {
-        
-        if (reconfigurable)
-            return reconfigurableReflectorMap;
-        else {
-            Rotor rotor = getRotor(m4, reflectorChoice);
-            if (rotor != null)
-                return rotor.getMap();
-
-            rotor = getRotor(rocket, reflectorChoice);
-            if (rotor != null)
-                return rotor.getMap();
-
-            rotor = getRotor(swissK, reflectorChoice);
-            if (rotor != null)
-                return rotor.getMap();
-        }
-
-        return null;
-    }
-
     private int[] leftMap1;
     private int[] rightMap1;
     private int[] leftMap2;
@@ -562,7 +565,6 @@ public class Model {
     private int[] leftMap3;
     private int[] rightMap3;
 
-    private ArrayList<int[]> pipeline = new ArrayList<int[]>(9);
     
     private void advanceRotors() {
         incrementRotorOffset(3, 1);
@@ -627,6 +629,7 @@ public class Model {
         // return test5();
     }
 
+    private ArrayList<int[]> pipeline = new ArrayList<int[]>(9);
     private void buildPipeline() {
         
         advanceRotors();
