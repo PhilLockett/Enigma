@@ -263,23 +263,11 @@ public class Model {
      */
 
     ObservableList<String> wheelList = FXCollections.observableArrayList();
-
-    private String wheel0Choice;
-    private String wheel1Choice;
-    private String wheel2Choice;
-    private String wheel3Choice;
+    private ArrayList<String> wheelChoices = new ArrayList<String>(ROTOR_COUNT);
 
     public ObservableList<String> getWheelList()   { return wheelList; }
-
-    public String getWheel0Choice()   { return wheel0Choice; }
-    public String getWheel1Choice()   { return wheel1Choice; }
-    public String getWheel2Choice()   { return wheel2Choice; }
-    public String getWheel3Choice()   { return wheel3Choice; }
-
-    public void setWheel0Choice(String choice)   { wheel0Choice = choice; }
-    public void setWheel1Choice(String choice)   { wheel1Choice = choice; }
-    public void setWheel2Choice(String choice)   { wheel2Choice = choice; }
-    public void setWheel3Choice(String choice)   { wheel3Choice = choice; }
+    public String getWheelChoice(int index)   { return wheelChoices.get(index); }
+    public void setWheelChoice(int index, String choice)   { wheelChoices.set(index, choice); }
 
     private void fillWheelList() {
         wheelList.clear();
@@ -287,17 +275,19 @@ public class Model {
         for (Rotor rotor : m3)
             wheelList.add(rotor.getId());
     }
+    private void fillWheelChoices() {
+        final String first = wheelList.get(0);
+
+		for (int i = 0; i < ROTOR_COUNT; ++i)
+			wheelChoices.add(first);
+    }
 
     /**
      * Initialize "Wheel Order" panel.
      */
     private void initializeWheelOrder() {
         fillWheelList();
-        final String first = wheelList.get(0);
-        wheel0Choice = first;
-        wheel1Choice = first;
-        wheel2Choice = first;
-        wheel3Choice = first;
+		fillWheelChoices();
     }
 
 
@@ -612,9 +602,6 @@ public class Model {
         setPlugboardMap();
         setReflectorMap();
         reflectorMap = getReflectorMap();
-        map1 = getRotor(m3, wheel1Choice).getMap(getRingIndex(1));
-        map2 = getRotor(m3, wheel2Choice).getMap(getRingIndex(2));
-        map3 = getRotor(m3, wheel3Choice).getMap(getRingIndex(3));
         
     }
     

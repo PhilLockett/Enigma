@@ -243,25 +243,25 @@ public class PrimaryController {
         wheel2Choicebox.setItems(model.getWheelList());
         wheel3Choicebox.setItems(model.getWheelList());
 
-        wheel0Choicebox.setValue(model.getWheel0Choice());
-        wheel1Choicebox.setValue(model.getWheel1Choice());
-        wheel2Choicebox.setValue(model.getWheel2Choice());
-        wheel3Choicebox.setValue(model.getWheel3Choice());
+        wheel0Choicebox.setValue(model.getWheelChoice(0));
+        wheel1Choicebox.setValue(model.getWheelChoice(1));
+        wheel2Choicebox.setValue(model.getWheelChoice(2));
+        wheel3Choicebox.setValue(model.getWheelChoice(3));
 
         wheel0Choicebox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
-            model.setWheel0Choice(newValue);
+            model.setWheelChoice(0, newValue);
         });
 
         wheel1Choicebox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
-            model.setWheel1Choice(newValue);
+            model.setWheelChoice(1, newValue);
         });
 
         wheel2Choicebox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
-            model.setWheel2Choice(newValue);
+            model.setWheelChoice(2, newValue);
         });
 
         wheel3Choicebox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
-            model.setWheel3Choice(newValue);
+            model.setWheelChoice(3, newValue);
         });
     }
 
