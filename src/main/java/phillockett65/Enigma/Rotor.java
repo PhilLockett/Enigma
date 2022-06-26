@@ -99,6 +99,9 @@ public class Rotor {
         map = buildIndices();
         this.turnover = buildTurnover(turnover);
         reflect = setReflect();
+
+        rightMap = new int[26];
+        leftMap = new int[26];
     }
 
     public String getId()		{ return id; }
@@ -131,8 +134,6 @@ public class Rotor {
         // System.out.println("setRingSetting(" + index + ")");
 
         ringSetting = index;
-        rightMap = new int[26];
-        leftMap = new int[26];
 
         int a = 0;
         final int max = map.length + index;
