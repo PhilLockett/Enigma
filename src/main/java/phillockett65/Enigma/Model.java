@@ -599,7 +599,7 @@ public class Model {
         
         index = translate(plugboardMap, index, -offset3);
 
-        System.out.println("  Lamp: " + Rotor.indexToString(index));
+        System.out.println("Lamp: " + Rotor.indexToString(index));
 
         return index;
     }
