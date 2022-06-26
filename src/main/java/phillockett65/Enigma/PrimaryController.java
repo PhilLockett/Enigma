@@ -606,7 +606,9 @@ public class PrimaryController {
         // model.dumpRotorWiring();
         // dumpPlugboard();
         // dumpReflector();
-        model.test();
+        int code = model.test();
+
+        mainLabel.setText(Rotor.indexToString(code));
     }
 
     
