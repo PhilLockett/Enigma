@@ -231,6 +231,7 @@ public class Model {
     private int[] getReflectorMap() {
         
         if (reconfigurable) {
+            setReflectorMap();
 
             return reconfigurableReflectorMap;
         }
@@ -659,7 +660,6 @@ public class Model {
 
     private void lockdownSettings() {
         setPlugboardMap();
-        setReflectorMap();
         reflectorMap = getReflectorMap();
 
         Rotor rotor = getRotor(m3, getWheelChoice(1));
