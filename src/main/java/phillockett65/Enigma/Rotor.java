@@ -32,6 +32,7 @@ public class Rotor {
     private final String name;
     private final int[] map;
     private final boolean[] turnover;
+    private final boolean[] notches;
     private final boolean reflect;
     
     private int ringSetting;
@@ -45,17 +46,19 @@ public class Rotor {
 
         System.out.println();
     }
+    public void dumpFlags(boolean[] flags) {
+        for (int i = 0; i < flags.length; ++i)
+            System.out.print(flags[i] ? "1" : "0");
+
+        System.out.println();
+    }
 
     public void dumpCipher() { System.out.println(cipher); }
     public void dumpMap() { dumpMapping(map); }
     public void dumpLeftMap() { dumpMapping(leftMap); }
     public void dumpRightMap() { dumpMapping(rightMap); }
-    public void dumpTurnover() {
-        for (int i = 0; i < turnover.length; ++i)
-            System.out.print(turnover[i] ? "1" : "0");
-
-        System.out.println();
-    }
+    public void dumpTurnover() { dumpFlags(turnover); }
+    public void dumpNotches() { dumpFlags(notches); }
 
     public static final int CASE_DELTA = 'a' - 'A';
 
@@ -83,16 +86,27 @@ public class Rotor {
         return alan;
     }
 
-    private boolean[] buildTurnover(String map) {
+    private boolean[] buildTurnover(String turnovers) {
         boolean [] turing = new boolean[26];
 
         for (int i = 0; i < turing.length; ++i)
             turing[i] = false;
 
-        for (int i = 0; i < map.length(); ++i) {
-            final int c = charToIndex(map.charAt(i));
+        for (int i = 0; i < turnovers.length(); ++i) {
+            final int c = charToIndex(turnovers.charAt(i));
             turing[c] = true;
         }
+
+        return turing;
+    }
+
+    private boolean[] buildNotches() {
+        boolean [] turing = new boolean[26];
+
+        for (int i = 1; i < turnover.length; ++i)
+            turing[i - 1] = turnover[i];
+
+        turing[turnover.length - 1] = turnover[0];
 
         return turing;
     }
@@ -117,6 +131,7 @@ public class Rotor {
         this.name = name;
         map = buildIndices();
         this.turnover = buildTurnover(turnover);
+        this.notches = buildNotches();
         reflect = setReflect();
 
         rightMap = new int[26];
@@ -130,6 +145,7 @@ public class Rotor {
     public int[] getMap()		{ return map; }
     public boolean isReflector() { return reflect; }
     public boolean isTurnoverPoint(int index) { return turnover[index]; }
+    public boolean isNotchPoint(int index) { return notches[index]; }
 
     public int getRingSetting()	{ return ringSetting; }
     public int[] getLeftMap()	{ return leftMap; }
@@ -166,6 +182,11 @@ public class Rotor {
 
         for (int i = 0; i < map.length; ++i)
             leftMap[rightMap[i]] = i;
+
+        // System.out.print("rightMap = ");
+        // dumpRightMap();
+        // System.out.print("leftMap  = ");
+        // dumpLeftMap();
     }
 
     @Override
