@@ -533,22 +533,17 @@ public class Model {
      * Support code for "Encipher" panel.
      */
 
+    private ArrayList<int[]> rightMaps = new ArrayList<int[]>(ROTOR_COUNT);
+    private ArrayList<int[]> leftMaps = new ArrayList<int[]>(ROTOR_COUNT);
+
+    private boolean encipher = false;
+
     public boolean isConfigValid() {
         return isPlugboardValid() && isReflectorValid();
     }
 
-    private boolean encipher = false;
-
-    
     public boolean isEncipher() {
         return encipher;
-    }
-
-    private void dumpMapping(int[] map) {
-        for (int i = 0; i < map.length; ++i)
-            System.out.print(Rotor.indexToString(map[i]));
-
-        System.out.println();
     }
 
     private Rotor getRotor(ObservableList<Rotor> list, String target) {
@@ -559,21 +554,16 @@ public class Model {
         return null;
     }
 
-    private int[] leftMap1;
-    private int[] rightMap1;
-    private int[] leftMap2;
-    private int[] rightMap2;
-    private int[] leftMap3;
-    private int[] rightMap3;
 
     
     private void advanceRotors() {
         incrementRotorOffset(3, 1);
     }
 
-    public int translate(int[] map, int index, int offset) {
 
-        index = (index + offset + 26) % 26;
+    private int translate(int[] map, int index, int offset, int fromOffset) {
+
+        index = (index + offset - fromOffset + 26) % 26;
 
         System.out.print(Rotor.indexToString(index) + "->" + Rotor.indexToString(map[index]) + "  ");
 
@@ -592,19 +582,19 @@ public class Model {
 
         System.out.print("Key: " + Rotor.indexToString(index) + "  Positions: " + Rotor.indexToString(offset1) + Rotor.indexToString(offset2) + Rotor.indexToString(offset3) + "  ");
 
-        index = translate(plugboardMap, index, offsetP);
+        index = translate(plugboardMap, index, offsetP, 0);
 
-        index = translate(rightMap3, index, offset3 - offsetP);
-        index = translate(rightMap2, index, offset2 - offset3);
-        index = translate(rightMap1, index, offset1 - offset2);
+        index = translate(rightMaps.get(3), index, offset3, offsetP);
+        index = translate(rightMaps.get(2), index, offset2, offset3);
+        index = translate(rightMaps.get(1), index, offset1, offset2);
 
-        index = translate(reflectorMap, index, offsetR - offset1);
+        index = translate(reflectorMap, index, offsetR, offset1);
         
-        index = translate(leftMap1, index, offset1 - offsetR);
-        index = translate(leftMap2, index, offset2 - offset1);
-        index = translate(leftMap3, index, offset3 - offset2);
+        index = translate(leftMaps.get(1), index, offset1, offsetR);
+        index = translate(leftMaps.get(2), index, offset2, offset1);
+        index = translate(leftMaps.get(3), index, offset3, offset2);
         
-        index = translate(plugboardMap, index, offsetP - offset3);
+        index = translate(plugboardMap, index, offsetP, offset3);
 
         System.out.println("Lamp: " + Rotor.indexToString(index));
 
@@ -634,61 +624,75 @@ public class Model {
         // return test5();
     }
 
-    private ArrayList<int[]> pipeline = new ArrayList<int[]>(9);
-    private void buildPipeline() {
-        
-        advanceRotors();
 
+    private class RotorState {
+        private int[] map;
+        private int offset;
+
+        public RotorState(int[] map, int offset) {
+            this.map = map;
+            this.offset = offset;
+        }
+
+        public int[] getMap() { return map; }
+        public int getOffset() { return offset; }
+    }
+
+	private ArrayList<RotorState> pipeline = new ArrayList<RotorState>(9);
+
+	private void buildPipeline() {
+        
         pipeline.clear();
 
-        pipeline.add(plugboardMap);
+        advanceRotors();
 
-        pipeline.add(rightMap3);
-        pipeline.add(rightMap2);
-        pipeline.add(rightMap1);
+        final int offset1 = getRotorIndex(1);
+        final int offset2 = getRotorIndex(2);
+        final int offset3 = getRotorIndex(3);
 
-        pipeline.add(reflectorMap);
+        pipeline.add(new RotorState(plugboardMap, 0));
 
-        pipeline.add(leftMap1);
-        pipeline.add(leftMap2);
-        pipeline.add(leftMap3);
+        pipeline.add(new RotorState(rightMaps.get(3), offset3));
+        pipeline.add(new RotorState(rightMaps.get(2), offset2));
+        pipeline.add(new RotorState(rightMaps.get(1), offset1));
 
-        pipeline.add(plugboardMap);
+        pipeline.add(new RotorState(reflectorMap, 0));
+
+        pipeline.add(new RotorState(leftMaps.get(1), offset1));
+        pipeline.add(new RotorState(leftMaps.get(2), offset2));
+        pipeline.add(new RotorState(leftMaps.get(3), offset3));
+
+        pipeline.add(new RotorState(plugboardMap, 0));
+    }
+
+    private void dumpMapping(int[] map) {
+        for (int i = 0; i < map.length; ++i)
+            System.out.print(Rotor.indexToString(map[i]));
+
+        System.out.println();
     }
 
     private void dumpMappings() {
 
-        for (int[] map : pipeline)
-            dumpMapping(map);
+        for (RotorState rotorState : pipeline)
+            dumpMapping(rotorState.getMap());
     }
+
 
     private void lockdownSettings() {
         setPlugboardMap();
         reflectorMap = getReflectorMap();
 
-        Rotor rotor = getRotor(m3, getWheelChoice(1));
-        rotor.setRingSetting(getRingIndex(1));
-        leftMap1 = rotor.getLeftMap();
-        rightMap1 = rotor.getRightMap();
+        Rotor rotor;
+        for (int i = 0; i < ROTOR_COUNT; ++i) {
+            rotor = getRotor(m3, getWheelChoice(i));
+            rotor.setRingSetting(getRingIndex(i));
+            leftMaps.set(i, rotor.getLeftMap());
+            rightMaps.set(i, rotor.getRightMap());
 
-        // dumpMapping(rotor.getMap(getRingIndex(1)));
-
-        rotor = getRotor(m3, getWheelChoice(2));
-        rotor.setRingSetting(getRingIndex(2));
-        leftMap2 = rotor.getLeftMap();
-        rightMap2 = rotor.getRightMap();
-
-        rotor = getRotor(m3, getWheelChoice(3));
-        rotor.setRingSetting(getRingIndex(3));
-        leftMap3 = rotor.getLeftMap();
-        rightMap3 = rotor.getRightMap();
-
-        // dumpMapping(rightMap1);
-        // dumpMapping(leftMap1);
-        // dumpMapping(rightMap2);
-        // dumpMapping(leftMap2);
-        // dumpMapping(rightMap3);
-        // dumpMapping(leftMap3);
+            // rotor.dumpLeftMap();
+            // rotor.dumpRightMap();
+        }
     }
     
     public void setEncipher(boolean state) {
@@ -703,10 +707,18 @@ public class Model {
         }
     }
 
-    /**
+    private void fillMaps() {
+        for (int i = 0; i < ROTOR_COUNT; ++i) {
+            rightMaps.add(new int[26]);
+            leftMaps.add(new int[26]);
+        }
+    }
+
+	/**
      * Initialize "Encipher" panel.
      */
     private void initializeEncipher() {
+        fillMaps();
     }
 
 }
