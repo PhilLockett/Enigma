@@ -380,7 +380,7 @@ public class Model {
     public void incrementRotorOffset(int index, int step) { rotorOffsetSpinners.get(index).increment(step); }
 
 
-    private boolean useLetters = false;
+    private boolean useLetters = true;
 
     public void setUseLetters(boolean state) { 
         useLetters = state; 
