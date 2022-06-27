@@ -555,9 +555,22 @@ public class Model {
     }
 
 
-    
     private void advanceRotors() {
+        // Normal step of right rotor.
         incrementRotorOffset(3, 1);
+
+        Rotor rotor = getRotor(m3, getWheelChoice(2));
+        if (rotor.isNotchPoint(getRotorIndex(2))) {
+            // Double step of middle rotor, normal step of left rotor.
+            incrementRotorOffset(2, 1);
+            incrementRotorOffset(1, 1);
+        }
+
+        rotor = getRotor(m3, getWheelChoice(3));
+        if (rotor.isTurnoverPoint(getRotorIndex(3))) {
+            // Right rotor takes middle rotor one step further.
+            incrementRotorOffset(2, 1);
+        }
     }
 
 
