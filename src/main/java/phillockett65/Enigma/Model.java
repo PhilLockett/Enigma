@@ -583,7 +583,7 @@ public class Model {
         return map[index];
     }
 
-    public int test(int index) {
+    public int translate(int index) {
 
         advanceRotors();
         
@@ -614,10 +614,27 @@ public class Model {
         return index;
     }
 
+    public int translatePipeline(int index) {
+
+        System.out.print("Key: " + Rotor.indexToString(index) + "  ");
+
+        int previous = 0;
+        for (RotorState rotorState : pipeline) {
+            final int offset = rotorState.getOffset();
+            index = translate(rotorState.getMap(), index, offset, previous);
+            previous = offset;
+        }
+
+        System.out.println("Lamp: " + Rotor.indexToString(index));
+
+        return index;
+    }
 
 
     public int test1(char key) {
-        return test(Rotor.charToIndex(key));
+        buildPipeline();
+        return translatePipeline(Rotor.charToIndex(key));
+        // return translate(Rotor.charToIndex(key));
     }
 
     public int test5() {
@@ -631,7 +648,7 @@ public class Model {
     }
 
     public int test() {
-        lockdownSettings();
+        // lockdownSettings();
 
         return test1('A');
         // return test5();
@@ -713,7 +730,7 @@ public class Model {
         // System.out.println("setEncipher(" + encipher + ").");
         if (encipher) {
             lockdownSettings();
-            buildPipeline();
+            // buildPipeline();
             
             dumpMappings();
             System.out.println("Enter text");
