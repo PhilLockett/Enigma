@@ -615,15 +615,12 @@ public class Model {
 
     public int translatePipeline(int index) {
 
-        System.out.print("Key: " + Rotor.indexToString(index) + "  ");
+        // System.out.print("Key: " + Rotor.indexToString(index) + "  ");
 
-        int previous = 0;
-        for (Translation translator : pipeline) {
-            index = translator.translate(index, previous);
-            previous = translator.getOffset();
-        }
+        for (Translation translator : pipeline)
+            index = translator.translate(index);
 
-        System.out.println("Lamp: " + Rotor.indexToString(index));
+        // System.out.println("Lamp: " + Rotor.indexToString(index));
 
         return index;
     }
@@ -654,10 +651,10 @@ public class Model {
             return me;
         }
 
-        private int translate(int index, int fromOffset) {
+        private int translate(int index) {
 
             final int output = (map[(index + offset) % 26] + 26 - offset) % 26;
-            System.out.print(id + "[" + offset + "](" + Rotor.indexToString(index) + "->" + Rotor.indexToString(output) + ")  ");
+            // System.out.print(id + "[" + offset + "](" + Rotor.indexToString(index) + "->" + Rotor.indexToString(output) + ")  ");
 
             return output;
         }
@@ -765,7 +762,7 @@ public class Model {
         if (encipher) {
             lockdownSettings();
             buildPipeline();
-            dumpPipeline();
+            // dumpPipeline();
     
             System.out.println("Enter text");
         }
