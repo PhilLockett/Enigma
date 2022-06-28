@@ -656,9 +656,9 @@ public class Model {
     
     }
 
-	private ArrayList<RotorState> pipeline = new ArrayList<RotorState>(9);
+    private ArrayList<RotorState> pipeline = new ArrayList<RotorState>(9);
 
-	private void buildPipeline() {
+    private void buildPipeline() {
         
         pipeline.clear();
 
@@ -756,7 +756,7 @@ public class Model {
         }
     }
 
-	/**
+    /**
      * Initialize "Encipher" panel.
      */
     private void initializeEncipher() {
