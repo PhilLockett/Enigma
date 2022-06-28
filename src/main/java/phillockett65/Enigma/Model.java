@@ -656,11 +656,10 @@ public class Model {
 
         private int translate(int index, int fromOffset) {
 
-            index = (index + offset - fromOffset + 26) % 26;
-    
-            System.out.print(Rotor.indexToString(index) + "->" + Rotor.indexToString(map[index]) + "  ");
-    
-            return map[index];
+            final int output = (map[(index + offset) % 26] + 26 - offset) % 26;
+            System.out.print(id + "[" + offset + "](" + Rotor.indexToString(index) + "->" + Rotor.indexToString(output) + ")  ");
+
+            return output;
         }
     
     }
