@@ -620,9 +620,8 @@ public class Model {
 
         int previous = 0;
         for (RotorState rotorState : pipeline) {
-            final int offset = rotorState.getOffset();
-            index = translate(rotorState.getMap(), index, offset, previous);
-            previous = offset;
+            index = rotorState.translate(index, previous);
+            previous = rotorState.getOffset();;
         }
 
         System.out.println("Lamp: " + Rotor.indexToString(index));
@@ -632,16 +631,29 @@ public class Model {
 
 
     private class RotorState {
-        private int[] map;
-        private int offset;
+        final private String id;
+        final private int[] map;
+        final private int offset;
 
-        public RotorState(int[] map, int offset) {
+        public RotorState(String id, int[] map, int offset) {
+            this.id = id;
             this.map = map;
             this.offset = offset;
         }
 
+        public String getId() { return id; }
         public int[] getMap() { return map; }
         public int getOffset() { return offset; }
+
+        private int translate(int index, int fromOffset) {
+
+            index = (index + offset - fromOffset + 26) % 26;
+    
+            System.out.print(Rotor.indexToString(index) + "->" + Rotor.indexToString(map[index]) + "  ");
+    
+            return map[index];
+        }
+    
     }
 
 	private ArrayList<RotorState> pipeline = new ArrayList<RotorState>(9);
@@ -656,19 +668,19 @@ public class Model {
         final int offset2 = getRotorIndex(2);
         final int offset3 = getRotorIndex(3);
 
-        pipeline.add(new RotorState(plugboardMap, 0));
+        pipeline.add(new RotorState("P", plugboardMap, 0));
 
-        pipeline.add(new RotorState(rightMaps.get(3), offset3));
-        pipeline.add(new RotorState(rightMaps.get(2), offset2));
-        pipeline.add(new RotorState(rightMaps.get(1), offset1));
+        pipeline.add(new RotorState("3", rightMaps.get(3), offset3));
+        pipeline.add(new RotorState("2", rightMaps.get(2), offset2));
+        pipeline.add(new RotorState("1", rightMaps.get(1), offset1));
 
-        pipeline.add(new RotorState(reflectorMap, 0));
+        pipeline.add(new RotorState("R", reflectorMap, 0));
 
-        pipeline.add(new RotorState(leftMaps.get(1), offset1));
-        pipeline.add(new RotorState(leftMaps.get(2), offset2));
-        pipeline.add(new RotorState(leftMaps.get(3), offset3));
+        pipeline.add(new RotorState("1", leftMaps.get(1), offset1));
+        pipeline.add(new RotorState("2", leftMaps.get(2), offset2));
+        pipeline.add(new RotorState("3", leftMaps.get(3), offset3));
 
-        pipeline.add(new RotorState(plugboardMap, 0));
+        pipeline.add(new RotorState("P", plugboardMap, 0));
     }
 
     private void dumpMapping(int[] map) {
