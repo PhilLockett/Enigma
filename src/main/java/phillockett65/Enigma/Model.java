@@ -619,9 +619,9 @@ public class Model {
         System.out.print("Key: " + Rotor.indexToString(index) + "  ");
 
         int previous = 0;
-        for (RotorState rotorState : pipeline) {
-            index = rotorState.translate(index, previous);
-            previous = rotorState.getOffset();;
+        for (Translation translator : pipeline) {
+            index = translator.translate(index, previous);
+            previous = translator.getOffset();;
         }
 
         System.out.println("Lamp: " + Rotor.indexToString(index));
@@ -630,12 +630,12 @@ public class Model {
     }
 
 
-    private class RotorState {
+    private class Translation {
         final private String id;
         final private int[] map;
         final private int offset;
 
-        public RotorState(String id, int[] map, int offset) {
+        public Translation(String id, int[] map, int offset) {
             this.id = id;
             this.map = map;
             this.offset = offset;
@@ -656,7 +656,7 @@ public class Model {
     
     }
 
-    private ArrayList<RotorState> pipeline = new ArrayList<RotorState>(9);
+    private ArrayList<Translation> pipeline = new ArrayList<Translation>(9);
 
     private void buildPipeline() {
         
@@ -668,19 +668,19 @@ public class Model {
         final int offset2 = getRotorIndex(2);
         final int offset3 = getRotorIndex(3);
 
-        pipeline.add(new RotorState("P", plugboardMap, 0));
+        pipeline.add(new Translation("P", plugboardMap, 0));
 
-        pipeline.add(new RotorState("3", rightMaps.get(3), offset3));
-        pipeline.add(new RotorState("2", rightMaps.get(2), offset2));
-        pipeline.add(new RotorState("1", rightMaps.get(1), offset1));
+        pipeline.add(new Translation("3", rightMaps.get(3), offset3));
+        pipeline.add(new Translation("2", rightMaps.get(2), offset2));
+        pipeline.add(new Translation("1", rightMaps.get(1), offset1));
 
-        pipeline.add(new RotorState("R", reflectorMap, 0));
+        pipeline.add(new Translation("R", reflectorMap, 0));
 
-        pipeline.add(new RotorState("1", leftMaps.get(1), offset1));
-        pipeline.add(new RotorState("2", leftMaps.get(2), offset2));
-        pipeline.add(new RotorState("3", leftMaps.get(3), offset3));
+        pipeline.add(new Translation("1", leftMaps.get(1), offset1));
+        pipeline.add(new Translation("2", leftMaps.get(2), offset2));
+        pipeline.add(new Translation("3", leftMaps.get(3), offset3));
 
-        pipeline.add(new RotorState("P", plugboardMap, 0));
+        pipeline.add(new Translation("P", plugboardMap, 0));
     }
 
     public int test1(char key) {
@@ -717,9 +717,9 @@ public class Model {
 
     private void dumpPipeline() {
 
-        for (RotorState rotorState : pipeline) {
-            System.out.print(rotorState.getId() + "(" + rotorState.getOffset() +"): ");
-            dumpMapping(rotorState.getMap(), rotorState.getOffset());
+        for (Translation translator : pipeline) {
+            System.out.print(translator.getId() + "(" + translator.getOffset() +"): ");
+            dumpMapping(translator.getMap(), translator.getOffset());
         }
     }
 
