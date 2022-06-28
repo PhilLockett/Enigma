@@ -611,45 +611,7 @@ public class Model {
     }
 
 
-    public int translate(int index) {
 
-        advanceRotors();
-        
-        final int offsetP = 0;
-        final int offset1 = getRotorIndex(1);
-        final int offset2 = getRotorIndex(2);
-        final int offset3 = getRotorIndex(3);
-        final int offsetR = 0;
-
-        System.out.print("Key: " + Rotor.indexToString(index) + "  Positions: " + Rotor.indexToString(offset1) + Rotor.indexToString(offset2) + Rotor.indexToString(offset3) + "  ");
-
-        index = translate(plugboardMap, index, offsetP, 0);
-
-        index = translate(rightMaps.get(3), index, offset3, offsetP);
-        index = translate(rightMaps.get(2), index, offset2, offset3);
-        index = translate(rightMaps.get(1), index, offset1, offset2);
-
-        index = translate(reflectorMap, index, offsetR, offset1);
-        
-        index = translate(leftMaps.get(1), index, offset1, offsetR);
-        index = translate(leftMaps.get(2), index, offset2, offset1);
-        index = translate(leftMaps.get(3), index, offset3, offset2);
-        
-        index = translate(plugboardMap, index, offsetP, offset3);
-
-        System.out.println("Lamp: " + Rotor.indexToString(index));
-
-        return index;
-    }
-
-    private int translate(int[] map, int index, int offset, int fromOffset) {
-
-        index = (index + offset - fromOffset + 26) % 26;
-
-        System.out.print(Rotor.indexToString(index) + "->" + Rotor.indexToString(map[index]) + "  ");
-
-        return map[index];
-    }
 
     public int translatePipeline(int index) {
 

@@ -151,19 +151,6 @@ public class Rotor {
     public int[] getLeftMap()	{ return leftMap; }
     public int[] getRightMap()	{ return rightMap; }
 
-    public int[] getMap(int index) {
-        // System.out.println("getMap(" + index + ")");
-
-        int [] alan = new int[26];
-
-        int a = 0;
-        for (int i = index; i < map.length; ++i)
-            alan[a++] = map[i];
-        for (int i = 0; i < index; ++i)
-            alan[a++] = map[i];
-
-        return alan;
-    }
 
     /**
      * Set the ring setting and fill in the left and right mappings using the
