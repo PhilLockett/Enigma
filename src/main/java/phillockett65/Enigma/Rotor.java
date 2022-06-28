@@ -175,10 +175,8 @@ public class Rotor {
 
         ringSetting = index;
 
-        int a = 0;
-        final int max = map.length + index;
-        for (int i = index; i < max; ++i)
-            rightMap[a++] = map[i % 26];
+        for (int i = 0; i < map.length; ++i)
+            rightMap[(i + index) % 26] = (map[i] + index) % 26;
 
         for (int i = 0; i < map.length; ++i)
             leftMap[rightMap[i]] = i;
