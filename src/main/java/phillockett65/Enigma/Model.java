@@ -683,7 +683,6 @@ public class Model {
         pipeline.add(new RotorState("P", plugboardMap, 0));
     }
 
-    private void dumpMapping(int[] map) {
     public int test1(char key) {
         buildPipeline();
         dumpPipeline();
@@ -708,16 +707,20 @@ public class Model {
         // return test5();
     }
 
+
+    private void dumpMapping(int[] map, int offset) {
         for (int i = 0; i < map.length; ++i)
-            System.out.print(Rotor.indexToString(map[i]));
+            System.out.print(Rotor.indexToString(map[(i + offset) % 26]));
 
         System.out.println();
     }
 
-    private void dumpMappings() {
+    private void dumpPipeline() {
 
-        for (RotorState rotorState : pipeline)
-            dumpMapping(rotorState.getMap());
+        for (RotorState rotorState : pipeline) {
+            System.out.print(rotorState.getId() + "(" + rotorState.getOffset() +"): ");
+            dumpMapping(rotorState.getMap(), rotorState.getOffset());
+        }
     }
 
 
