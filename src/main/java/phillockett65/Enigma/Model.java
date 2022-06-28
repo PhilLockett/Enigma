@@ -704,34 +704,26 @@ public class Model {
 
     private ArrayList<Translation> pipeline = new ArrayList<Translation>(9);
 
-    private void buildPipeline() {
+    private void updatePipeline() {
         
-        pipeline.clear();
-
         advanceRotors();
 
-        final int offset1 = getRotorIndex(1);
-        final int offset2 = getRotorIndex(2);
-        final int offset3 = getRotorIndex(3);
+        int offset = getRotorIndex(1);
+        for (Translation translator : pipeline)
+            translator.conditionallyUpdate("1", offset);
 
-        pipeline.add(new Translation("P", plugboardMap, 0));
+        offset = getRotorIndex(2);
+        for (Translation translator : pipeline)
+            translator.conditionallyUpdate("2", offset);
 
-        pipeline.add(new Translation("3", rightMaps.get(3), offset3));
-        pipeline.add(new Translation("2", rightMaps.get(2), offset2));
-        pipeline.add(new Translation("1", rightMaps.get(1), offset1));
-
-        pipeline.add(new Translation("R", reflectorMap, 0));
-
-        pipeline.add(new Translation("1", leftMaps.get(1), offset1));
-        pipeline.add(new Translation("2", leftMaps.get(2), offset2));
-        pipeline.add(new Translation("3", leftMaps.get(3), offset3));
-
-        pipeline.add(new Translation("P", plugboardMap, 0));
+        offset = getRotorIndex(3);
+        for (Translation translator : pipeline)
+            translator.conditionallyUpdate("3", offset);
+    
     }
 
     public int test1(char key) {
-        buildPipeline();
-        dumpPipeline();
+        updatePipeline();
         return translatePipeline(Rotor.charToIndex(key));
         // return translate(Rotor.charToIndex(key));
     }
@@ -770,6 +762,25 @@ public class Model {
     }
 
 
+    private void buildPipeline() {
+        
+        pipeline.clear();
+
+        pipeline.add(new Translation("P", plugboardMap, 0));
+
+        pipeline.add(new Translation("3", rightMaps.get(3), 0));
+        pipeline.add(new Translation("2", rightMaps.get(2), 0));
+        pipeline.add(new Translation("1", rightMaps.get(1), 0));
+
+        pipeline.add(new Translation("R", reflectorMap, 0));
+
+        pipeline.add(new Translation("1", leftMaps.get(1), 0));
+        pipeline.add(new Translation("2", leftMaps.get(2), 0));
+        pipeline.add(new Translation("3", leftMaps.get(3), 0));
+
+        pipeline.add(new Translation("P", plugboardMap, 0));
+    }
+
     private void lockdownSettings() {
         setPlugboardMap();
         reflectorMap = getReflectorMap();
@@ -781,8 +792,8 @@ public class Model {
             leftMaps.set(i, rotor.getLeftMap());
             rightMaps.set(i, rotor.getRightMap());
 
-            // rotor.dumpLeftMap();
             // rotor.dumpRightMap();
+            // rotor.dumpLeftMap();
         }
     }
     
@@ -791,9 +802,9 @@ public class Model {
         // System.out.println("setEncipher(" + encipher + ").");
         if (encipher) {
             lockdownSettings();
-            // buildPipeline();
-            
-            dumpMappings();
+            buildPipeline();
+            dumpPipeline();
+    
             System.out.println("Enter text");
         }
     }
