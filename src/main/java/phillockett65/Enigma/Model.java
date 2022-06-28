@@ -574,15 +574,6 @@ public class Model {
     }
 
 
-    private int translate(int[] map, int index, int offset, int fromOffset) {
-
-        index = (index + offset - fromOffset + 26) % 26;
-
-        System.out.print(Rotor.indexToString(index) + "->" + Rotor.indexToString(map[index]) + "  ");
-
-        return map[index];
-    }
-
     public int translate(int index) {
 
         advanceRotors();
@@ -614,6 +605,15 @@ public class Model {
         return index;
     }
 
+    private int translate(int[] map, int index, int offset, int fromOffset) {
+
+        index = (index + offset - fromOffset + 26) % 26;
+
+        System.out.print(Rotor.indexToString(index) + "->" + Rotor.indexToString(map[index]) + "  ");
+
+        return map[index];
+    }
+
     public int translatePipeline(int index) {
 
         System.out.print("Key: " + Rotor.indexToString(index) + "  ");
@@ -628,30 +628,6 @@ public class Model {
         System.out.println("Lamp: " + Rotor.indexToString(index));
 
         return index;
-    }
-
-
-    public int test1(char key) {
-        buildPipeline();
-        return translatePipeline(Rotor.charToIndex(key));
-        // return translate(Rotor.charToIndex(key));
-    }
-
-    public int test5() {
-        int output = 0;
-        
-        final String input = "AAAAA";
-        for (int i = 0; i < input.length(); ++i)
-            output = test1(input.charAt(i));
-
-        return output;
-    }
-
-    public int test() {
-        // lockdownSettings();
-
-        return test1('A');
-        // return test5();
     }
 
 
@@ -696,6 +672,30 @@ public class Model {
     }
 
     private void dumpMapping(int[] map) {
+    public int test1(char key) {
+        buildPipeline();
+        dumpPipeline();
+        return translatePipeline(Rotor.charToIndex(key));
+        // return translate(Rotor.charToIndex(key));
+    }
+
+    public int test5() {
+        int output = 0;
+        
+        final String input = "AAAAA";
+        for (int i = 0; i < input.length(); ++i)
+            output = test1(input.charAt(i));
+
+        return output;
+    }
+
+    public int test() {
+        // lockdownSettings();
+
+        return test1('A');
+        // return test5();
+    }
+
         for (int i = 0; i < map.length; ++i)
             System.out.print(Rotor.indexToString(map[i]));
 
