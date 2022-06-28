@@ -668,9 +668,9 @@ public class Model {
 
 
     private class Translation {
-        final private String id;
-        final private int[] map;
-        final private int offset;
+        private final String id;
+        private final int[] map;
+        private int offset;
 
         public Translation(String id, int[] map, int offset) {
             this.id = id;
@@ -681,6 +681,15 @@ public class Model {
         public String getId() { return id; }
         public int[] getMap() { return map; }
         public int getOffset() { return offset; }
+
+        public boolean conditionallyUpdate(String id, int offset) {
+            boolean me = this.id.equals(id);
+
+            if (me)
+                this.offset = offset;
+
+            return me;
+        }
 
         private int translate(int index, int fromOffset) {
 
