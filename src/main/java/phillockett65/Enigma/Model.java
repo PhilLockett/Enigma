@@ -765,7 +765,7 @@ public class Model {
 
         for (Translation translator : pipeline) {
             System.out.print(translator.getId() + "(" + translator.getOffset() +"): ");
-            dumpMapping(translator.getMap(), translator.getOffset());
+            dumpMapping(translator.getMap(), 0);
         }
     }
 
