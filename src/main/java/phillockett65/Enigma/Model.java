@@ -620,7 +620,7 @@ public class Model {
         int previous = 0;
         for (Translation translator : pipeline) {
             index = translator.translate(index, previous);
-            previous = translator.getOffset();;
+            previous = translator.getOffset();
         }
 
         System.out.println("Lamp: " + Rotor.indexToString(index));
@@ -634,10 +634,11 @@ public class Model {
         private final int[] map;
         private int offset;
 
-        public Translation(String id, int[] map, int offset) {
+
+        public Translation(String id, int[] map) {
             this.id = id;
             this.map = map;
-            this.offset = offset;
+            offset = 0;
         }
 
         public String getId() { return id; }
@@ -728,19 +729,19 @@ public class Model {
         
         pipeline.clear();
 
-        pipeline.add(new Translation("P", plugboardMap, 0));
+        pipeline.add(new Translation("P", plugboardMap));
 
-        pipeline.add(new Translation("3", rightMaps.get(3), 0));
-        pipeline.add(new Translation("2", rightMaps.get(2), 0));
-        pipeline.add(new Translation("1", rightMaps.get(1), 0));
+        pipeline.add(new Translation("3", rightMaps.get(3)));
+        pipeline.add(new Translation("2", rightMaps.get(2)));
+        pipeline.add(new Translation("1", rightMaps.get(1)));
 
-        pipeline.add(new Translation("R", reflectorMap, 0));
+        pipeline.add(new Translation("R", reflectorMap));
 
-        pipeline.add(new Translation("1", leftMaps.get(1), 0));
-        pipeline.add(new Translation("2", leftMaps.get(2), 0));
-        pipeline.add(new Translation("3", leftMaps.get(3), 0));
+        pipeline.add(new Translation("1", leftMaps.get(1)));
+        pipeline.add(new Translation("2", leftMaps.get(2)));
+        pipeline.add(new Translation("3", leftMaps.get(3)));
 
-        pipeline.add(new Translation("P", plugboardMap, 0));
+        pipeline.add(new Translation("P", plugboardMap));
     }
 
     private void lockdownSettings() {
