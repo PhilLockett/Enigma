@@ -243,7 +243,8 @@ public class PrimaryController {
 
     @FXML
     void fourthWheelCheckboxActionPerformed(ActionEvent event) {
-
+        model.setFourthWheel(fourthWheelCheckbox.isSelected());
+    
     }
 
     private void editableWheelOrder(boolean editable) {
@@ -283,6 +284,8 @@ public class PrimaryController {
         wheel3Choicebox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
             model.setWheelChoice(3, newValue);
         });
+
+        fourthWheelCheckbox.setSelected(model.isFourthWheel());
     }
 
 
@@ -407,7 +410,7 @@ public class PrimaryController {
             model.setRotorOffset(3, newValue);
         });
 
-        useLettersCheckbox.setSelected(model.getUseLetters());
+        useLettersCheckbox.setSelected(model.isUseLetters());
     }
 
 

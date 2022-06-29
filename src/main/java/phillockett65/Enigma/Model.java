@@ -363,6 +363,14 @@ public class Model {
     public String getWheelChoice(int index) { return rotorStates.get(index).getWheelChoice(); }
     public void setWheelChoice(int index, String choice) { rotorStates.get(index).setWheelChoice(choice); }
 
+    private boolean fourthWheel = false;
+
+    public void setFourthWheel(boolean state) { 
+        fourthWheel = state; 
+    }
+
+    public boolean isFourthWheel() { return fourthWheel; }
+
     private void fillWheelList() {
         wheelList.clear();
 
@@ -443,7 +451,7 @@ public class Model {
         fillRotorOffsetsList();
     }
 
-    public boolean getUseLetters() { return useLetters; }
+    public boolean isUseLetters() { return useLetters; }
 
     private void fillRotorOffsetsList() {
         rotorOffsetsList.clear();
@@ -674,7 +682,7 @@ public class Model {
     private void updatePipeline() {
         advanceRotors();
 
-        for (int i = 1; i < ROTOR_COUNT; ++i) {
+        for (int i = 0; i < ROTOR_COUNT; ++i) {
             int offset = getRotorIndex(i);
 
             for (Translation translator : pipeline)
@@ -710,11 +718,16 @@ public class Model {
         
         pipeline.clear();
 
+        Rotor slow = getRotor(m3, getWheelChoice(SLOW));
+
         Rotor left = getRotor(m3, getWheelChoice(LEFT));
         Rotor middle = getRotor(m3, getWheelChoice(MIDDLE));
         Rotor right = getRotor(m3, getWheelChoice(RIGHT));
 
         pipeline.add(new Translation(OTHER, plugboard, Swapper.RIGHT_TO_LEFT));
+
+        if (fourthWheel)
+            pipeline.add(new Translation(SLOW, slow, Swapper.RIGHT_TO_LEFT));
 
         pipeline.add(new Translation(RIGHT, right, Swapper.RIGHT_TO_LEFT));
         pipeline.add(new Translation(MIDDLE, middle, Swapper.RIGHT_TO_LEFT));
@@ -725,6 +738,9 @@ public class Model {
         pipeline.add(new Translation(LEFT, left, Swapper.LEFT_TO_RIGHT));
         pipeline.add(new Translation(MIDDLE, middle, Swapper.LEFT_TO_RIGHT));
         pipeline.add(new Translation(RIGHT, right, Swapper.LEFT_TO_RIGHT));
+
+        if (fourthWheel)
+            pipeline.add(new Translation(SLOW, slow, Swapper.LEFT_TO_RIGHT));
 
         pipeline.add(new Translation(OTHER, plugboard, Swapper.LEFT_TO_RIGHT));
     }
