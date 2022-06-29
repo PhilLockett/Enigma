@@ -33,6 +33,18 @@ import javafx.scene.control.SpinnerValueFactory;
 public class Model {
 
     private static final int ROTOR_COUNT = 4;
+
+    private static final int OTHER = -1;
+    private static final int SLOW = 0;
+    private static final int LEFT = 1;
+    private static final int MIDDLE = 2;
+    private static final int RIGHT = 3;
+
+
+    /************************************************************************
+     * Initialization support code.
+     */
+
     /**
      * Responsible for constructing the Model and any local objects. Called by 
      * the controller.
@@ -591,21 +603,27 @@ public class Model {
     }
 
 
+    /**
+     * Advances the right rotor then checks the other rotors. The notch point 
+     * of the middle rotor is used to check for a step of the left rotor and a 
+     * double step of the middle rotor. The turnover point of the right rotor 
+     * is used to check for a step of the middle rotor
+     */
     private void advanceRotors() {
         // Normal step of right rotor.
-        incrementRotorOffset(3, 1);
+        incrementRotorOffset(RIGHT, 1);
 
-        Rotor rotor = getRotor(m3, getWheelChoice(2));
-        if (rotor.isNotchPoint(getRotorIndex(2))) {
+        Rotor rotor = getRotor(m3, getWheelChoice(MIDDLE));
+        if (rotor.isNotchPoint(getRotorIndex(MIDDLE))) {
             // Double step of middle rotor, normal step of left rotor.
-            incrementRotorOffset(2, 1);
-            incrementRotorOffset(1, 1);
+            incrementRotorOffset(MIDDLE, 1);
+            incrementRotorOffset(LEFT, 1);
         }
 
-        rotor = getRotor(m3, getWheelChoice(3));
-        if (rotor.isTurnoverPoint(getRotorIndex(3))) {
+        rotor = getRotor(m3, getWheelChoice(RIGHT));
+        if (rotor.isTurnoverPoint(getRotorIndex(RIGHT))) {
             // Right rotor takes middle rotor one step further.
-            incrementRotorOffset(2, 1);
+            incrementRotorOffset(MIDDLE, 1);
         }
     }
 
@@ -656,17 +674,12 @@ public class Model {
     private void updatePipeline() {
         advanceRotors();
 
-        int offset = getRotorIndex(1);
-        for (Translation translator : pipeline)
-            translator.conditionallyUpdate(1, offset);
+        for (int i = 1; i < ROTOR_COUNT; ++i) {
+            int offset = getRotorIndex(i);
 
-        offset = getRotorIndex(2);
-        for (Translation translator : pipeline)
-            translator.conditionallyUpdate(2, offset);
-
-        offset = getRotorIndex(3);
-        for (Translation translator : pipeline)
-            translator.conditionallyUpdate(3, offset);
+            for (Translation translator : pipeline)
+                translator.conditionallyUpdate(i, offset);
+        }
     }
 
     public int test1(char key) {
@@ -697,23 +710,23 @@ public class Model {
         
         pipeline.clear();
 
-        Rotor rotor1 = getRotor(m3, getWheelChoice(1));
-        Rotor rotor2 = getRotor(m3, getWheelChoice(2));
-        Rotor rotor3 = getRotor(m3, getWheelChoice(3));
+        Rotor left = getRotor(m3, getWheelChoice(LEFT));
+        Rotor middle = getRotor(m3, getWheelChoice(MIDDLE));
+        Rotor right = getRotor(m3, getWheelChoice(RIGHT));
 
-        pipeline.add(new Translation(0, plugboard, Swapper.RIGHT_TO_LEFT));
+        pipeline.add(new Translation(OTHER, plugboard, Swapper.RIGHT_TO_LEFT));
 
-        pipeline.add(new Translation(3, rotor3, Swapper.RIGHT_TO_LEFT));
-        pipeline.add(new Translation(2, rotor2, Swapper.RIGHT_TO_LEFT));
-        pipeline.add(new Translation(1, rotor1, Swapper.RIGHT_TO_LEFT));
+        pipeline.add(new Translation(RIGHT, right, Swapper.RIGHT_TO_LEFT));
+        pipeline.add(new Translation(MIDDLE, middle, Swapper.RIGHT_TO_LEFT));
+        pipeline.add(new Translation(LEFT, left, Swapper.RIGHT_TO_LEFT));
 
-        pipeline.add(new Translation(0, reflector, Swapper.RIGHT_TO_LEFT));
+        pipeline.add(new Translation(OTHER, reflector, Swapper.RIGHT_TO_LEFT));
 
-        pipeline.add(new Translation(1, rotor1, Swapper.LEFT_TO_RIGHT));
-        pipeline.add(new Translation(2, rotor2, Swapper.LEFT_TO_RIGHT));
-        pipeline.add(new Translation(3, rotor3, Swapper.LEFT_TO_RIGHT));
+        pipeline.add(new Translation(LEFT, left, Swapper.LEFT_TO_RIGHT));
+        pipeline.add(new Translation(MIDDLE, middle, Swapper.LEFT_TO_RIGHT));
+        pipeline.add(new Translation(RIGHT, right, Swapper.LEFT_TO_RIGHT));
 
-        pipeline.add(new Translation(0, plugboard, Swapper.LEFT_TO_RIGHT));
+        pipeline.add(new Translation(OTHER, plugboard, Swapper.LEFT_TO_RIGHT));
     }
 
     private void lockdownSettings() {
@@ -731,15 +744,16 @@ public class Model {
             // rotor.dumpRightMap();
             // rotor.dumpLeftMap();
         }
-    }
+
+        buildPipeline();
+        // dumpPipeline();
+}
     
     public void setEncipher(boolean state) {
         encipher = state;
         // System.out.println("setEncipher(" + encipher + ").");
         if (encipher) {
             lockdownSettings();
-            buildPipeline();
-            // dumpPipeline();
     
             System.out.println("Enter text");
         }
