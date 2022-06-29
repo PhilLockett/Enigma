@@ -147,6 +147,7 @@ public class Model {
     private int[] reconfigurableReflectorMap = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
     private int[] reflectorMap;
+    private Swapper reflector;
 
     private ArrayList<Pair> pairs = new ArrayList<Pair>(PrimaryController.PAIR_COUNT);
 
@@ -469,6 +470,7 @@ public class Model {
 
     private int[] plugboardLetterCounts = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
     private int[] plugboardMap = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    private Swapper plugboard;
 
     private ArrayList<Pair> plugs = new ArrayList<Pair>(PrimaryController.PLUG_COUNT);
 
@@ -570,9 +572,6 @@ public class Model {
      * Support code for "Encipher" panel.
      */
 
-    private ArrayList<int[]> rightMaps = new ArrayList<int[]>(ROTOR_COUNT);
-    private ArrayList<int[]> leftMaps = new ArrayList<int[]>(ROTOR_COUNT);
-
     private boolean encipher = false;
 
     public boolean isConfigValid() {
@@ -611,74 +610,63 @@ public class Model {
     }
 
 
-
-
     public int translatePipeline(int index) {
 
-        // System.out.print("Key: " + Rotor.indexToString(index) + "  ");
+        System.out.print("Key: " + Rotor.indexToString(index) + "  ");
 
         for (Translation translator : pipeline)
             index = translator.translate(index);
 
-        // System.out.println("Lamp: " + Rotor.indexToString(index));
+        System.out.println("Lamp: " + Rotor.indexToString(index));
 
         return index;
     }
 
 
     private class Translation {
-        private final String id;
-        private final int[] map;
-        private int offset;
+        private final int pos;
+        private final Swapper swapper;
+        private final int dir;
 
 
-        public Translation(String id, int[] map) {
-            this.id = id;
-            this.map = map;
-            offset = 0;
+        public Translation(int id, Swapper swapper, int dir) {
+            this.pos = id;
+            this.swapper = swapper;
+            this.dir = dir;
         }
 
-        public String getId() { return id; }
-        public int[] getMap() { return map; }
-        public int getOffset() { return offset; }
+        public boolean conditionallyUpdate(int target, int offset) {
+            if (target == pos) {
+                swapper.setOffset(offset);
 
-        public boolean conditionallyUpdate(String id, int offset) {
-            boolean me = this.id.equals(id);
+                return true;
+            }
 
-            if (me)
-                this.offset = offset;
-
-            return me;
-        }
-
-        private int translate(int index) {
-
-            final int output = (map[(index + offset) % 26] + 26 - offset) % 26;
-            // System.out.print(id + "[" + offset + "](" + Rotor.indexToString(index) + "->" + Rotor.indexToString(output) + ")  ");
-
-            return output;
+            return false;
         }
     
+        public int translate(int index) {
+            return swapper.swap(dir, index);
+        }	
+
     }
 
     private ArrayList<Translation> pipeline = new ArrayList<Translation>(9);
 
     private void updatePipeline() {
-        
         advanceRotors();
 
         int offset = getRotorIndex(1);
         for (Translation translator : pipeline)
-            translator.conditionallyUpdate("1", offset);
+            translator.conditionallyUpdate(1, offset);
 
         offset = getRotorIndex(2);
         for (Translation translator : pipeline)
-            translator.conditionallyUpdate("2", offset);
+            translator.conditionallyUpdate(2, offset);
 
         offset = getRotorIndex(3);
         for (Translation translator : pipeline)
-            translator.conditionallyUpdate("3", offset);
-    
+            translator.conditionallyUpdate(3, offset);
     }
 
     public int test1(char key) {
@@ -705,51 +693,40 @@ public class Model {
     }
 
 
-    private void dumpMapping(int[] map, int offset) {
-        for (int i = 0; i < map.length; ++i)
-            System.out.print(Rotor.indexToString(map[(i + offset) % 26]));
-
-        System.out.println();
-    }
-
-    private void dumpPipeline() {
-
-        for (Translation translator : pipeline) {
-            System.out.print(translator.getId() + "(" + translator.getOffset() +"): ");
-            dumpMapping(translator.getMap(), 0);
-        }
-    }
-
-
     private void buildPipeline() {
         
         pipeline.clear();
 
-        pipeline.add(new Translation("P", plugboardMap));
+        Rotor rotor1 = getRotor(m3, getWheelChoice(1));
+        Rotor rotor2 = getRotor(m3, getWheelChoice(2));
+        Rotor rotor3 = getRotor(m3, getWheelChoice(3));
 
-        pipeline.add(new Translation("3", rightMaps.get(3)));
-        pipeline.add(new Translation("2", rightMaps.get(2)));
-        pipeline.add(new Translation("1", rightMaps.get(1)));
+        pipeline.add(new Translation(0, plugboard, Swapper.RIGHT_TO_LEFT));
 
-        pipeline.add(new Translation("R", reflectorMap));
+        pipeline.add(new Translation(3, rotor3, Swapper.RIGHT_TO_LEFT));
+        pipeline.add(new Translation(2, rotor2, Swapper.RIGHT_TO_LEFT));
+        pipeline.add(new Translation(1, rotor1, Swapper.RIGHT_TO_LEFT));
 
-        pipeline.add(new Translation("1", leftMaps.get(1)));
-        pipeline.add(new Translation("2", leftMaps.get(2)));
-        pipeline.add(new Translation("3", leftMaps.get(3)));
+        pipeline.add(new Translation(0, reflector, Swapper.RIGHT_TO_LEFT));
 
-        pipeline.add(new Translation("P", plugboardMap));
+        pipeline.add(new Translation(1, rotor1, Swapper.LEFT_TO_RIGHT));
+        pipeline.add(new Translation(2, rotor2, Swapper.LEFT_TO_RIGHT));
+        pipeline.add(new Translation(3, rotor3, Swapper.LEFT_TO_RIGHT));
+
+        pipeline.add(new Translation(0, plugboard, Swapper.LEFT_TO_RIGHT));
     }
 
     private void lockdownSettings() {
         setPlugboardMap();
         reflectorMap = getReflectorMap();
 
+        plugboard = new Swapper("Plugboard", plugboardMap);
+        reflector = new Swapper("Reflector", reflectorMap);
+
         Rotor rotor;
         for (int i = 0; i < ROTOR_COUNT; ++i) {
             rotor = getRotor(m3, getWheelChoice(i));
             rotor.setRingSetting(getRingIndex(i));
-            leftMaps.set(i, rotor.getLeftMap());
-            rightMaps.set(i, rotor.getRightMap());
 
             // rotor.dumpRightMap();
             // rotor.dumpLeftMap();
@@ -768,18 +745,10 @@ public class Model {
         }
     }
 
-    private void fillMaps() {
-        for (int i = 0; i < ROTOR_COUNT; ++i) {
-            rightMaps.add(new int[26]);
-            leftMaps.add(new int[26]);
-        }
-    }
-
     /**
      * Initialize "Encipher" panel.
      */
     private void initializeEncipher() {
-        fillMaps();
     }
 
 }
