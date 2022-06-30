@@ -600,48 +600,11 @@ public class PrimaryController {
      * Support code for debug stuff.
      */
 
-    // private boolean dumpPlugboard() {
-    //     System.out.println("dumpPlugboard().");
-
-    //     // for (TextField plug : plugs)
-    //     //     setValidTextField(plug, true);
-
-    //     int[] counts = model.getPlugboardLetterCounts();
-    //     for (int i = 0; i < counts.length; ++i) {
-    //         String letter = "" + Rotor.indexToString(i) + " ";
-    //         System.out.println(letter + " " + counts[i]);
-    //     }
-
-    //     for (int i = 0; i < plugs.size(); ++i) {
-    //         final Boolean valid = model.isPlugValid(i);
-    //         System.out.println(i + " " + valid);
-    //     }
-
-    //     return model.isPlugboardValid();
-    // }
-
-    // private boolean dumpReflector() {
-    //     System.out.println("dumpReflector().");
-
-    //     int[] counts = model.getReflectorLetterCounts();
-    //     for (int i = 0; i < counts.length; ++i) {
-    //         String letter = "" + Rotor.indexToString(i) + " ";
-    //         System.out.println(letter + " " + counts[i]);
-    //     }
-
-    //     return model.isReflectorValid();
-    // }
-
-
     @FXML
     private Button primaryButton;
 
     @FXML
     void buttonActionPerformed(ActionEvent event) {
-        // System.out.println("Button pressed.");
-        // model.dumpRotorWiring();
-        // dumpPlugboard();
-        // dumpReflector();
         int code = model.test();
 
         mainLabel.setText(Rotor.indexToString(code));
