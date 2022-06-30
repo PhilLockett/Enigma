@@ -286,6 +286,10 @@ public class Model {
         return null;
     }
 
+    private void lockdownReflectorMap() {
+        reflectorMap = getReflectorMap();
+    }
+
 
     private void fillReflectorList() {
         reflectorList.clear();
@@ -776,7 +780,7 @@ public class Model {
 
     private void lockdownSettings() {
         setPlugboardMap();
-        reflectorMap = getReflectorMap();
+        lockdownReflectorMap();
 
         plugboard = new Swapper("Plugboard", plugboardMap);
         reflector = new Swapper("Reflector", reflectorMap);
