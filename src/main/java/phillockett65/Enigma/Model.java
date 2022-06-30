@@ -113,6 +113,9 @@ public class Model {
     ObservableList<Rotor> m3 = FXCollections.observableArrayList();
     ObservableList<Rotor> m4 = FXCollections.observableArrayList();
 
+    ObservableList<Rotor> rotors = FXCollections.observableArrayList();
+    ObservableList<Rotor> reflectors = FXCollections.observableArrayList();
+
     private void initRotorWiring() {
 
         commercial.add(new Rotor("IC",	"DMTWSILRUYQNKFEJCAZBPGXOHV",	"1924",	"Commercial Enigma A, B", "R"));
@@ -148,6 +151,33 @@ public class Model {
         m4.add(new Rotor("Reflector B Thin",	"ENKQAUYWJICOPBLMDXZVFTHRGS",	"1940",	"M4 R1 (M3 + Thin)", ""));
         m4.add(new Rotor("Reflector C Thin",	"RDOBJNTKVEHMLFCWZAXGYIPSUQ",	"1940",	"M4 R1 (M3 + Thin)", ""));
         m4.add(new Rotor("ETW",					"ABCDEFGHIJKLMNOPQRSTUVWXYZ",	"",	"Enigma I", ""));
+
+        // Build list of rotors and list of reflectors that can be selected.
+        for (Rotor rotor : m3)
+            if (!rotor.isReflector())
+                rotors.add(rotor);
+
+        for (Rotor rotor : m4)
+            if (!rotor.isReflector())
+                rotors.add(rotor);
+            else
+                reflectors.add(rotor);
+
+        for (Rotor rotor : rocket)
+            if (!rotor.isReflector())
+                rotors.add(rotor);
+            else
+                reflectors.add(rotor);
+
+        for (Rotor rotor : swissK)
+            if (!rotor.isReflector())
+                rotors.add(rotor);
+            else
+                reflectors.add(rotor);
+
+        for (Rotor rotor : commercial)
+            if (!rotor.isReflector())
+                rotors.add(rotor);
     }
 
     public void dumpRotorWiring() {
@@ -270,15 +300,7 @@ public class Model {
 
             return reconfigurableReflectorMap;
         } else {
-            Rotor rotor = getRotor(m4, reflectorChoice);
-            if (rotor != null)
-                return rotor.getMap();
-
-            rotor = getRotor(rocket, reflectorChoice);
-            if (rotor != null)
-                return rotor.getMap();
-
-            rotor = getRotor(swissK, reflectorChoice);
+            Rotor rotor = getRotor(reflectors, reflectorChoice);
             if (rotor != null)
                 return rotor.getMap();
         }
@@ -294,15 +316,7 @@ public class Model {
     private void fillReflectorList() {
         reflectorList.clear();
 
-        for (Rotor rotor : m4)
-            if (rotor.isReflector())
-                reflectorList.add(rotor.getId());
-
-        for (Rotor rotor : rocket)
-            if (rotor.isReflector())
-                reflectorList.add(rotor.getId());
-
-        for (Rotor rotor : swissK)
+        for (Rotor rotor : reflectors)
             if (rotor.isReflector())
                 reflectorList.add(rotor.getId());
 
@@ -405,7 +419,7 @@ public class Model {
     private void fillWheelList() {
         wheelList.clear();
 
-        for (Rotor rotor : m3)
+        for (Rotor rotor : rotors)
             wheelList.add(rotor.getId());
     }
 
@@ -740,6 +754,7 @@ public class Model {
     }
 
     public int test() {
+        // dumpRotorWiring();
         // lockdownSettings();
 
         return test1('A');
