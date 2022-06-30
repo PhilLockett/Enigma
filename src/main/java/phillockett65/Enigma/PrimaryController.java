@@ -98,6 +98,7 @@ public class PrimaryController {
     void reconfigurableCheckboxActionPerformed(ActionEvent event) {
         model.setReconfigurable(reconfigurableCheckbox.isSelected());
         setReconfigurable();
+        checkConfigValid();
     }
 
     @FXML
@@ -139,12 +140,12 @@ public class PrimaryController {
     private ArrayList<TextField> pairs = new ArrayList<TextField>(PAIR_COUNT);
 
     @FXML
-    void reflectorActionPerformed(ActionEvent event) {
+    void reflectorActionPerformed(KeyEvent event) {
         // System.out.println("reflectorActionPerformed().");
 
         TextField field = (TextField)event.getSource();
         model.setPairText(field.getId(), field.getText());
-        
+
         checkReflector();
         checkConfigValid();
     }
@@ -646,6 +647,5 @@ public class PrimaryController {
         mainLabel.setText(Rotor.indexToString(code));
     }
 
-    
 
 }
