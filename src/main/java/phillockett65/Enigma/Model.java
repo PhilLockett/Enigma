@@ -193,12 +193,16 @@ public class Model {
     public void setReconfigurable(boolean state) { reconfigurable = state; }
     public boolean isReconfigurable() { return reconfigurable; }
 
+
     public void setPairText(int index, String text) {
         pairs.get(index).set(text);
         countLetterUsage(reflectorLetterCounts, pairs);
     }
 
-    public void sanitizePair(int index) { pairs.get(index).sanitize(); }
+    public void sanitizePairs() {
+        for (Pair pair : pairs)
+            pair.sanitize();
+    }
 
     public String getPairText(int index)	{ return pairs.get(index).get(); }
     public int getPairCount(int index)		{ return pairs.get(index).count(); }
@@ -212,18 +216,14 @@ public class Model {
         if (!pair.isValid())
             return false;
 
-        final int[] counts = getReflectorLetterCounts();
-        final String text = pair.get();
-        for (int i = 0; i < text.length(); ++i)
-            if (counts[Rotor.charToIndex(text.charAt(i))] > 1)
+        for (int i = 0; i < 2; ++i)
+            if (reflectorLetterCounts[pair.indexAt(i)] != 1)
                 return false;
 
-        System.out.println("pair " + index + " is valid");
         return true;
     }
 
     public void setPairText(String id, String text) { setPairText(idToIndex(id), text); }
-    public void sanitizePair(String id) { sanitizePair(idToIndex(id)); }
 
     public String getPairText(String id)	{ return getPairText(idToIndex(id)); }
     public int getPairCount(String id)		{ return getPairCount(idToIndex(id)); }
@@ -234,9 +234,8 @@ public class Model {
             if (!pair.isValid())
                 return false;
 
-        int[] counts = getReflectorLetterCounts();
-        for (int i = 0; i < counts.length; ++i)
-            if (counts[i] > 1)
+        for (int i = 0; i < reflectorLetterCounts.length; ++i)
+            if (reflectorLetterCounts[i] != 1)
                 return false;
 
         return true;
@@ -256,9 +255,8 @@ public class Model {
             if (pair.isEmpty())
                 continue;
 
-            final String text = pair.get();
-            int a = Rotor.charToIndex(text.charAt(0));
-            int b = Rotor.charToIndex(text.charAt(1));
+            final int a = pair.indexAt(0);
+            final int b = pair.indexAt(1);
             reconfigurableReflectorMap[a] = b;
             reconfigurableReflectorMap[b] = a;
         }
@@ -270,8 +268,7 @@ public class Model {
             setReflectorMap();
 
             return reconfigurableReflectorMap;
-        }
-        else {
+        } else {
             Rotor rotor = getRotor(m4, reflectorChoice);
             if (rotor != null)
                 return rotor.getMap();
@@ -311,8 +308,8 @@ public class Model {
      * Initialize "Reflector" panel.
      */
     private void initializeReflector() {
-		reflectorLetterCounts = new int[26];
-		reconfigurableReflectorMap = new int[26];
+        reflectorLetterCounts = new int[26];
+        reconfigurableReflectorMap = new int[26];
         fillReflectorList();
 
         for (int i = 0; i < PrimaryController.PAIR_COUNT; ++i)
@@ -540,12 +537,16 @@ public class Model {
 
     private ArrayList<Pair> plugs = new ArrayList<Pair>(PrimaryController.PLUG_COUNT);
 
+
     public void setPlugText(int index, String text) {
         plugs.get(index).set(text);
         countLetterUsage(plugboardLetterCounts, plugs);
     }
 
-    public void sanitizePlug(int index) { plugs.get(index).sanitize(); }
+    public void sanitizePlugs() {
+        for (Pair pair : plugs)
+            pair.sanitize();
+    }
 
     public String getPlugText(int index)	{ return plugs.get(index).get(); }
     public int getPlugCount(int index)		{ return plugs.get(index).count(); }
@@ -559,16 +560,14 @@ public class Model {
         if (!plug.isValid())
             return false;
 
-        final String text = plug.get();
-        for (int i = 0; i < text.length(); ++i)
-            if (plugboardLetterCounts[Rotor.charToIndex(text.charAt(i))] > 1)
+        for (int i = 0; i < 2; ++i)
+            if (plugboardLetterCounts[plug.indexAt(i)] > 1)
                 return false;
 
         return true;
     }
 
     public void setPlugText(String id, String text) { setPlugText(idToIndex(id), text); }
-    public void sanitizePlug(String id) { sanitizePlug(idToIndex(id)); }
 
     public String getPlugText(String id)	{ return getPlugText(idToIndex(id)); }
     public int getPlugCount(String id)		{ return getPlugCount(idToIndex(id)); }
@@ -579,16 +578,11 @@ public class Model {
             if (!pair.isValid())
                 return false;
 
-        int[] counts = getPlugboardLetterCounts();
-        for (int i = 0; i < counts.length; ++i)
-            if (counts[i] > 1)
+        for (int i = 0; i < plugboardLetterCounts.length; ++i)
+            if (plugboardLetterCounts[i] > 1)
                 return false;
 
         return true;
-    }
-
-    public int[] getPlugboardLetterCounts() {
-        return plugboardLetterCounts;
     }
 
     private void setPlugboardMap() {
@@ -599,9 +593,8 @@ public class Model {
             if (plug.isEmpty())
                 continue;
 
-            final String text = plug.get();
-            int a = Rotor.charToIndex(text.charAt(0));
-            int b = Rotor.charToIndex(text.charAt(1));
+            int a = plug.indexAt(0);
+            int b = plug.indexAt(1);
             plugboardMap[a] = b;
             plugboardMap[b] = a;
         }
@@ -611,8 +604,8 @@ public class Model {
      * Initialize "Plugboard Connections" panel.
      */
     private void initializePlugboardConnections() {
-		plugboardLetterCounts = new int[26];
-		plugboardMap = new int[26];
+        plugboardLetterCounts = new int[26];
+        plugboardMap = new int[26];
 
         for (int i = 0; i < PrimaryController.PLUG_COUNT; ++i)
             plugs.add(new Pair());
