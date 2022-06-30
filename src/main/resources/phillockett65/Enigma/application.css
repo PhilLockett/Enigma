@@ -33,9 +33,6 @@
     -fx-font-weight: bold;
     -fx-background-color: white;
 }
-.text-area{
-    -fx-text-fill: #e8e8e8;
-}
 .content{
     -fx-background-color: #080808;
 	-fx-border-color: white;
@@ -45,7 +42,7 @@
     -fx-background-color: #282828;
 }
 
-.choice-box, .color-picker, .button{
+.choice-box, .button{
     -fx-background-color: #9B4642;
     -fx-text-fill: #e8e8e8;
     -fx-font-weight: bold;
