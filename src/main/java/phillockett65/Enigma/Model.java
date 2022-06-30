@@ -42,6 +42,29 @@ public class Model {
 
 
     /************************************************************************
+     * General support code.
+     */
+
+    private int idToIndex(String id) { return Integer.valueOf(id); }
+
+    private void countLetterUsage(int[] counts, ArrayList<Pair> list) {
+
+        for (int i = 0; i < counts.length; ++i) 
+            counts[i] = 0;
+
+        for (Pair pair : list) {
+            for (int i = 0; i < pair.count(); ++i) {
+                if (pair.isCharAt(i)) {
+                    final int index = pair.indexAt(i);
+                    counts[index]++;
+                }
+            }
+        }
+    }
+
+
+
+    /************************************************************************
      * Initialization support code.
      */
 
@@ -510,8 +533,6 @@ public class Model {
      * Support code for "Plugboard Connections" panel.
      */
     
-    private int idToIndex(String id) { return Integer.valueOf(id); }
-
     private int[] plugboardLetterCounts = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
     private int[] plugboardMap = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
     private Swapper plugboard;
@@ -591,23 +612,6 @@ public class Model {
     private void initializePlugboardConnections() {
         for (int i = 0; i < PrimaryController.PLUG_COUNT; ++i)
             plugs.add(new Pair());
-    }
-
-    private void countLetterUsage(int[] counts, ArrayList<Pair> list) {
-
-        for (int i = 0; i < counts.length; ++i) 
-            counts[i] = 0;
-
-        for (Pair item : list) {
-            final String text = item.get();
-            for (int i = 0; i < text.length(); ++i) {
-                final char ch = text.charAt(i);
-                if (Character.isAlphabetic(ch)) {
-                    final int index = Rotor.charToIndex(ch);
-                    counts[index]++;
-                }
-            }
-        }
     }
 
 
