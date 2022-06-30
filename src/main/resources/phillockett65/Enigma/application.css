@@ -22,7 +22,7 @@
 .text-field{
     -fx-text-fill: black;
     -fx-font-weight: bold;
-    -fx-background-color: #e8e8e8;
+    -fx-background-color: #c0c0c0;
 }
 .error-text-field{
     -fx-text-fill: red;
