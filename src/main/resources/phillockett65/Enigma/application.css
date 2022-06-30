@@ -19,10 +19,6 @@
     -fx-font-weight: bold;
     -fx-background-color: #808080;
 }
-.combo-box{
-    -fx-font-weight: bold;
-    -fx-background-color: #e8e8e8;
-}
 .text-field{
     -fx-text-fill: black;
     -fx-font-weight: bold;
