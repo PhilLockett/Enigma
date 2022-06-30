@@ -244,11 +244,22 @@ public class PrimaryController {
     @FXML
     void fourthWheelCheckboxActionPerformed(ActionEvent event) {
         model.setFourthWheel(fourthWheelCheckbox.isSelected());
-    
+        editableFourthWheel();
+    }
+
+    private void editableFourthWheel() {
+        final boolean fourthWheel = model.isFourthWheel();
+        final boolean disable = fourthWheel ? model.isEncipher() : true;
+
+        wheel0Choicebox.setDisable(disable);
+        ringSetting0Spinner.setDisable(disable);
+        rotorOffset0Spinner.setDisable(!fourthWheel);
     }
 
     private void editableWheelOrder(boolean editable) {
         // System.out.println("editableReflector(" + editable + ")");
+
+        fourthWheelCheckbox.setDisable(!editable);
 
         wheel1Choicebox.setDisable(!editable);
         wheel2Choicebox.setDisable(!editable);
@@ -559,6 +570,7 @@ public class PrimaryController {
         editableWheelOrder(!encipher);
         editableRingSettings(!encipher);
         editablePlugboard(!encipher);
+        editableFourthWheel();
 
         String message = !encipher ? "Start Translation" : "Change Settings";
         encipherButton.setText("Press to " + message);
