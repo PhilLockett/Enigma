@@ -183,7 +183,7 @@ public class Model {
     private int[] reflectorMap;
     private Swapper reflector;
 
-    private ArrayList<Pair> pairs = new ArrayList<Pair>(PrimaryController.PAIR_COUNT);
+    private ArrayList<Pair> pairs = new ArrayList<Pair>(PrimaryController.PAIR_COUNT + 1);
 
 
     public ObservableList<String> getReflectorList()   { return reflectorList; }
@@ -229,7 +229,7 @@ public class Model {
     public int getPairCount(String id)		{ return getPairCount(idToIndex(id)); }
     public boolean isPairValid(String id)	{ return isPairValid(idToIndex(id)); }
 
-    public boolean isReflectorValid() {
+    public boolean isReconfigurableReflectorValid() {
         for (Pair pair : pairs)
             if (!pair.isValid())
                 return false;
@@ -241,15 +241,16 @@ public class Model {
         return true;
     }
 
-    public int[] getReflectorLetterCounts() {
-        return reflectorLetterCounts;
+    public boolean isReflectorValid() {
+        if (reconfigurable)
+            return isReconfigurableReflectorValid();
+
+        return true;
     }
 
-    private void setReflectorMap() {
-        int j = Rotor.charToIndex('j');
-        int y = Rotor.charToIndex('y');
-        reconfigurableReflectorMap[j] = y;
-        reconfigurableReflectorMap[y] = j;
+    private void setReconfigurableReflectorMap() {
+        for (int i = 0; i < reconfigurableReflectorMap.length; ++i)
+            reconfigurableReflectorMap[i] = 0;
 
         for (Pair pair : pairs) {
             if (pair.isEmpty())
@@ -265,7 +266,7 @@ public class Model {
     private int[] getReflectorMap() {
         
         if (reconfigurable) {
-            setReflectorMap();
+            setReconfigurableReflectorMap();
 
             return reconfigurableReflectorMap;
         } else {
@@ -312,8 +313,11 @@ public class Model {
         reconfigurableReflectorMap = new int[26];
         fillReflectorList();
 
-        for (int i = 0; i < PrimaryController.PAIR_COUNT; ++i)
+        for (int i = 0; i < PrimaryController.PAIR_COUNT + 1; ++i)
             pairs.add(new Pair());
+
+        // Set up "hard wired" J-Y reflector connection as last pair.
+        pairs.get(PrimaryController.PAIR_COUNT).set("JY");
     }
 
 
