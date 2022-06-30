@@ -211,7 +211,7 @@ public class Model {
         Pair pair = pairs.get(index);
 
         if (pair.isEmpty())
-            return true;
+            return false;
 
         if (!pair.isValid())
             return false;
@@ -231,7 +231,7 @@ public class Model {
 
     public boolean isReconfigurableReflectorValid() {
         for (Pair pair : pairs)
-            if (!pair.isValid())
+            if ((pair.isEmpty()) || (!pair.isValid()))
                 return false;
 
         for (int i = 0; i < reflectorLetterCounts.length; ++i)
