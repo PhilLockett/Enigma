@@ -57,6 +57,10 @@ public class ListSpinner {
         SVF.setValue(value);
     }
 
+    public void setIndex(int value) {
+        SVF.setValue(list.get(value));
+    }
+
     public void increment(int steps) {
         SVF.increment(steps);
     }

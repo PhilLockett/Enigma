@@ -322,13 +322,15 @@ public class Model {
         public String getRingSetting() { return ringSetting.getCurrent(); }
         public int getRingIndex() { return ringSetting.getIndex(); }
         public void setRingSetting(String value) { ringSetting.setCurrent(value); }
+        public void setRingIndex(int value) { ringSetting.setIndex(value); }
         public void incrementRingSetting(int step) { ringSetting.increment(step); }
 
         public SpinnerValueFactory<String> getRotorOffsetSVF() { return offset.getSVF(); }
 
         public String getRotorOffset() { return offset.getCurrent(); }
         public int getRotorIndex() { return offset.getIndex(); }
-        public void setOffset(String value) { offset.setCurrent(value); }
+        public void setRotorOffset(String value) { offset.setCurrent(value); }
+        public void setRotorIndex(int value) { offset.setIndex(value); }
         public void incrementRotorOffset(int step) { offset.increment(step); }
         
     }
@@ -398,26 +400,37 @@ public class Model {
     public String getRingSetting(int index) { return rotorStates.get(index).getRingSetting(); }
     public int getRingIndex(int index) { return rotorStates.get(index).getRingIndex(); }
     public void setRingSetting(int index, String value) { rotorStates.get(index).setRingSetting(value); }
+    public void setRingIndex(int index, int value) { rotorStates.get(index).setRingIndex(value); }
     public void incrementRingSetting(int index, int step) { rotorStates.get(index).incrementRingSetting(step); }
 
+
+    private void switchRingSettingsList() {
+
+        int[] indices = new int[ROTOR_COUNT];
+        for (int i = 0; i < ROTOR_COUNT; ++i)
+            indices[i] = getRingIndex(i);
+
+        if (useLetters) {
+            for (int i = 0; i < 26; ++i)
+                ringSettingsList.set(i, Rotor.indexToString(i));
+        } else {
+            for (int i = 0; i < 26; ++i)
+                ringSettingsList.set(i, String.valueOf(i + 1));
+        }
+
+        for (int i = 0; i < ROTOR_COUNT; ++i)
+            setRingIndex(i, indices[i]);
+    }
 
     private void fillRingSettingsList() {
         ringSettingsList.clear();
 
         if (useLetters) {
-            for (int i = 0; i < 26; ++i) {
-                // final String item = String.valueOf(i + 'A');
-                final String item = String.valueOf(Rotor.indexToString(i));
-                // System.out.println(item);
-                ringSettingsList.add(item);
-            }
+            for (int i = 0; i < 26; ++i)
+                ringSettingsList.add(Rotor.indexToString(i));
         } else {
-            for (int i = 0; i < 26; ++i) {
-                // final String item = String.valueOf(i + 1);
-                final String item = String.valueOf(i + 1);
-                // System.out.println(item);
-                ringSettingsList.add(item);
-            }
+            for (int i = 0; i < 26; ++i)
+                ringSettingsList.add(String.valueOf(i + 1));
         }
     }
 
@@ -439,7 +452,8 @@ public class Model {
     public SpinnerValueFactory<String> getRotorOffsetSVF(int index) { return rotorStates.get(index).getRotorOffsetSVF(); }
     public String getRotorOffset(int index) { return rotorStates.get(index).getRotorOffset(); }
     public int getRotorIndex(int index) { return rotorStates.get(index).getRotorIndex(); }
-    public void setRotorOffset(int index, String value) { rotorStates.get(index).setOffset(value); }
+    public void setRotorOffset(int index, String value) { rotorStates.get(index).setRotorOffset(value); }
+    public void setRotorIndex(int index, int value) { rotorStates.get(index).setRotorIndex(value); }
     public void incrementRotorOffset(int index, int step) { rotorStates.get(index).incrementRotorOffset(step); }
 
 
@@ -447,29 +461,39 @@ public class Model {
 
     public void setUseLetters(boolean state) { 
         useLetters = state; 
-        fillRingSettingsList();
-        fillRotorOffsetsList();
+        switchRingSettingsList();
+        switchRotorOffsetsList();
     }
 
     public boolean isUseLetters() { return useLetters; }
+
+    private void switchRotorOffsetsList() {
+
+        int[] indices = new int[ROTOR_COUNT];
+        for (int i = 0; i < ROTOR_COUNT; ++i)
+            indices[i] = getRotorIndex(i);
+
+        if (useLetters) {
+            for (int i = 0; i < 26; ++i)
+                rotorOffsetsList.set(i, Rotor.indexToString(i));
+        } else {
+            for (int i = 0; i < 26; ++i)
+                rotorOffsetsList.set(i, String.valueOf(i + 1));
+        }
+
+        for (int i = 0; i < ROTOR_COUNT; ++i)
+            setRotorIndex(i, indices[i]);
+    }
 
     private void fillRotorOffsetsList() {
         rotorOffsetsList.clear();
 
         if (useLetters) {
-            for (int i = 0; i < 26; ++i) {
-                // final String item = String.valueOf(i + 'A');
-                final String item = String.valueOf(Rotor.indexToString(i));
-                // System.out.println(item);
-                rotorOffsetsList.add(item);
-            }
+            for (int i = 0; i < 26; ++i)
+                rotorOffsetsList.add(Rotor.indexToString(i));
         } else {
-            for (int i = 0; i < 26; ++i) {
-                // final String item = String.valueOf(i + 1);
-                final String item = String.valueOf(i + 1);
-                // System.out.println(item);
-                rotorOffsetsList.add(item);
-            }
+            for (int i = 0; i < 26; ++i)
+                rotorOffsetsList.add(String.valueOf(i + 1));
         }
     }
 
