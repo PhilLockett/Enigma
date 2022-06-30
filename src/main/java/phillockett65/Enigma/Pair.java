@@ -31,6 +31,7 @@ public class Pair {
     public String get() { return letters; }
     public int count() { return letters.length(); }
     public char charAt(int index) { return letters.charAt(index); }
+    public boolean isCharAt(int index) { return Character.isAlphabetic(charAt(index)); }
     public int indexAt(int index) { return Rotor.charToIndex(charAt(index)); }
 
     public boolean isEmpty() { return count() == 0; }
@@ -42,13 +43,13 @@ public class Pair {
         if (count() != 2)
             return false;
 
-        if (!Character.isAlphabetic(letters.charAt(0)))
+        if (!isCharAt(0))
             return false;
 
-        if (!Character.isAlphabetic(letters.charAt(1)))
+        if (!isCharAt(1))
             return false;
 
-        if (letters.charAt(0) == letters.charAt(1))
+        if (charAt(0) == charAt(1))
             return false;
 
         return true;
