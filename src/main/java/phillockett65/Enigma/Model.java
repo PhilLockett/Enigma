@@ -178,9 +178,8 @@ public class Model {
     private String reflectorChoice;
     private boolean reconfigurable = false;
 
-    private int[] reflectorLetterCounts = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-    private int[] reconfigurableReflectorMap = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-
+    private int[] reflectorLetterCounts;
+    private int[] reconfigurableReflectorMap;
     private int[] reflectorMap;
     private Swapper reflector;
 
@@ -312,6 +311,8 @@ public class Model {
      * Initialize "Reflector" panel.
      */
     private void initializeReflector() {
+		reflectorLetterCounts = new int[26];
+		reconfigurableReflectorMap = new int[26];
         fillReflectorList();
 
         for (int i = 0; i < PrimaryController.PAIR_COUNT; ++i)
@@ -533,8 +534,8 @@ public class Model {
      * Support code for "Plugboard Connections" panel.
      */
     
-    private int[] plugboardLetterCounts = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-    private int[] plugboardMap = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+    private int[] plugboardLetterCounts;
+    private int[] plugboardMap;
     private Swapper plugboard;
 
     private ArrayList<Pair> plugs = new ArrayList<Pair>(PrimaryController.PLUG_COUNT);
@@ -610,6 +611,9 @@ public class Model {
      * Initialize "Plugboard Connections" panel.
      */
     private void initializePlugboardConnections() {
+		plugboardLetterCounts = new int[26];
+		plugboardMap = new int[26];
+
         for (int i = 0; i < PrimaryController.PLUG_COUNT; ++i)
             plugs.add(new Pair());
     }
