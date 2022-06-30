@@ -30,6 +30,8 @@ public class Pair {
 
     public String get() { return letters; }
     public int count() { return letters.length(); }
+    public char charAt(int index) { return letters.charAt(index); }
+    public int indexAt(int index) { return Rotor.charToIndex(charAt(index)); }
 
     public boolean isEmpty() { return count() == 0; }
 
