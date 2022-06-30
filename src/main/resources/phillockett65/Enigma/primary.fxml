@@ -36,18 +36,18 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <TextField fx:id="pair0" onAction="#reflectorActionPerformed" GridPane.rowIndex="1" />
-                  <TextField fx:id="pair1" onAction="#reflectorActionPerformed" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <TextField fx:id="pair2" onAction="#reflectorActionPerformed" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <TextField fx:id="pair3" onAction="#reflectorActionPerformed" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                  <TextField fx:id="pair4" onAction="#reflectorActionPerformed" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                  <TextField fx:id="pair5" onAction="#reflectorActionPerformed" GridPane.columnIndex="5" GridPane.rowIndex="1" />
-                  <TextField fx:id="pair6" onAction="#reflectorActionPerformed" GridPane.rowIndex="2" />
-                  <TextField fx:id="pair7" onAction="#reflectorActionPerformed" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <TextField fx:id="pair8" onAction="#reflectorActionPerformed" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                  <TextField fx:id="pair9" onAction="#reflectorActionPerformed" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                  <TextField fx:id="pair10" onAction="#reflectorActionPerformed" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                  <TextField fx:id="pair11" onAction="#reflectorActionPerformed" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+                  <TextField fx:id="pair0" onKeyTyped="#reflectorActionPerformed" GridPane.rowIndex="1" />
+                  <TextField fx:id="pair1" onKeyTyped="#reflectorActionPerformed" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="pair2" onKeyTyped="#reflectorActionPerformed" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <TextField fx:id="pair3" onKeyTyped="#reflectorActionPerformed" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <TextField fx:id="pair4" onKeyTyped="#reflectorActionPerformed" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                  <TextField fx:id="pair5" onKeyTyped="#reflectorActionPerformed" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                  <TextField fx:id="pair6" onKeyTyped="#reflectorActionPerformed" GridPane.rowIndex="2" />
+                  <TextField fx:id="pair7" onKeyTyped="#reflectorActionPerformed" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="pair8" onKeyTyped="#reflectorActionPerformed" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <TextField fx:id="pair9" onKeyTyped="#reflectorActionPerformed" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                  <TextField fx:id="pair10" onKeyTyped="#reflectorActionPerformed" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                  <TextField fx:id="pair11" onKeyTyped="#reflectorActionPerformed" GridPane.columnIndex="5" GridPane.rowIndex="2" />
                   <ChoiceBox fx:id="reflectorChoicebox" prefWidth="150.0" GridPane.columnSpan="2" />
                   <CheckBox fx:id="reconfigurableCheckbox" mnemonicParsing="false" onAction="#reconfigurableCheckboxActionPerformed" text="Use Reconfigurable Reflector" GridPane.columnIndex="3" GridPane.columnSpan="3" />
                </children>
