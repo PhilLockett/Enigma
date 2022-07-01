@@ -334,7 +334,7 @@ public class Model {
         for (int i = 0; i < PrimaryController.PAIR_COUNT + 1; ++i)
             pairs.add(new Pair());
 
-        // Set up "hard wired" J-Y reflector connection as last pair.
+        // Set up "hard wired" J-Y connection as last pair of reconfigurable reflector.
         pairs.get(PrimaryController.PAIR_COUNT).set("JY");
 
         setReflectorChoice("Reflector B");
@@ -434,7 +434,6 @@ public class Model {
     private void initializeWheelOrder() {
         fillWheelList();
     }
-
 
 
 
@@ -722,9 +721,8 @@ public class Model {
         return translatePipeline(index);
     }
 
-
     private void buildPipeline() {
-        
+
         pipeline.clear();
 
         Rotor slow = getRotor(rotors, getWheelChoice(SLOW));
@@ -771,16 +769,13 @@ public class Model {
         }
 
         buildPipeline();
-        // dumpPipeline();
-}
+    }
     
     public void setEncipher(boolean state) {
+        // System.out.println("setEncipher(" + state + ").");
         encipher = state;
-        // System.out.println("setEncipher(" + encipher + ").");
         if (encipher) {
             lockdownSettings();
-    
-            System.out.println("Enter text");
         }
     }
 
