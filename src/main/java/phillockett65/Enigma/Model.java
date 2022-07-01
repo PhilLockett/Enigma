@@ -62,6 +62,24 @@ public class Model {
         }
     }
 
+    private void setList(ObservableList<String> list) {
+        if (useLetters) {
+            for (int i = 0; i < 26; ++i)
+                list.set(i, Rotor.indexToString(i));
+        } else {
+            for (int i = 0; i < 26; ++i)
+                list.set(i, String.valueOf(i + 1));
+        }
+    }
+    private void addList(ObservableList<String> list) {
+        if (useLetters) {
+            for (int i = 0; i < 26; ++i)
+                list.add(Rotor.indexToString(i));
+        } else {
+            for (int i = 0; i < 26; ++i)
+                list.add(String.valueOf(i + 1));
+        }
+    }
 
 
     /************************************************************************
@@ -435,13 +453,7 @@ public class Model {
         for (int i = 0; i < ROTOR_COUNT; ++i)
             indices[i] = getRingIndex(i);
 
-        if (useLetters) {
-            for (int i = 0; i < 26; ++i)
-                ringSettingsList.set(i, Rotor.indexToString(i));
-        } else {
-            for (int i = 0; i < 26; ++i)
-                ringSettingsList.set(i, String.valueOf(i + 1));
-        }
+        setList(ringSettingsList);
 
         for (int i = 0; i < ROTOR_COUNT; ++i)
             setRingIndex(i, indices[i]);
@@ -450,13 +462,7 @@ public class Model {
     private void fillRingSettingsList() {
         ringSettingsList.clear();
 
-        if (useLetters) {
-            for (int i = 0; i < 26; ++i)
-                ringSettingsList.add(Rotor.indexToString(i));
-        } else {
-            for (int i = 0; i < 26; ++i)
-                ringSettingsList.add(String.valueOf(i + 1));
-        }
+        addList(ringSettingsList);
     }
 
     /**
@@ -498,13 +504,7 @@ public class Model {
         for (int i = 0; i < ROTOR_COUNT; ++i)
             indices[i] = getRotorIndex(i);
 
-        if (useLetters) {
-            for (int i = 0; i < 26; ++i)
-                rotorOffsetsList.set(i, Rotor.indexToString(i));
-        } else {
-            for (int i = 0; i < 26; ++i)
-                rotorOffsetsList.set(i, String.valueOf(i + 1));
-        }
+        setList(rotorOffsetsList);
 
         for (int i = 0; i < ROTOR_COUNT; ++i)
             setRotorIndex(i, indices[i]);
@@ -513,13 +513,7 @@ public class Model {
     private void fillRotorOffsetsList() {
         rotorOffsetsList.clear();
 
-        if (useLetters) {
-            for (int i = 0; i < 26; ++i)
-                rotorOffsetsList.add(Rotor.indexToString(i));
-        } else {
-            for (int i = 0; i < 26; ++i)
-                rotorOffsetsList.add(String.valueOf(i + 1));
-        }
+        addList(rotorOffsetsList);
     }
 
     /**
