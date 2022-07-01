@@ -111,10 +111,11 @@ public class Swapper {
 
     public void setOffset(int value) {}
 
-    public int swap(int direction, int index) {
+    public int swap(int direction, int index, boolean show) {
         final int output = map[index];
 
-        System.out.print(id + "(" + Rotor.indexToString(index) + "->" + Rotor.indexToString(output) + ")  ");
+        if (show)
+            System.out.print(id + "(" + Rotor.indexToString(index) + "->" + Rotor.indexToString(output) + ")  ");
 
         return output;
     }

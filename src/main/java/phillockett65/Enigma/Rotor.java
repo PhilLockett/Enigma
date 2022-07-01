@@ -113,14 +113,14 @@ public class Rotor extends Swapper {
 
     public void setOffset(int value) { offset = value; }
 
-    public int swap(int direction, int index) {
+    public int swap(int direction, int index, boolean show) {
         int shift = (index + offset) % 26;
 
         int output = (direction == RIGHT_TO_LEFT) ? rightToLeft(shift) : leftToRight(shift);
         output = (output + 26 - offset) % 26;
-        // final int output = (map(direction, index) + 26 - offset) % 26;
 
-        System.out.print(id + "[" + Rotor.indexToString(offset) + "](" + Rotor.indexToString(index) + "->" + Rotor.indexToString(output) + ")  ");
+        if (show)
+            System.out.print(id + "[" + Rotor.indexToString(offset) + "](" + Rotor.indexToString(index) + "->" + Rotor.indexToString(output) + ")  ");
 
         return output;
     }

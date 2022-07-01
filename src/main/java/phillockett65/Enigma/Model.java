@@ -620,6 +620,7 @@ public class Model {
      */
 
     private boolean encipher = false;
+    private boolean show = false;
 
     private ArrayList<Translation> pipeline = new ArrayList<Translation>(9);
 
@@ -627,9 +628,8 @@ public class Model {
         return isPlugboardValid() && isReflectorValid();
     }
 
-    public boolean isEncipher() {
-        return encipher;
-    }
+    public boolean isEncipher() { return encipher; }
+    public boolean isShow() { return show; }
 
     private Rotor getRotor(ObservableList<Rotor> list, String target) {
         for (Rotor rotor : list)
@@ -688,19 +688,20 @@ public class Model {
         }
     
         public int translate(int index) {
-            return swapper.swap(dir, index);
+            return swapper.swap(dir, index, isShow());
         }	
 
     }
 
     private int translatePipeline(int index) {
-
-        System.out.print("Key: " + Rotor.indexToString(index) + "  ");
+        if (isShow())
+            System.out.print("Key: " + Rotor.indexToString(index) + "  ");
 
         for (Translation translator : pipeline)
             index = translator.translate(index);
 
-        System.out.println("Lamp: " + Rotor.indexToString(index));
+        if (isShow())
+            System.out.println("Lamp: " + Rotor.indexToString(index));
 
         return index;
     }
