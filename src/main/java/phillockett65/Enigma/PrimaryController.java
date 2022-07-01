@@ -384,8 +384,15 @@ public class PrimaryController {
     private CheckBox useLettersCheckbox;
 
     @FXML
+    private CheckBox showStepsCheckbox;
+
+    @FXML
     void useLettersCheckboxActionPerformed(ActionEvent event) {
         model.setUseLetters(useLettersCheckbox.isSelected());
+    }
+    @FXML
+    void showStepsCheckboxActionPerformed(ActionEvent event) {
+        model.setShow(showStepsCheckbox.isSelected());
     }
 
     /**
@@ -423,6 +430,7 @@ public class PrimaryController {
         });
 
         useLettersCheckbox.setSelected(model.isUseLetters());
+        showStepsCheckbox.setSelected(model.isShow());
     }
 
 

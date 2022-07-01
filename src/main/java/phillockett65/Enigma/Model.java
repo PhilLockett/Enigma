@@ -631,6 +631,8 @@ public class Model {
     public boolean isEncipher() { return encipher; }
     public boolean isShow() { return show; }
 
+    public void setShow(boolean state) { show = state; }
+
     private Rotor getRotor(ObservableList<Rotor> list, String target) {
         for (Rotor rotor : list)
              if (rotor.is(target))

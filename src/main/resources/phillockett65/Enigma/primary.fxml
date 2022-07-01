@@ -109,6 +109,7 @@
                      <children>
                         <CheckBox fx:id="fourthWheelCheckbox" mnemonicParsing="false" onAction="#fourthWheelCheckboxActionPerformed" text="Fourth Wheel" />
                         <CheckBox fx:id="useLettersCheckbox" mnemonicParsing="false" onAction="#useLettersCheckboxActionPerformed" text="Use Letters" />
+                        <CheckBox fx:id="showStepsCheckbox" mnemonicParsing="false" onAction="#showStepsCheckboxActionPerformed" text="Show Steps" />
                      </children>
                   </HBox>
                </children>
@@ -148,17 +149,21 @@
             </GridPane>
          </content>
       </TitledPane>
-      <HBox>
-         <children>
-            <ToggleButton fx:id="encipherButton" mnemonicParsing="false" onAction="#encipherButtonActionPerformed" text="Encipher" />
-            <Region HBox.hgrow="ALWAYS" />
-            <Label fx:id="mainLabel" text="Configure">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-         </children>
-      </HBox>
+      <TitledPane collapsible="false" text="Translation">
+         <content>
+            <HBox>
+               <children>
+                  <ToggleButton fx:id="encipherButton" mnemonicParsing="false" onAction="#encipherButtonActionPerformed" text="Encipher" />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Label fx:id="mainLabel" text="Configure">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </content>
+      </TitledPane>
    </children>
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
