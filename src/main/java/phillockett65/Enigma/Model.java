@@ -623,6 +623,8 @@ public class Model {
 
     private boolean encipher = false;
 
+    private ArrayList<Translation> pipeline = new ArrayList<Translation>(9);
+
     public boolean isConfigValid() {
         return isPlugboardValid() && isReflectorValid();
     }
@@ -665,19 +667,6 @@ public class Model {
     }
 
 
-    public int translatePipeline(int index) {
-
-        System.out.print("Key: " + Rotor.indexToString(index) + "  ");
-
-        for (Translation translator : pipeline)
-            index = translator.translate(index);
-
-        System.out.println("Lamp: " + Rotor.indexToString(index));
-
-        return index;
-    }
-
-
     private class Translation {
         private final int pos;
         private final Swapper swapper;
@@ -706,7 +695,17 @@ public class Model {
 
     }
 
-    private ArrayList<Translation> pipeline = new ArrayList<Translation>(9);
+    private int translatePipeline(int index) {
+
+        System.out.print("Key: " + Rotor.indexToString(index) + "  ");
+
+        for (Translation translator : pipeline)
+            index = translator.translate(index);
+
+        System.out.println("Lamp: " + Rotor.indexToString(index));
+
+        return index;
+    }
 
     private void updatePipeline() {
         advanceRotors();
