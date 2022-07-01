@@ -719,6 +719,9 @@ public class Model {
         }
     }
 
+    public int translate(int index) {
+        updatePipeline();
+        return translatePipeline(index);
     }
 
 

@@ -53,6 +53,16 @@ public class App extends Application {
 
         PrimaryController controller = fxmlLoader.getController();
 
+        scene.setOnKeyPressed(event -> {
+            if (event.getCode().isLetterKey())
+                controller.keyPress(event.getCode());
+        });
+
+        scene.setOnKeyReleased(event -> {
+            if (event.getCode().isLetterKey())
+                controller.keyRelease(event.getCode());
+        });
+
         stage.show();
 
         controller.init();

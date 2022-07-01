@@ -34,6 +34,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 public class PrimaryController {
@@ -546,6 +547,9 @@ public class PrimaryController {
 
     final String mainMessage = "Configure Settings";
 
+    private int current = -1;
+
+
     @FXML
     private ToggleButton encipherButton;
     
@@ -593,10 +597,27 @@ public class PrimaryController {
     }
 
 
+    public void keyPress(KeyCode keyCode) {
+        final boolean encipher = model.isEncipher();
 
+        if (encipher) {
+            if (current == -1) {
+                current = Swapper.stringToIndex(keyCode.getChar());
+                final int index = model.translate(current);
 
+                mainLabel.setText(keyCode.getChar() + "->" + Rotor.indexToString(index));
+            }
+        }
+    }
 
+    public void keyRelease(KeyCode keyCode) {
+        final boolean encipher = model.isEncipher();
 
+        if (encipher) {
+            final int index = Swapper.stringToIndex(keyCode.getChar());
+            if (current == index)
+                current = -1;
+        }
     }
 
 
