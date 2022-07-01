@@ -83,7 +83,7 @@ public class Model {
 
 
     /************************************************************************
-     * Initialization support code.
+     * Support code for the Initialization of the Model.
      */
 
     /**
@@ -106,7 +106,7 @@ public class Model {
         initializeWheelOrder();
         initializeRingSettings();
         initializeRotorOffsets();
-        initializeRotorStates();
+        initializeRotorSetup();
         initializePlugboardConnections();
         initializeEncipher();
     }
@@ -201,7 +201,7 @@ public class Model {
 
 
     /************************************************************************
-     * Support code for "Reflector" panel.
+     * Support code for "Reflector Set-Up" panel.
      */
 
     ObservableList<String> reflectorList = FXCollections.observableArrayList();
@@ -324,7 +324,7 @@ public class Model {
     }
 
     /**
-     * Initialize "Reflector" panel.
+     * Initialize "Reflector Set-Up" panel.
      */
     private void initializeReflector() {
         reflectorLetterCounts = new int[26];
@@ -343,67 +343,7 @@ public class Model {
 
 
     /************************************************************************
-     * Support code for "Rotor States" panel.
-     */
-
-    private ArrayList<RotorState> rotorStates = new ArrayList<RotorState>(ROTOR_COUNT);
-
-    private class RotorState {
-        private String wheelChoice;
-        private ListSpinner ringSetting;
-        private ListSpinner offset;
-
-        public RotorState(String wheelChoice, ListSpinner ringSetting, ListSpinner offset) {
-            this.wheelChoice = wheelChoice;
-            this.ringSetting = ringSetting;
-            this.offset = offset;
-        }
-
-        public String getWheelChoice() { return wheelChoice; }
-        public void setWheelChoice(String choice) { wheelChoice = choice; }
-
-        public SpinnerValueFactory<String> getRingSettingSVF() { return ringSetting.getSVF(); }
-
-        public String getRingSetting() { return ringSetting.getCurrent(); }
-        public int getRingIndex() { return ringSetting.getIndex(); }
-        public void setRingSetting(String value) { ringSetting.setCurrent(value); }
-        public void setRingIndex(int value) { ringSetting.setIndex(value); }
-        public void incrementRingSetting(int step) { ringSetting.increment(step); }
-
-        public SpinnerValueFactory<String> getRotorOffsetSVF() { return offset.getSVF(); }
-
-        public String getRotorOffset() { return offset.getCurrent(); }
-        public int getRotorIndex() { return offset.getIndex(); }
-        public void setRotorOffset(String value) { offset.setCurrent(value); }
-        public void setRotorIndex(int value) { offset.setIndex(value); }
-        public void incrementRotorOffset(int step) { offset.increment(step); }
-        
-    }
-
-    private void fillRotorStates() {
-        final String first = wheelList.get(0);
-
-        for (int i = 0; i < ROTOR_COUNT; ++i) {
-            rotorStates.add(new RotorState(first, 
-                new ListSpinner(ringSettingsList), 
-                new ListSpinner(rotorOffsetsList)));
-        }
-    }
-
-    /**
-     * Initialize "Rotor States".
-     */
-    private void initializeRotorStates() {
-        fillRotorStates();
-        setWheelChoice(1, "I");
-        setWheelChoice(2, "II");
-        setWheelChoice(3, "III");
-    }
-
-
-
-    /************************************************************************
-     * Support code for "Wheel Order" panel.
+     * Support code for "Rotor Selection" panel.
      */
 
     ObservableList<String> wheelList = FXCollections.observableArrayList();
@@ -429,7 +369,7 @@ public class Model {
     }
 
     /**
-     * Initialize "Wheel Order" panel.
+     * Initialize "Rotor Selection" panel.
      */
     private void initializeWheelOrder() {
         fillWheelList();
@@ -530,6 +470,66 @@ public class Model {
 
 
     /************************************************************************
+     * Support code for "Rotor Set-Up" panel.
+     */
+
+    private ArrayList<RotorState> rotorStates = new ArrayList<RotorState>(ROTOR_COUNT);
+
+    private class RotorState {
+        private String wheelChoice;
+        private ListSpinner ringSetting;
+        private ListSpinner offset;
+
+        public RotorState(String wheelChoice, ListSpinner ringSetting, ListSpinner offset) {
+            this.wheelChoice = wheelChoice;
+            this.ringSetting = ringSetting;
+            this.offset = offset;
+        }
+
+        public String getWheelChoice() { return wheelChoice; }
+        public void setWheelChoice(String choice) { wheelChoice = choice; }
+
+        public SpinnerValueFactory<String> getRingSettingSVF() { return ringSetting.getSVF(); }
+
+        public String getRingSetting() { return ringSetting.getCurrent(); }
+        public int getRingIndex() { return ringSetting.getIndex(); }
+        public void setRingSetting(String value) { ringSetting.setCurrent(value); }
+        public void setRingIndex(int value) { ringSetting.setIndex(value); }
+        public void incrementRingSetting(int step) { ringSetting.increment(step); }
+
+        public SpinnerValueFactory<String> getRotorOffsetSVF() { return offset.getSVF(); }
+
+        public String getRotorOffset() { return offset.getCurrent(); }
+        public int getRotorIndex() { return offset.getIndex(); }
+        public void setRotorOffset(String value) { offset.setCurrent(value); }
+        public void setRotorIndex(int value) { offset.setIndex(value); }
+        public void incrementRotorOffset(int step) { offset.increment(step); }
+        
+    }
+
+    private void fillRotorStates() {
+        final String first = wheelList.get(0);
+
+        for (int i = 0; i < ROTOR_COUNT; ++i) {
+            rotorStates.add(new RotorState(first, 
+                new ListSpinner(ringSettingsList), 
+                new ListSpinner(rotorOffsetsList)));
+        }
+    }
+
+    /**
+     * Initialize "Rotor Set-Up".
+     */
+    private void initializeRotorSetup() {
+        fillRotorStates();
+        setWheelChoice(1, "I");
+        setWheelChoice(2, "II");
+        setWheelChoice(3, "III");
+    }
+
+
+
+    /************************************************************************
      * Support code for "Plugboard Connections" panel.
      */
     
@@ -616,7 +616,7 @@ public class Model {
 
 
     /************************************************************************
-     * Support code for "Encipher" panel.
+     * Support code for "Translation" panel.
      */
 
     private boolean encipher = false;
@@ -783,7 +783,7 @@ public class Model {
     }
 
     /**
-     * Initialize "Encipher" panel.
+     * Initialize "Translation" panel.
      */
     private void initializeEncipher() {
     }

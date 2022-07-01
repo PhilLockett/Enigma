@@ -45,7 +45,7 @@ public class PrimaryController {
     private Model model;
 
     /************************************************************************
-     * Support code for the Initialization of the Model.
+     * Support code for the Initialization of the Controller.
      */
 
     /**
@@ -69,6 +69,7 @@ public class PrimaryController {
         initializeWheelOrder();
         initializeRingSettings();
         initializeRotorOffsets();
+        initializeRotorSetup();
         initializePlugboardConnections();
         initializeEncipher();
     }
@@ -85,7 +86,7 @@ public class PrimaryController {
 
 
     /************************************************************************
-     * Support code for "Reflector" panel.
+     * Support code for "Reflector Set-Up" panel.
      */
 
     @FXML
@@ -223,8 +224,8 @@ public class PrimaryController {
 
 
 
-    /************************************************************************
-     * Support code for "Wheel Order" panel.
+     /************************************************************************
+     * Support code for "Rotor Selection" panel.
      */
 
     @FXML
@@ -239,23 +240,6 @@ public class PrimaryController {
     @FXML
     private ChoiceBox<String> wheel3Choicebox;
 
-    @FXML
-    private CheckBox fourthWheelCheckbox;
-
-    @FXML
-    void fourthWheelCheckboxActionPerformed(ActionEvent event) {
-        model.setFourthWheel(fourthWheelCheckbox.isSelected());
-        editableFourthWheel();
-    }
-
-    private void editableFourthWheel() {
-        final boolean fourthWheel = model.isFourthWheel();
-        final boolean disable = fourthWheel ? model.isEncipher() : true;
-
-        wheel0Choicebox.setDisable(disable);
-        ringSetting0Spinner.setDisable(disable);
-        rotorOffset0Spinner.setDisable(!fourthWheel);
-    }
 
     private void editableWheelOrder(boolean editable) {
         // System.out.println("editableReflector(" + editable + ")");
@@ -268,7 +252,7 @@ public class PrimaryController {
     }
 
     /**
-     * Initialize "Wheel Order" panel.
+     * Initialize "Rotor Selection" panel.
      */
     private void initializeWheelOrder() {
         wheel0Choicebox.setItems(model.getWheelList());
@@ -296,8 +280,6 @@ public class PrimaryController {
         wheel3Choicebox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
             model.setWheelChoice(3, newValue);
         });
-
-        fourthWheelCheckbox.setSelected(model.isFourthWheel());
     }
 
 
@@ -380,21 +362,6 @@ public class PrimaryController {
     @FXML
     private Spinner<String> rotorOffset3Spinner;
 
-    @FXML
-    private CheckBox useLettersCheckbox;
-
-    @FXML
-    private CheckBox showStepsCheckbox;
-
-    @FXML
-    void useLettersCheckboxActionPerformed(ActionEvent event) {
-        model.setUseLetters(useLettersCheckbox.isSelected());
-    }
-    @FXML
-    void showStepsCheckboxActionPerformed(ActionEvent event) {
-        model.setShow(showStepsCheckbox.isSelected());
-    }
-
     /**
      * Initialize "Rotor Offsets" panel.
      */
@@ -428,7 +395,52 @@ public class PrimaryController {
             // System.out.println("rotorOffset3Spinner.valueProperty().Listener(" + newValue + "));");
             model.setRotorOffset(3, newValue);
         });
+    }
 
+
+
+    /************************************************************************
+     * Support code for "Rotor Set-Up" panel.
+     */
+
+    @FXML
+    private CheckBox fourthWheelCheckbox;
+
+    @FXML
+    private CheckBox useLettersCheckbox;
+
+    @FXML
+    private CheckBox showStepsCheckbox;
+
+    @FXML
+    void fourthWheelCheckboxActionPerformed(ActionEvent event) {
+        model.setFourthWheel(fourthWheelCheckbox.isSelected());
+        editableFourthWheel();
+    }
+
+    @FXML
+    void useLettersCheckboxActionPerformed(ActionEvent event) {
+        model.setUseLetters(useLettersCheckbox.isSelected());
+    }
+    @FXML
+    void showStepsCheckboxActionPerformed(ActionEvent event) {
+        model.setShow(showStepsCheckbox.isSelected());
+    }
+
+    private void editableFourthWheel() {
+        final boolean fourthWheel = model.isFourthWheel();
+        final boolean disable = fourthWheel ? model.isEncipher() : true;
+
+        wheel0Choicebox.setDisable(disable);
+        ringSetting0Spinner.setDisable(disable);
+        rotorOffset0Spinner.setDisable(!fourthWheel);
+    }
+
+    /**
+     * Initialize "Rotor Set-Up".
+     */
+    private void initializeRotorSetup() {
+        fourthWheelCheckbox.setSelected(model.isFourthWheel());
         useLettersCheckbox.setSelected(model.isUseLetters());
         showStepsCheckbox.setSelected(model.isShow());
     }
@@ -550,7 +562,7 @@ public class PrimaryController {
 
 
     /************************************************************************
-     * Support code for "Encipher" panel.
+     * Support code for "Translation" panel.
      */
 
     final String mainMessage = "Configure Settings";
@@ -597,7 +609,7 @@ public class PrimaryController {
     }
 
     /**
-     * Initialize "Encipher" panel.
+     * Initialize "Translation" panel.
      */
     private void initializeEncipher() {
         checkConfigValid();
