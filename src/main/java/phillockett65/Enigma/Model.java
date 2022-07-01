@@ -180,24 +180,6 @@ public class Model {
                 rotors.add(rotor);
     }
 
-    public void dumpRotorWiring() {
-        for (Rotor rotor : commercial)
-            System.out.println(rotor.toString());
-        System.out.println();
-        for (Rotor rotor : rocket)
-            System.out.println(rotor.toString());
-        System.out.println();
-        for (Rotor rotor : swissK)
-            System.out.println(rotor.toString());
-        System.out.println();
-        for (Rotor rotor : m3)
-            System.out.println(rotor.toString());
-        System.out.println();
-        for (Rotor rotor : m4)
-            System.out.println(rotor.toString());
-        System.out.println();
-    }
-
 
 
     /************************************************************************
@@ -737,28 +719,6 @@ public class Model {
         }
     }
 
-    public int test1(char key) {
-        updatePipeline();
-        return translatePipeline(Rotor.charToIndex(key));
-        // return translate(Rotor.charToIndex(key));
-    }
-
-    public int test5() {
-        int output = 0;
-        
-        final String input = "AAAAA";
-        for (int i = 0; i < input.length(); ++i)
-            output = test1(input.charAt(i));
-
-        return output;
-    }
-
-    public int test() {
-        // dumpRotorWiring();
-        // lockdownSettings();
-
-        return test1('A');
-        // return test5();
     }
 
 
@@ -828,5 +788,55 @@ public class Model {
      */
     private void initializeEncipher() {
     }
+
+
+
+    /************************************************************************
+     * Support code for debug stuff.
+     */
+
+    public void dumpRotorWiring() {
+        for (Rotor rotor : commercial)
+            System.out.println(rotor.toString());
+        System.out.println();
+        for (Rotor rotor : rocket)
+            System.out.println(rotor.toString());
+        System.out.println();
+        for (Rotor rotor : swissK)
+            System.out.println(rotor.toString());
+        System.out.println();
+        for (Rotor rotor : m3)
+            System.out.println(rotor.toString());
+        System.out.println();
+        for (Rotor rotor : m4)
+            System.out.println(rotor.toString());
+        System.out.println();
+    }
+
+    public int test1(char key) {
+        updatePipeline();
+        return translatePipeline(Rotor.charToIndex(key));
+        // return translate(Rotor.charToIndex(key));
+    }
+
+    public int test5() {
+        int output = 0;
+        
+        final String input = "AAAAA";
+        for (int i = 0; i < input.length(); ++i)
+            output = test1(input.charAt(i));
+
+        return output;
+    }
+
+    public int test() {
+        // dumpRotorWiring();
+        // lockdownSettings();
+
+        return test1('A');
+        // return test5();
+    }
+
+
 
 }
