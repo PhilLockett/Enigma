@@ -40,15 +40,14 @@ public class Swapper {
     protected int[] leftMap;
     protected int[] rightMap;
 
-    public static final int CASE_DELTA = 'a' - 'A';
-
 
     /************************************************************************
      * General support code.
      */
 
-    public static int charToUpper(int v) { return ((v >= 'A') && (v <= 'Z')) ? v : v - CASE_DELTA; }
+    public static int charToUpper(int v) { return Character.toUpperCase(v); }
     public static int charToIndex(int v) { return charToUpper(v) - 'A'; }
+    public static int stringToIndex(String v) { return charToIndex(v.charAt(0)); }
     public static int indexToChar(int v) { return v + 'A'; }
     public static String indexToString(int v) { return "" + (char)indexToChar(v); }
 
