@@ -28,7 +28,6 @@ import java.util.ArrayList;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -596,18 +595,8 @@ public class PrimaryController {
 
 
 
-    /************************************************************************
-     * Support code for debug stuff.
-     */
 
-    @FXML
-    private Button primaryButton;
 
-    @FXML
-    void buttonActionPerformed(ActionEvent event) {
-        int code = model.test();
-
-        mainLabel.setText(Rotor.indexToString(code));
     }
 
 
