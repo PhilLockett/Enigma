@@ -336,6 +336,8 @@ public class Model {
 
         // Set up "hard wired" J-Y reflector connection as last pair.
         pairs.get(PrimaryController.PAIR_COUNT).set("JY");
+
+        setReflectorChoice("Reflector B");
     }
 
 
@@ -393,6 +395,9 @@ public class Model {
      */
     private void initializeRotorStates() {
         fillRotorStates();
+        setWheelChoice(1, "I");
+        setWheelChoice(2, "II");
+        setWheelChoice(3, "III");
     }
 
 
