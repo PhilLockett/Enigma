@@ -650,14 +650,14 @@ public class Model {
         // Normal step of right rotor.
         incrementRotorOffset(RIGHT, 1);
 
-        Rotor rotor = getRotor(m3, getWheelChoice(MIDDLE));
+        Rotor rotor = getRotor(rotors, getWheelChoice(MIDDLE));
         if (rotor.isNotchPoint(getRotorIndex(MIDDLE))) {
             // Double step of middle rotor, normal step of left rotor.
             incrementRotorOffset(MIDDLE, 1);
             incrementRotorOffset(LEFT, 1);
         }
 
-        rotor = getRotor(m3, getWheelChoice(RIGHT));
+        rotor = getRotor(rotors, getWheelChoice(RIGHT));
         if (rotor.isTurnoverPoint(getRotorIndex(RIGHT))) {
             // Right rotor takes middle rotor one step further.
             incrementRotorOffset(MIDDLE, 1);
@@ -729,11 +729,11 @@ public class Model {
         
         pipeline.clear();
 
-        Rotor slow = getRotor(m3, getWheelChoice(SLOW));
+        Rotor slow = getRotor(rotors, getWheelChoice(SLOW));
 
-        Rotor left = getRotor(m3, getWheelChoice(LEFT));
-        Rotor middle = getRotor(m3, getWheelChoice(MIDDLE));
-        Rotor right = getRotor(m3, getWheelChoice(RIGHT));
+        Rotor left = getRotor(rotors, getWheelChoice(LEFT));
+        Rotor middle = getRotor(rotors, getWheelChoice(MIDDLE));
+        Rotor right = getRotor(rotors, getWheelChoice(RIGHT));
 
         pipeline.add(new Translation(OTHER, plugboard, Swapper.RIGHT_TO_LEFT));
 
@@ -765,7 +765,7 @@ public class Model {
 
         Rotor rotor;
         for (int i = 0; i < ROTOR_COUNT; ++i) {
-            rotor = getRotor(m3, getWheelChoice(i));
+            rotor = getRotor(rotors, getWheelChoice(i));
             rotor.setRingSetting(getRingIndex(i));
 
             // rotor.dumpRightMap();
