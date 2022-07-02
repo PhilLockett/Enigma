@@ -83,6 +83,10 @@ public class PrimaryController {
         model.init();
     }
 
+    public void saveState() {
+        DataStore.writeData(model);
+    }
+
 
 
     /************************************************************************
@@ -217,6 +221,7 @@ public class PrimaryController {
             String id = String.valueOf(i);
             TextField pair = pairs.get(i);
             pair.setId(id);         // Use id as an index.
+            pair.setText(model.getPairText(i));
             
             setValidTextField(pair, model.isPairValid(i));
         }
@@ -554,6 +559,7 @@ public class PrimaryController {
             String id = String.valueOf(i);
             TextField plug = plugs.get(i);
             plug.setId(id);         // Use id as an index.
+            plug.setText(model.getPlugText(i));
             
             setValidTextField(plug, model.isPlugValid(i));
         }

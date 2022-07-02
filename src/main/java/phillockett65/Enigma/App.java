@@ -37,6 +37,8 @@ import java.io.IOException;
  */
 public class App extends Application {
 
+    PrimaryController controller;
+
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("primary.fxml"));
@@ -51,7 +53,7 @@ public class App extends Application {
         stage.resizableProperty().setValue(false);
         stage.setScene(scene);
 
-        PrimaryController controller = fxmlLoader.getController();
+        controller = fxmlLoader.getController();
 
         scene.setOnKeyPressed(event -> {
             if (event.getCode().isLetterKey())
@@ -66,6 +68,11 @@ public class App extends Application {
         stage.show();
 
         controller.init();
+    }
+
+    @Override
+    public void stop() throws Exception {
+        controller.saveState();
     }
 
     public static void main(String[] args) {

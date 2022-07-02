@@ -32,7 +32,9 @@ import javafx.scene.control.SpinnerValueFactory;
 
 public class Model {
 
-    private static final int ROTOR_COUNT = 4;
+    private final static String DATAFILE = "Settings.dat";
+
+    public static final int ROTOR_COUNT = 4;
 
     private static final int OTHER = -1;
     private static final int SLOW = 0;
@@ -81,6 +83,9 @@ public class Model {
         }
     }
 
+    public String getSettingsFile() {
+        return DATAFILE;
+    }
 
     /************************************************************************
      * Support code for the Initialization of the Model.
@@ -109,6 +114,8 @@ public class Model {
         initializeRotorSetup();
         initializePlugboardConnections();
         initializeEncipher();
+
+        DataStore.readData(this);
     }
 
     /**
@@ -234,6 +241,7 @@ public class Model {
             pair.sanitize();
     }
 
+    public int getPairCount() { return pairs.size(); }
     public String getPairText(int index)	{ return pairs.get(index).get(); }
     public int getPairCount(int index)		{ return pairs.get(index).count(); }
 
@@ -461,6 +469,8 @@ public class Model {
     private boolean useLetters = true;
     private boolean show = false;
 
+    public int getRotorStateCount() { return rotorStates.size(); }
+
     public void setFourthWheel(boolean state) { fourthWheel = state; }
     public boolean isFourthWheel() { return fourthWheel; }
 
@@ -550,6 +560,7 @@ public class Model {
             pair.sanitize();
     }
 
+    public int getPlugCount() { return plugs.size(); }
     public String getPlugText(int index)	{ return plugs.get(index).get(); }
     public int getPlugCount(int index)		{ return plugs.get(index).count(); }
 
