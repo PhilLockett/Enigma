@@ -146,9 +146,9 @@ public class PrimaryController {
 
     @FXML
     void reflectorKeyTyped(KeyEvent event) {
-        // System.out.println("reflectorKeyTyped()");
-
         TextField field = (TextField)event.getSource();
+        // System.out.println("reflectorKeyTyped(" + field.getId() + ", " + field.getText() + ")");
+
         model.setPairText(field.getId(), field.getText());
 
         checkReflector();
@@ -501,6 +501,7 @@ public class PrimaryController {
     void plugBoardKeyTyped(KeyEvent event) {
         TextField field = (TextField)event.getSource();
         // System.out.println("plugBoardKeyTyped(" + field.getId() + ", " + field.getText() + ")");
+
         model.setPlugText(field.getId(), field.getText());
         
         checkPlugboard();
