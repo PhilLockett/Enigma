@@ -146,7 +146,7 @@ public class PrimaryController {
 
     @FXML
     void reflectorKeyTyped(KeyEvent event) {
-        // System.out.println("reflectorKeyTyped().");
+        // System.out.println("reflectorKeyTyped()");
 
         TextField field = (TextField)event.getSource();
         model.setPairText(field.getId(), field.getText());
@@ -156,7 +156,7 @@ public class PrimaryController {
     }
 
     private void checkReflector() {
-        // System.out.println("checkReflector().");
+        // System.out.println("checkReflector()");
 
         for (int i = 0; i < pairs.size(); ++i) {
             final Boolean valid = model.isPairValid(i);
@@ -329,22 +329,22 @@ public class PrimaryController {
         ringSetting3Spinner.getValueFactory().wrapAroundProperty().set(true);
 
         ringSetting0Spinner.valueProperty().addListener( (v, oldValue, newValue) -> {
-            // System.out.println("ringSetting0Spinner.valueProperty().Listener(" + newValue + "));");
+            // System.out.println("ringSetting0Spinner.valueProperty().Listener(" + newValue + "))");
             model.setRingSetting(0, newValue);
         });
 
         ringSetting1Spinner.valueProperty().addListener( (v, oldValue, newValue) -> {
-            // System.out.println("ringSetting1Spinner.valueProperty().Listener(" + newValue + "));");
+            // System.out.println("ringSetting1Spinner.valueProperty().Listener(" + newValue + "))");
             model.setRingSetting(1, newValue);
         });
 
         ringSetting2Spinner.valueProperty().addListener( (v, oldValue, newValue) -> {
-            // System.out.println("ringSetting2Spinner.valueProperty().Listener(" + newValue + "));");
+            // System.out.println("ringSetting2Spinner.valueProperty().Listener(" + newValue + "))");
             model.setRingSetting(2, newValue);
         });
 
         ringSetting3Spinner.valueProperty().addListener( (v, oldValue, newValue) -> {
-            // System.out.println("ringSetting3Spinner.valueProperty().Listener(" + newValue + "));");
+            // System.out.println("ringSetting3Spinner.valueProperty().Listener(" + newValue + "))");
             model.setRingSetting(3, newValue);
         });
     }
@@ -382,22 +382,22 @@ public class PrimaryController {
         rotorOffset3Spinner.getValueFactory().wrapAroundProperty().set(true);
 
         rotorOffset0Spinner.valueProperty().addListener( (v, oldValue, newValue) -> {
-            // System.out.println("rotorOffset0Spinner.valueProperty().Listener(" + newValue + "));");
+            // System.out.println("rotorOffset0Spinner.valueProperty().Listener(" + newValue + "))");
             model.setRotorOffset(0, newValue);
         });
 
         rotorOffset1Spinner.valueProperty().addListener( (v, oldValue, newValue) -> {
-            // System.out.println("rotorOffset1Spinner.valueProperty().Listener(" + newValue + "));");
+            // System.out.println("rotorOffset1Spinner.valueProperty().Listener(" + newValue + "))");
             model.setRotorOffset(1, newValue);
         });
 
         rotorOffset2Spinner.valueProperty().addListener( (v, oldValue, newValue) -> {
-            // System.out.println("rotorOffset2Spinner.valueProperty().Listener(" + newValue + "));");
+            // System.out.println("rotorOffset2Spinner.valueProperty().Listener(" + newValue + "))");
             model.setRotorOffset(2, newValue);
         });
 
         rotorOffset3Spinner.valueProperty().addListener( (v, oldValue, newValue) -> {
-            // System.out.println("rotorOffset3Spinner.valueProperty().Listener(" + newValue + "));");
+            // System.out.println("rotorOffset3Spinner.valueProperty().Listener(" + newValue + "))");
             model.setRotorOffset(3, newValue);
         });
     }
@@ -499,17 +499,16 @@ public class PrimaryController {
 
     @FXML
     void plugBoardKeyTyped(KeyEvent event) {
-        
         TextField field = (TextField)event.getSource();
+        // System.out.println("plugBoardKeyTyped(" + field.getId() + ", " + field.getText() + ")");
         model.setPlugText(field.getId(), field.getText());
-        // System.out.println("plugBoardKeyTyped(" + field.getId() + ", " + field.getText() + ").");
         
         checkPlugboard();
         checkConfigValid();
     }
 
     private void checkPlugboard() {
-        // System.out.println("checkPlugboard().");
+        // System.out.println("checkPlugboard()");
 
         for (int i = 0; i < plugs.size(); ++i) {
             final Boolean valid = model.isPlugValid(i);
@@ -586,7 +585,7 @@ public class PrimaryController {
     @FXML
     void encipherButtonActionPerformed(ActionEvent event) {
         final boolean encipher = encipherButton.isSelected();
-        // System.out.println("encipherButtonActionPerformed(" + encipher + ").");
+        // System.out.println("encipherButtonActionPerformed(" + encipher + ")");
 
         model.setEncipher(encipher);
         updateStatus();
@@ -595,7 +594,7 @@ public class PrimaryController {
     private boolean updateStatus() {
         final boolean encipher = model.isEncipher();
 
-        // System.out.println("updateStatus(" + encipher + ").");
+        // System.out.println("updateStatus(" + encipher + ")");
         editableReflector(!encipher);
         editableWheelOrder(!encipher);
         editableRingSettings(!encipher);
