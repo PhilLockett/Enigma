@@ -353,14 +353,6 @@ public class Model {
     public String getWheelChoice(int index) { return rotorStates.get(index).getWheelChoice(); }
     public void setWheelChoice(int index, String choice) { rotorStates.get(index).setWheelChoice(choice); }
 
-    private boolean fourthWheel = false;
-
-    public void setFourthWheel(boolean state) { 
-        fourthWheel = state; 
-    }
-
-    public boolean isFourthWheel() { return fourthWheel; }
-
     private void fillWheelList() {
         wheelList.clear();
 
@@ -432,16 +424,6 @@ public class Model {
     public void incrementRotorOffset(int index, int step) { rotorStates.get(index).incrementRotorOffset(step); }
 
 
-    private boolean useLetters = true;
-
-    public void setUseLetters(boolean state) { 
-        useLetters = state; 
-        switchRingSettingsList();
-        switchRotorOffsetsList();
-    }
-
-    public boolean isUseLetters() { return useLetters; }
-
     private void switchRotorOffsetsList() {
 
         int[] indices = new int[ROTOR_COUNT];
@@ -474,6 +456,24 @@ public class Model {
      */
 
     private ArrayList<RotorState> rotorStates = new ArrayList<RotorState>(ROTOR_COUNT);
+
+    private boolean fourthWheel = false;
+    private boolean useLetters = true;
+    private boolean show = false;
+
+    public void setFourthWheel(boolean state) { fourthWheel = state; }
+    public boolean isFourthWheel() { return fourthWheel; }
+
+    public void setUseLetters(boolean state) {
+        useLetters = state;
+        switchRingSettingsList();
+        switchRotorOffsetsList();
+    }
+
+    public boolean isUseLetters() { return useLetters; }
+    
+    public boolean isShow() { return show; }
+    public void setShow(boolean state) { show = state; }
 
     private class RotorState {
         private String wheelChoice;
@@ -620,7 +620,6 @@ public class Model {
      */
 
     private boolean encipher = false;
-    private boolean show = false;
 
     private ArrayList<Translation> pipeline = new ArrayList<Translation>(9);
 
@@ -629,9 +628,6 @@ public class Model {
     }
 
     public boolean isEncipher() { return encipher; }
-    public boolean isShow() { return show; }
-
-    public void setShow(boolean state) { show = state; }
 
     private Rotor getRotor(ObservableList<Rotor> list, String target) {
         for (Rotor rotor : list)
