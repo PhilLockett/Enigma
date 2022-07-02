@@ -56,11 +56,13 @@ public class App extends Application {
         controller = fxmlLoader.getController();
 
         scene.setOnKeyPressed(event -> {
+            // System.out.println("scene.setOnKeyPressed(" + event.getCode() + ", " + event.getCharacter() + ").");
             if (event.getCode().isLetterKey())
                 controller.keyPress(event.getCode());
         });
 
         scene.setOnKeyReleased(event -> {
+            // System.out.println("scene.setOnKeyReleased(" + event.getCode() + ", " + event.getCharacter() + ").");
             if (event.getCode().isLetterKey())
                 controller.keyRelease(event.getCode());
         });
