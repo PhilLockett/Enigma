@@ -98,7 +98,7 @@ public class Swapper {
     public int[] getMap() { return map; }
     public boolean isReflector() { return reflect; }
 
-	public int[] getLeftMap()	{ return leftMap; }
+    public int[] getLeftMap()	{ return leftMap; }
     public int[] getRightMap()	{ return rightMap; }
 
     public int leftToRight(int index) { return leftMap[index]; }
