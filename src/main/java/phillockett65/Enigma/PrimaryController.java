@@ -145,8 +145,8 @@ public class PrimaryController {
     private ArrayList<TextField> pairs = new ArrayList<TextField>(PAIR_COUNT);
 
     @FXML
-    void reflectorActionPerformed(KeyEvent event) {
-        // System.out.println("reflectorActionPerformed().");
+    void reflectorKeyTyped(KeyEvent event) {
+        // System.out.println("reflectorKeyTyped().");
 
         TextField field = (TextField)event.getSource();
         model.setPairText(field.getId(), field.getText());
@@ -498,11 +498,11 @@ public class PrimaryController {
     private ArrayList<TextField> plugs = new ArrayList<TextField>(PLUG_COUNT);
 
     @FXML
-    void plugBoardActionPerformed(KeyEvent event) {
+    void plugBoardKeyTyped(KeyEvent event) {
         
         TextField field = (TextField)event.getSource();
         model.setPlugText(field.getId(), field.getText());
-        // System.out.println("plugBoardActionPerformed(" + field.getId() + ", " + field.getText() + ").");
+        // System.out.println("plugBoardKeyTyped(" + field.getId() + ", " + field.getText() + ").");
         
         checkPlugboard();
         checkConfigValid();

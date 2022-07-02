@@ -37,18 +37,18 @@
                <children>
                   <ChoiceBox fx:id="reflectorChoicebox" GridPane.columnSpan="3" />
                   <CheckBox fx:id="reconfigurableCheckbox" mnemonicParsing="false" onAction="#reconfigurableCheckboxActionPerformed" text="Use Reconfigurable Reflector" GridPane.columnIndex="3" GridPane.columnSpan="3" />
-                  <TextField fx:id="pair0" onKeyTyped="#reflectorActionPerformed" GridPane.rowIndex="1" />
-                  <TextField fx:id="pair1" onKeyTyped="#reflectorActionPerformed" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <TextField fx:id="pair2" onKeyTyped="#reflectorActionPerformed" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <TextField fx:id="pair3" onKeyTyped="#reflectorActionPerformed" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                  <TextField fx:id="pair4" onKeyTyped="#reflectorActionPerformed" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                  <TextField fx:id="pair5" onKeyTyped="#reflectorActionPerformed" GridPane.columnIndex="5" GridPane.rowIndex="1" />
-                  <TextField fx:id="pair6" onKeyTyped="#reflectorActionPerformed" GridPane.rowIndex="2" />
-                  <TextField fx:id="pair7" onKeyTyped="#reflectorActionPerformed" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <TextField fx:id="pair8" onKeyTyped="#reflectorActionPerformed" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                  <TextField fx:id="pair9" onKeyTyped="#reflectorActionPerformed" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                  <TextField fx:id="pair10" onKeyTyped="#reflectorActionPerformed" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                  <TextField fx:id="pair11" onKeyTyped="#reflectorActionPerformed" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+                  <TextField fx:id="pair0" onKeyTyped="#reflectorKeyTyped" GridPane.rowIndex="1" />
+                  <TextField fx:id="pair1" onKeyTyped="#reflectorKeyTyped" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="pair2" onKeyTyped="#reflectorKeyTyped" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <TextField fx:id="pair3" onKeyTyped="#reflectorKeyTyped" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <TextField fx:id="pair4" onKeyTyped="#reflectorKeyTyped" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                  <TextField fx:id="pair5" onKeyTyped="#reflectorKeyTyped" GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                  <TextField fx:id="pair6" onKeyTyped="#reflectorKeyTyped" GridPane.rowIndex="2" />
+                  <TextField fx:id="pair7" onKeyTyped="#reflectorKeyTyped" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="pair8" onKeyTyped="#reflectorKeyTyped" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <TextField fx:id="pair9" onKeyTyped="#reflectorKeyTyped" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                  <TextField fx:id="pair10" onKeyTyped="#reflectorKeyTyped" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                  <TextField fx:id="pair11" onKeyTyped="#reflectorKeyTyped" GridPane.columnIndex="5" GridPane.rowIndex="2" />
                </children>
             </GridPane>
          </content>
@@ -132,19 +132,19 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <TextField fx:id="plug0" onKeyTyped="#plugBoardActionPerformed" />
-                  <TextField fx:id="plug1" onKeyTyped="#plugBoardActionPerformed" GridPane.columnIndex="1" />
-                  <TextField fx:id="plug2" onKeyTyped="#plugBoardActionPerformed" GridPane.columnIndex="2" />
-                  <TextField fx:id="plug3" onKeyTyped="#plugBoardActionPerformed" GridPane.columnIndex="3" />
-                  <TextField fx:id="plug4" onKeyTyped="#plugBoardActionPerformed" GridPane.columnIndex="4" />
-                  <TextField fx:id="plug5" onKeyTyped="#plugBoardActionPerformed" GridPane.rowIndex="1" />
-                  <TextField fx:id="plug6" onKeyTyped="#plugBoardActionPerformed" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <TextField fx:id="plug7" onKeyTyped="#plugBoardActionPerformed" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <TextField fx:id="plug8" onKeyTyped="#plugBoardActionPerformed" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                  <TextField fx:id="plug9" onKeyTyped="#plugBoardActionPerformed" GridPane.columnIndex="4" GridPane.rowIndex="1" />
-                  <TextField fx:id="plug10" onKeyTyped="#plugBoardActionPerformed" GridPane.rowIndex="2" />
-                  <TextField fx:id="plug11" onKeyTyped="#plugBoardActionPerformed" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <TextField fx:id="plug12" onKeyTyped="#plugBoardActionPerformed" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <TextField fx:id="plug0" onKeyTyped="#plugBoardKeyTyped" />
+                  <TextField fx:id="plug1" onKeyTyped="#plugBoardKeyTyped" GridPane.columnIndex="1" />
+                  <TextField fx:id="plug2" onKeyTyped="#plugBoardKeyTyped" GridPane.columnIndex="2" />
+                  <TextField fx:id="plug3" onKeyTyped="#plugBoardKeyTyped" GridPane.columnIndex="3" />
+                  <TextField fx:id="plug4" onKeyTyped="#plugBoardKeyTyped" GridPane.columnIndex="4" />
+                  <TextField fx:id="plug5" onKeyTyped="#plugBoardKeyTyped" GridPane.rowIndex="1" />
+                  <TextField fx:id="plug6" onKeyTyped="#plugBoardKeyTyped" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="plug7" onKeyTyped="#plugBoardKeyTyped" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <TextField fx:id="plug8" onKeyTyped="#plugBoardKeyTyped" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <TextField fx:id="plug9" onKeyTyped="#plugBoardKeyTyped" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                  <TextField fx:id="plug10" onKeyTyped="#plugBoardKeyTyped" GridPane.rowIndex="2" />
+                  <TextField fx:id="plug11" onKeyTyped="#plugBoardKeyTyped" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="plug12" onKeyTyped="#plugBoardKeyTyped" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                </children>
             </GridPane>
          </content>
