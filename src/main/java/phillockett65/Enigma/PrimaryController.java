@@ -222,7 +222,7 @@ public class PrimaryController {
             TextField pair = pairs.get(i);
             pair.setId(id);         // Use id as an index.
             pair.setText(model.getPairText(i));
-            
+
             setValidTextField(pair, model.isPairValid(i));
         }
     }
@@ -560,7 +560,7 @@ public class PrimaryController {
             TextField plug = plugs.get(i);
             plug.setId(id);         // Use id as an index.
             plug.setText(model.getPlugText(i));
-            
+
             setValidTextField(plug, model.isPlugValid(i));
         }
     }
@@ -575,10 +575,9 @@ public class PrimaryController {
 
     private int current = -1;
 
-
     @FXML
     private ToggleButton encipherButton;
-    
+
     @FXML
     private Label mainLabel;
 
