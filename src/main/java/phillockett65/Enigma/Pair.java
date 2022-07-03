@@ -27,6 +27,7 @@ public class Pair {
     private String letters = "";
 
     public void set(String text) { letters = text; }
+    public void clear() { letters = ""; }
 
     public String get() { return letters; }
     public int count() { return letters.length(); }
