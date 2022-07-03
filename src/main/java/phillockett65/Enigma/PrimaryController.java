@@ -28,6 +28,7 @@ import java.util.ArrayList;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -579,8 +580,10 @@ public class PrimaryController {
     private ToggleButton encipherButton;
 
     @FXML
-    private Label mainLabel;
+    private Button resetButton;
 
+    @FXML
+    private Label mainLabel;
 
     @FXML
     void encipherButtonActionPerformed(ActionEvent event) {
@@ -589,6 +592,12 @@ public class PrimaryController {
 
         model.setEncipher(encipher);
         updateStatus();
+    }
+
+    @FXML
+    void resetButtonActionPerformed(ActionEvent event) {
+        model.defaultSettings();
+        syncUI();
     }
 
     private boolean updateStatus() {
@@ -645,5 +654,28 @@ public class PrimaryController {
         }
     }
 
+    public void syncUI() {
+        reflectorChoicebox.setValue(model.getReflectorChoice());
+        reconfigurableCheckbox.setSelected(model.isReconfigurable());
+        for (int i = 0; i < pairs.size(); ++i) {
+            TextField pair = pairs.get(i);
+            pair.setText(model.getPairText(i));
+        }
+
+        wheel0Choicebox.setValue(model.getWheelChoice(0));
+        wheel1Choicebox.setValue(model.getWheelChoice(1));
+        wheel2Choicebox.setValue(model.getWheelChoice(2));
+        wheel3Choicebox.setValue(model.getWheelChoice(3));
+
+        fourthWheelCheckbox.setSelected(model.isFourthWheel());
+        useLettersCheckbox.setSelected(model.isUseLetters());
+        showStepsCheckbox.setSelected(model.isShow());
+
+        for (int i = 0; i < plugs.size(); ++i) {
+            TextField plug = plugs.get(i);
+            plug.setText(model.getPlugText(i));
+        }
+        encipherButton.setSelected(model.isEncipher());
+    }
 
 }

@@ -785,6 +785,8 @@ public class Model {
         // System.out.println("setEncipher(" + state + ").");
         encipher = state;
         if (encipher) {
+            sanitizePairs();
+            sanitizePlugs();
             lockdownSettings();
         }
     }
@@ -793,6 +795,34 @@ public class Model {
      * Initialize "Translation" panel.
      */
     private void initializeEncipher() {
+    }
+
+
+    public void defaultSettings() {
+        setReflectorChoice("Reflector B");
+
+        reconfigurable = false;
+        for (Pair pair : pairs)
+            pair.clear();
+
+        setWheelChoice(0, "Beta");
+        setWheelChoice(1, "I");
+        setWheelChoice(2, "II");
+        setWheelChoice(3, "III");
+
+        for (RotorState rotorState : rotorStates) {
+            rotorState.setRingIndex(0);
+            rotorState.setRotorIndex(0);
+        }
+
+        fourthWheel = false;
+        useLetters = true;
+        show = false;
+
+        for (Pair pair : plugs)
+            pair.clear();
+
+        encipher = false;
     }
 
 
