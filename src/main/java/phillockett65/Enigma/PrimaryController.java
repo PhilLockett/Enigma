@@ -82,6 +82,7 @@ public class PrimaryController {
     public void init() {
         // System.out.println("PrimaryController init.");
         model.init();
+        syncUI();
     }
 
     public void saveState() {
@@ -199,7 +200,6 @@ public class PrimaryController {
         setReconfigurable();
 
         reflectorChoicebox.setItems(model.getReflectorList());
-        reflectorChoicebox.setValue(model.getReflectorChoice());
 
         reflectorChoicebox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
             model.setReflectorChoice(newValue);
@@ -222,7 +222,6 @@ public class PrimaryController {
             String id = String.valueOf(i);
             TextField pair = pairs.get(i);
             pair.setId(id);         // Use id as an index.
-            pair.setText(model.getPairText(i));
 
             setValidTextField(pair, model.isPairValid(i));
         }
@@ -265,11 +264,6 @@ public class PrimaryController {
         wheel1Choicebox.setItems(model.getWheelList());
         wheel2Choicebox.setItems(model.getWheelList());
         wheel3Choicebox.setItems(model.getWheelList());
-
-        wheel0Choicebox.setValue(model.getWheelChoice(0));
-        wheel1Choicebox.setValue(model.getWheelChoice(1));
-        wheel2Choicebox.setValue(model.getWheelChoice(2));
-        wheel3Choicebox.setValue(model.getWheelChoice(3));
 
         wheel0Choicebox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
             model.setWheelChoice(0, newValue);
@@ -446,9 +440,6 @@ public class PrimaryController {
      * Initialize "Rotor Set-Up".
      */
     private void initializeRotorSetup() {
-        fourthWheelCheckbox.setSelected(model.isFourthWheel());
-        useLettersCheckbox.setSelected(model.isUseLetters());
-        showStepsCheckbox.setSelected(model.isShow());
     }
 
 
@@ -560,7 +551,6 @@ public class PrimaryController {
             String id = String.valueOf(i);
             TextField plug = plugs.get(i);
             plug.setId(id);         // Use id as an index.
-            plug.setText(model.getPlugText(i));
 
             setValidTextField(plug, model.isPlugValid(i));
         }
