@@ -108,7 +108,7 @@
                   </TitledPane>
                   <HBox spacing="10.0">
                      <children>
-                        <CheckBox fx:id="fourthWheelCheckbox" mnemonicParsing="false" onAction="#fourthWheelCheckboxActionPerformed" text="Fourth Wheel" />
+                        <CheckBox fx:id="fourthWheelCheckbox" mnemonicParsing="false" onAction="#fourthWheelCheckboxActionPerformed" text="Fourth Rotor" />
                         <CheckBox fx:id="useLettersCheckbox" mnemonicParsing="false" onAction="#useLettersCheckboxActionPerformed" text="Use Letters" />
                         <CheckBox fx:id="showStepsCheckbox" mnemonicParsing="false" onAction="#showStepsCheckboxActionPerformed" text="Show Steps" />
                      </children>

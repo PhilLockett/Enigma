@@ -35,6 +35,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
@@ -197,9 +198,11 @@ public class PrimaryController {
      */
     private void initializeReflector() {
         reconfigurableCheckbox.setSelected(model.isReconfigurable());
+        reconfigurableCheckbox.setTooltip(new Tooltip("Select to set up and use a reconfigurable Reflector"));
         setReconfigurable();
 
         reflectorChoicebox.setItems(model.getReflectorList());
+        reflectorChoicebox.setTooltip(new Tooltip("Select a Reflector"));
 
         reflectorChoicebox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
             model.setReflectorChoice(newValue);
@@ -222,6 +225,7 @@ public class PrimaryController {
             String id = String.valueOf(i);
             TextField pair = pairs.get(i);
             pair.setId(id);         // Use id as an index.
+            pair.setTooltip(new Tooltip("Configure unique loop-back wiring pair"));
 
             setValidTextField(pair, model.isPairValid(i));
         }
@@ -264,6 +268,11 @@ public class PrimaryController {
         wheel1Choicebox.setItems(model.getWheelList());
         wheel2Choicebox.setItems(model.getWheelList());
         wheel3Choicebox.setItems(model.getWheelList());
+
+        wheel0Choicebox.setTooltip(new Tooltip("Select the fourth Rotor"));
+        wheel1Choicebox.setTooltip(new Tooltip("Select the left Rotor"));
+        wheel2Choicebox.setTooltip(new Tooltip("Select the middle Rotor"));
+        wheel3Choicebox.setTooltip(new Tooltip("Select the right Rotor"));
 
         wheel0Choicebox.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) -> {
             model.setWheelChoice(0, newValue);
@@ -323,6 +332,11 @@ public class PrimaryController {
         ringSetting2Spinner.getValueFactory().wrapAroundProperty().set(true);
         ringSetting3Spinner.getValueFactory().wrapAroundProperty().set(true);
 
+        ringSetting0Spinner.setTooltip(new Tooltip("Select Ring Setting for the fourth Rotor"));
+        ringSetting1Spinner.setTooltip(new Tooltip("Select Ring Setting for the left Rotor"));
+        ringSetting2Spinner.setTooltip(new Tooltip("Select Ring Setting for the middle Rotor"));
+        ringSetting3Spinner.setTooltip(new Tooltip("Select Ring Setting for the right Rotor"));
+
         ringSetting0Spinner.valueProperty().addListener( (v, oldValue, newValue) -> {
             // System.out.println("ringSetting0Spinner.valueProperty().Listener(" + newValue + "))");
             model.setRingSetting(0, newValue);
@@ -376,6 +390,11 @@ public class PrimaryController {
         rotorOffset2Spinner.getValueFactory().wrapAroundProperty().set(true);
         rotorOffset3Spinner.getValueFactory().wrapAroundProperty().set(true);
 
+        rotorOffset0Spinner.setTooltip(new Tooltip("Select offset for the fourth Rotor"));
+        rotorOffset1Spinner.setTooltip(new Tooltip("Select offset for the left Rotor"));
+        rotorOffset2Spinner.setTooltip(new Tooltip("Select offset for the middle Rotor"));
+        rotorOffset3Spinner.setTooltip(new Tooltip("Select offset for the right Rotor"));
+        
         rotorOffset0Spinner.valueProperty().addListener( (v, oldValue, newValue) -> {
             // System.out.println("rotorOffset0Spinner.valueProperty().Listener(" + newValue + "))");
             model.setRotorOffset(0, newValue);
@@ -440,6 +459,10 @@ public class PrimaryController {
      * Initialize "Rotor Set-Up".
      */
     private void initializeRotorSetup() {
+        fourthWheelCheckbox.setTooltip(new Tooltip("Select to use a fourth Rotor"));
+        useLettersCheckbox.setTooltip(new Tooltip("Select to set use Letters instead of numbers on the Rotors"));
+        showStepsCheckbox.setTooltip(new Tooltip("Select to show individual translation steps"));
+
     }
 
 
@@ -551,6 +574,7 @@ public class PrimaryController {
             String id = String.valueOf(i);
             TextField plug = plugs.get(i);
             plug.setId(id);         // Use id as an index.
+            plug.setTooltip(new Tooltip("Configure plugboard wiring pair"));
 
             setValidTextField(plug, model.isPlugValid(i));
         }
@@ -600,10 +624,17 @@ public class PrimaryController {
         editablePlugboard(!encipher);
         editableFourthWheel();
 
-        String message = !encipher ? "Start Translation" : "Change Settings";
-        encipherButton.setText("Press to " + message);
+        if (encipher) {
+            encipherButton.setText("Press to Change Settings");
+            encipherButton.setTooltip(new Tooltip("Press to resume changing settings"));
 
-        mainLabel.setText(encipher ? "" : mainMessage);
+            mainLabel.setText("");
+        } else {
+            encipherButton.setText("Press to Start Translation");
+            encipherButton.setTooltip(new Tooltip("Press to use current settings and translate letters"));
+
+            mainLabel.setText(mainMessage);
+        }
 
         return encipher;
     }
@@ -618,6 +649,7 @@ public class PrimaryController {
     private void initializeEncipher() {
         checkConfigValid();
         encipherButton.setSelected(updateStatus());
+        resetButton.setTooltip(new Tooltip("Click to return all settings to the defaults"));
     }
 
 
