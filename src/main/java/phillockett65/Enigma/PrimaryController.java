@@ -41,9 +41,6 @@ import javafx.scene.input.KeyEvent;
 
 public class PrimaryController {
 
-    public final static int PLUG_COUNT = 13;
-    public final static int PAIR_COUNT = 12;
-
     private Model model;
 
     /************************************************************************
@@ -145,7 +142,7 @@ public class PrimaryController {
     @FXML
     private TextField pair11;
 
-    private ArrayList<TextField> pairs = new ArrayList<TextField>(PAIR_COUNT);
+    private ArrayList<TextField> pairs = new ArrayList<TextField>(Model.PAIR_COUNT);
 
     @FXML
     void reflectorKeyTyped(KeyEvent event) {
@@ -510,7 +507,7 @@ public class PrimaryController {
     @FXML
     private TextField plug12;
 
-    private ArrayList<TextField> plugs = new ArrayList<TextField>(PLUG_COUNT);
+    private ArrayList<TextField> plugs = new ArrayList<TextField>(Model.PLUG_COUNT);
 
     @FXML
     void plugBoardKeyTyped(KeyEvent event) {

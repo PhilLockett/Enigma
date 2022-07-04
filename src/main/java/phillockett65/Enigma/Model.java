@@ -35,6 +35,8 @@ public class Model {
     private final static String DATAFILE = "Settings.dat";
 
     public static final int ROTOR_COUNT = 4;
+    public final static int PLUG_COUNT = 13;
+    public final static int PAIR_COUNT = 12;
 
     private static final int OTHER = -1;
     private static final int SLOW = 0;
@@ -220,7 +222,7 @@ public class Model {
     private int[] reflectorMap;
     private Swapper reflector;
 
-    private ArrayList<Pair> pairs = new ArrayList<Pair>(PrimaryController.PAIR_COUNT + 1);
+    private ArrayList<Pair> pairs = new ArrayList<Pair>(PAIR_COUNT + 1);
 
 
     public ObservableList<String> getReflectorList()   { return reflectorList; }
@@ -339,13 +341,13 @@ public class Model {
         reconfigurableReflectorMap = new int[26];
         fillReflectorList();
 
-        for (int i = 0; i < PrimaryController.PAIR_COUNT + 1; ++i)
+        for (int i = 0; i < PAIR_COUNT + 1; ++i)
             pairs.add(new Pair());
 
         // Set up "hard wired" J-Y connection as last pair of reconfigurable reflector.
-        pairs.get(PrimaryController.PAIR_COUNT).set("JY");
 
         setReflectorChoice("Reflector B");
+        pairs.get(PAIR_COUNT).set("JY");
     }
 
 
@@ -547,7 +549,7 @@ public class Model {
     private int[] plugboardMap;
     private Swapper plugboard;
 
-    private ArrayList<Pair> plugs = new ArrayList<Pair>(PrimaryController.PLUG_COUNT);
+    private ArrayList<Pair> plugs = new ArrayList<Pair>(PLUG_COUNT);
 
 
     public void setPlugText(int index, String text) {
@@ -620,7 +622,7 @@ public class Model {
         plugboardLetterCounts = new int[26];
         plugboardMap = new int[26];
 
-        for (int i = 0; i < PrimaryController.PLUG_COUNT; ++i)
+        for (int i = 0; i < PLUG_COUNT; ++i)
             plugs.add(new Pair());
     }
 
