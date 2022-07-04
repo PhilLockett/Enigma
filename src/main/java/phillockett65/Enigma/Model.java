@@ -117,7 +117,8 @@ public class Model {
         initializePlugboardConnections();
         initializeEncipher();
 
-        DataStore.readData(this);
+        if (!DataStore.readData(this))
+            defaultSettings();
     }
 
     /**
@@ -345,8 +346,6 @@ public class Model {
             pairs.add(new Pair());
 
         // Set up "hard wired" J-Y connection as last pair of reconfigurable reflector.
-
-        setReflectorChoice("Reflector B");
         pairs.get(PAIR_COUNT).set("JY");
     }
 
@@ -534,9 +533,6 @@ public class Model {
      */
     private void initializeRotorSetup() {
         fillRotorStates();
-        setWheelChoice(1, "I");
-        setWheelChoice(2, "II");
-        setWheelChoice(3, "III");
     }
 
 
