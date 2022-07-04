@@ -223,7 +223,7 @@ public class Model {
     private int[] reflectorMap;
     private Swapper reflector;
 
-    private ArrayList<Pair> pairs = new ArrayList<Pair>(PAIR_COUNT + 1);
+    private ArrayList<Pair> pairs = new ArrayList<Pair>(PAIR_COUNT);
 
 
     public ObservableList<String> getReflectorList()   { return reflectorList; }
@@ -270,14 +270,23 @@ public class Model {
     public int getPairCount(String id)		{ return getPairCount(idToIndex(id)); }
     public boolean isPairValid(String id)	{ return isPairValid(idToIndex(id)); }
 
-    public boolean isReconfigurableReflectorValid() {
+    private boolean isReconfigurableReflectorValid() {
         for (Pair pair : pairs)
             if ((pair.isEmpty()) || (!pair.isValid()))
                 return false;
 
-        for (int i = 0; i < reflectorLetterCounts.length; ++i)
-            if (reflectorLetterCounts[i] != 1)
+        int empty = 0;
+        for (int i = 0; i < reflectorLetterCounts.length; ++i) {
+            if (reflectorLetterCounts[i] == 0)
+                empty++;
+
+            if (reflectorLetterCounts[i] > 1)
                 return false;
+        }
+
+        // Check we only have 1 unconfigured pair.
+        if (empty != 2)
+            return false;
 
         return true;
     }
@@ -289,18 +298,35 @@ public class Model {
         return true;
     }
 
+    /**
+     * Only called if isReconfigurableReflectorValid() is true.
+     */
     private void setReconfigurableReflectorMap() {
         for (int i = 0; i < reconfigurableReflectorMap.length; ++i)
             reconfigurableReflectorMap[i] = 0;
 
         for (Pair pair : pairs) {
-            if (pair.isEmpty())
-                continue;
-
             final int a = pair.indexAt(0);
             final int b = pair.indexAt(1);
             reconfigurableReflectorMap[a] = b;
             reconfigurableReflectorMap[b] = a;
+        }
+
+        // Set up unconfigured pair.
+        int x = -1;
+        int y = -1;
+
+        for (int i = 0; i < reflectorLetterCounts.length; ++i)
+            if (reflectorLetterCounts[i] == 0) {
+                if (x == -1)
+                    x = i;
+                else
+                    y = i;
+            }
+
+        if ((x != -1) && (y != -1)) {
+            reconfigurableReflectorMap[x] = y;
+            reconfigurableReflectorMap[y] = x;
         }
     }
 
@@ -342,11 +368,8 @@ public class Model {
         reconfigurableReflectorMap = new int[26];
         fillReflectorList();
 
-        for (int i = 0; i < PAIR_COUNT + 1; ++i)
+        for (int i = 0; i < PAIR_COUNT; ++i)
             pairs.add(new Pair());
-
-        // Set up "hard wired" J-Y connection as last pair of reconfigurable reflector.
-        pairs.get(PAIR_COUNT).set("JY");
     }
 
 
@@ -596,6 +619,9 @@ public class Model {
         return true;
     }
 
+    /**
+     * Only called if isPlugboardValid() is true.
+     */
     private void setPlugboardMap() {
         for (int i = 0; i < plugboardMap.length; ++i)
             plugboardMap[i] = i;
