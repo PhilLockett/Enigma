@@ -152,7 +152,7 @@
       </TitledPane>
       <TitledPane collapsible="false" text="Translation">
          <content>
-            <VBox>
+            <VBox spacing="4.0">
                <children>
                   <HBox>
                      <children>

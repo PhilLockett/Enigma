@@ -50,23 +50,6 @@ public class DataStore implements Serializable {
     private ArrayList<String> plugs = new ArrayList<String>();
     private Boolean encipher;
 
-    // private void dump() {
-    //     System.out.println("reflectorChoice = " + reflectorChoice);
-    //     System.out.println("reconfigurable = " + reconfigurable);
-    //     System.out.println("pairs = " + pairs);
-
-    //     System.out.println("fourthWheel = " + fourthWheel);
-    //     System.out.println("useLetters = " + useLetters);
-    //     System.out.println("show = " + show);
-
-    //     System.out.println("wheels = " + wheels);
-    //     System.out.println("ringSettings = " + ringSettings);
-    //     System.out.println("rotorOffsets = " + rotorOffsets);
-
-    //     System.out.println("plugs = " + plugs);
-    //     System.out.println("encipher = " + encipher);
-    // }
-
     public DataStore() {
     }
 
@@ -141,7 +124,7 @@ public class DataStore implements Serializable {
 
         DataStore dataStore = new DataStore();
         dataStore.pull(model);
-        // dataStore.dump();
+        dataStore.dump();
 
         ObjectOutputStream objectOutputStream;
         try {
@@ -166,7 +149,7 @@ public class DataStore implements Serializable {
 
             DataStore dataStore = (DataStore)objectInputStream.readObject();
             success = dataStore.push(model);
-            // dataStore.dump();
+            dataStore.dump();
 
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -182,6 +165,23 @@ public class DataStore implements Serializable {
     /************************************************************************
      * Support code for debug stuff.
      */
+
+    private void dump() {
+        // System.out.println("reflectorChoice = " + reflectorChoice);
+        // System.out.println("reconfigurable = " + reconfigurable);
+        // System.out.println("pairs = " + pairs);
+
+        // System.out.println("fourthWheel = " + fourthWheel);
+        // System.out.println("useLetters = " + useLetters);
+        // System.out.println("show = " + show);
+
+        // System.out.println("wheels = " + wheels);
+        // System.out.println("ringSettings = " + ringSettings);
+        // System.out.println("rotorOffsets = " + rotorOffsets);
+
+        // System.out.println("plugs = " + plugs);
+        // System.out.println("encipher = " + encipher);
+    }
 
 }
 
