@@ -379,10 +379,7 @@ public class Model {
         reflectorList.clear();
 
         for (Rotor rotor : reflectors)
-            if (rotor.isReflector())
-                reflectorList.add(rotor.getId());
-
-        reflectorChoice = reflectorList.get(0);
+            reflectorList.add(rotor.getId());
     }
 
     /**
