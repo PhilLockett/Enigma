@@ -51,6 +51,11 @@ public class Model {
 
     private int idToIndex(String id) { return Integer.valueOf(id); }
 
+    /**
+     * Counts the letter frequency in the given list.
+     * @param counts of letter frequency (count[0] -> 'A')
+     * @param list of letter pairs for counting.
+     */
     private void countLetterUsage(int[] counts, ArrayList<Pair> list) {
 
         for (int i = 0; i < counts.length; ++i) 
@@ -66,6 +71,11 @@ public class Model {
         }
     }
 
+    /**
+     * Sets the items in the ObservableList to a sequence of either capital 
+     * letters or integers depending on the current value of useLetters.
+     * @param list of strings being updated.
+     */
     private void setList(ObservableList<String> list) {
         if (useLetters) {
             for (int i = 0; i < 26; ++i)
@@ -75,14 +85,24 @@ public class Model {
                 list.set(i, String.valueOf(i + 1));
         }
     }
+
+    /**
+     * Construct a list of 26 Strings.
+     * @param list
+     */
     private void addList(ObservableList<String> list) {
         for (int i = 0; i < 26; ++i)
             list.add(Rotor.indexToString(i));
     }
 
+    /**
+     * @return the file path of the settings data file.
+     */
     public String getSettingsFile() {
         return DATAFILE;
     }
+
+
 
     /************************************************************************
      * Support code for the Initialization of the Model.
@@ -169,6 +189,9 @@ public class Model {
     ObservableList<Rotor> rotors = FXCollections.observableArrayList();
     ObservableList<Rotor> reflectors = FXCollections.observableArrayList();
 
+    /**
+     * Construct all the Rotor collections.
+     */
     private void initRotorWiring() {
 
         commercial.add(new Rotor("IC",	"DMTWSILRUYQNKFEJCAZBPGXOHV",	"1924",	"Commercial Enigma A, B", "R"));
@@ -309,7 +332,7 @@ public class Model {
                 return false;
         }
 
-        // Check we only have 1 unconfigured pair.
+        // Check we have only 1 unconfigured pair.
         if (empty != 2)
             return false;
 
@@ -355,6 +378,9 @@ public class Model {
         }
     }
 
+    /**
+     * @return a reference to the active reflector map.
+     */
     private int[] getReflectorMap() {
         
         if (reconfigurable) {
@@ -370,11 +396,17 @@ public class Model {
         return null;
     }
 
+    /**
+     * Assign the active reflector map to the global variable reflectorMap.
+     */
     private void lockdownReflectorMap() {
         reflectorMap = getReflectorMap();
     }
 
 
+    /**
+     * Construct the list of reflector names.
+     */
     private void fillReflectorList() {
         reflectorList.clear();
 
@@ -407,6 +439,10 @@ public class Model {
     public String getWheelChoice(int index) { return rotorStates.get(index).getWheelChoice(); }
     public void setWheelChoice(int index, String choice) { rotorStates.get(index).setWheelChoice(choice); }
 
+
+    /**
+     * Construct the list of rotor names.
+     */
     private void fillWheelList() {
         wheelList.clear();
 
@@ -437,6 +473,9 @@ public class Model {
     public void incrementRingSetting(int index, int step) { rotorStates.get(index).incrementRingSetting(step); }
 
 
+    /**
+     * Align ringSettingsList with useLetters state.
+     */
     private void switchRingSettingsList() {
 
         int[] indices = new int[ROTOR_COUNT];
@@ -449,9 +488,11 @@ public class Model {
             setRingIndex(i, indices[i]);
     }
 
+    /**
+     * Construct a new ringSettingsList.
+     */
     private void fillRingSettingsList() {
         ringSettingsList.clear();
-
         addList(ringSettingsList);
     }
 
@@ -478,6 +519,9 @@ public class Model {
     public void incrementRotorOffset(int index, int step) { rotorStates.get(index).incrementRotorOffset(step); }
 
 
+    /**
+     * Align rotorOffsetsList with useLetters state.
+     */
     private void switchRotorOffsetsList() {
 
         int[] indices = new int[ROTOR_COUNT];
@@ -490,9 +534,11 @@ public class Model {
             setRotorIndex(i, indices[i]);
     }
 
+    /**
+     * Construct a new rotorOffsetsList.
+     */
     private void fillRotorOffsetsList() {
         rotorOffsetsList.clear();
-
         addList(rotorOffsetsList);
     }
 
