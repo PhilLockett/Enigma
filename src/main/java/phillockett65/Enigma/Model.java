@@ -76,13 +76,8 @@ public class Model {
         }
     }
     private void addList(ObservableList<String> list) {
-        if (useLetters) {
-            for (int i = 0; i < 26; ++i)
-                list.add(Rotor.indexToString(i));
-        } else {
-            for (int i = 0; i < 26; ++i)
-                list.add(String.valueOf(i + 1));
-        }
+        for (int i = 0; i < 26; ++i)
+            list.add(Rotor.indexToString(i));
     }
 
     public String getSettingsFile() {
@@ -127,6 +122,36 @@ public class Model {
      */
     public void init() {
         // System.out.println("Model init.");
+    }
+
+    /**
+     * Set all attributes to the default values.
+     */
+    public void defaultSettings() {
+        setReflectorChoice("Reflector B");
+
+        setReconfigurable(false);
+        for (Pair pair : pairs)
+            pair.clear();
+
+        setWheelChoice(0, "Beta");
+        setWheelChoice(1, "I");
+        setWheelChoice(2, "II");
+        setWheelChoice(3, "III");
+
+        for (RotorState rotorState : rotorStates) {
+            rotorState.setRingIndex(0);
+            rotorState.setRotorIndex(0);
+        }
+
+        setFourthWheel(false);
+        setUseLetters(true);
+        setShow(false);
+
+        for (Pair pair : plugs)
+            pair.clear();
+
+        setEncipher(false);
     }
 
 
@@ -819,34 +844,6 @@ public class Model {
      * Initialize "Translation" panel.
      */
     private void initializeEncipher() {
-    }
-
-
-    public void defaultSettings() {
-        setReflectorChoice("Reflector B");
-
-        reconfigurable = false;
-        for (Pair pair : pairs)
-            pair.clear();
-
-        setWheelChoice(0, "Beta");
-        setWheelChoice(1, "I");
-        setWheelChoice(2, "II");
-        setWheelChoice(3, "III");
-
-        for (RotorState rotorState : rotorStates) {
-            rotorState.setRingIndex(0);
-            rotorState.setRotorIndex(0);
-        }
-
-        fourthWheel = false;
-        useLetters = true;
-        show = false;
-
-        for (Pair pair : plugs)
-            pair.clear();
-
-        encipher = false;
     }
 
 
