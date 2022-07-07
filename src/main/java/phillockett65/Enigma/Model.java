@@ -191,6 +191,9 @@ public class Model {
 
     /**
      * Construct all the Rotor collections.
+     * 
+     * Note: for the commercial, rocket and swissK Rotors, the turnover points 
+     * are guesses and may be incorrect.
      */
     private void initRotorWiring() {
 
@@ -282,11 +285,20 @@ public class Model {
     public boolean isReconfigurable() { return reconfigurable; }
 
 
+    /**
+     * Update the indexed pair with new text String then count the letter 
+     * usage of all pairs.
+     * @param index of targeted pair.
+     * @param text to use.
+     */
     public void setPairText(int index, String text) {
         pairs.get(index).set(text);
         countLetterUsage(reflectorLetterCounts, pairs);
     }
 
+    /**
+     * Sanitize all wired pairs.
+     */
     public void sanitizePairs() {
         for (Pair pair : pairs)
             pair.sanitize();
@@ -296,6 +308,11 @@ public class Model {
     public String getPairText(int index)	{ return pairs.get(index).get(); }
     public int getPairCount(int index)		{ return pairs.get(index).count(); }
 
+    /**
+     * Determine if the indexed pair is valid.
+     * @param index of targeted pair.
+     * @return true if the pair is valid, false otherwise.
+     */
     public boolean isPairValid(int index) {
         Pair pair = pairs.get(index);
 
@@ -313,11 +330,14 @@ public class Model {
     }
 
     public void setPairText(String id, String text) { setPairText(idToIndex(id), text); }
-
     public String getPairText(String id)	{ return getPairText(idToIndex(id)); }
     public int getPairCount(String id)		{ return getPairCount(idToIndex(id)); }
     public boolean isPairValid(String id)	{ return isPairValid(idToIndex(id)); }
 
+    /**
+     * Determine if the reconfigurable reflector is valid.
+     * @return true if the reconfigurable reflector is valid, false otherwise.
+     */
     private boolean isReconfigurableReflectorValid() {
         for (Pair pair : pairs)
             if ((pair.isEmpty()) || (!pair.isValid()))
@@ -339,6 +359,10 @@ public class Model {
         return true;
     }
 
+    /**
+     * Determine if the reflector is valid.
+     * @return true if the reflector is valid, false otherwise.
+     */
     public boolean isReflectorValid() {
         if (reconfigurable)
             return isReconfigurableReflectorValid();
@@ -566,6 +590,11 @@ public class Model {
     public void setFourthWheel(boolean state) { fourthWheel = state; }
     public boolean isFourthWheel() { return fourthWheel; }
 
+    /**
+     * Update useLetters and synchronise the ring setting and rotor offset 
+     * Spinners.
+     * @param state assigned to useLetters;
+     */
     public void setUseLetters(boolean state) {
         useLetters = state;
         switchRingSettingsList();
@@ -577,6 +606,10 @@ public class Model {
     public boolean isShow() { return show; }
     public void setShow(boolean state) { show = state; }
 
+    /**
+     * RotorState is a class that captures the choice of Rotor, the ring 
+     * setting and the rotor offset of a single Rotor.
+     */
     private class RotorState {
         private String wheelChoice;
         private ListSpinner ringSetting;
@@ -609,6 +642,9 @@ public class Model {
         
     }
 
+    /**
+     * Fills the list of rotor states with new instances of RotorState.
+     */
     private void fillRotorStates() {
         final String first = wheelList.get(0);
 
@@ -639,11 +675,20 @@ public class Model {
     private ArrayList<Pair> plugs = new ArrayList<Pair>(PLUG_COUNT);
 
 
+    /**
+     * Update the indexed plug with new text String then count the letter 
+     * usage of all plugs.
+     * @param index of targeted plug.
+     * @param text to use.
+     */
     public void setPlugText(int index, String text) {
         plugs.get(index).set(text);
         countLetterUsage(plugboardLetterCounts, plugs);
     }
 
+    /**
+     * Sanitize all wired plugs.
+     */
     public void sanitizePlugs() {
         for (Pair pair : plugs)
             pair.sanitize();
@@ -653,6 +698,11 @@ public class Model {
     public String getPlugText(int index)	{ return plugs.get(index).get(); }
     public int getPlugCount(int index)		{ return plugs.get(index).count(); }
 
+    /**
+     * Determine if the indexed plug is valid.
+     * @param index of targeted plug.
+     * @return true if the plug is valid, false otherwise.
+     */
     public boolean isPlugValid(int index) {
         Pair plug = plugs.get(index);
 
@@ -670,11 +720,14 @@ public class Model {
     }
 
     public void setPlugText(String id, String text) { setPlugText(idToIndex(id), text); }
-
     public String getPlugText(String id)	{ return getPlugText(idToIndex(id)); }
     public int getPlugCount(String id)		{ return getPlugCount(idToIndex(id)); }
     public boolean isPlugValid(String id)	{ return isPlugValid(idToIndex(id)); }
 
+    /**
+     * Determine if the plugboard is valid.
+     * @return true if the plugboard is valid, false otherwise.
+     */
     public boolean isPlugboardValid() {
         for (Pair pair : plugs)
             if (!pair.isValid())
@@ -726,12 +779,23 @@ public class Model {
 
     private ArrayList<Translation> pipeline = new ArrayList<Translation>(9);
 
+    /**
+     * Determine if all settings are valid which requires checking the 
+     * reflector and the plugboard.
+     * @return true if the settings are valid, false otherwise.
+     */
     public boolean isConfigValid() {
         return isPlugboardValid() && isReflectorValid();
     }
 
     public boolean isEncipher() { return encipher; }
 
+    /**
+     * Find a Rotor with the given id in the given list,
+     * @param list of Rotors to search.
+     * @param target id of Rotor.
+     * @return Rotor with matching id if found, null otherwise.
+     */
     private Rotor getRotor(ObservableList<Rotor> list, String target) {
         for (Rotor rotor : list)
              if (rotor.is(target))
@@ -766,6 +830,11 @@ public class Model {
     }
 
 
+    /**
+     * Translation is a class that helps manage the offsets of the Swappers 
+     * and Rotors and is used in the construction of the pipeline to maintain 
+     * direction.
+     */
     private class Translation {
         private final int pos;
         private final Swapper swapper;
@@ -794,6 +863,12 @@ public class Model {
 
     }
 
+    /**
+     * Translates an index (numerical equivalent of the letter) to another for 
+     * every Swapper in the pipeline.
+     * @param index to translate.
+     * @return the translated index.
+     */
     private int translatePipeline(int index) {
         if (isShow())
             System.out.print("Key: " + Rotor.indexToString(index) + "  ");
@@ -807,6 +882,9 @@ public class Model {
         return index;
     }
 
+    /**
+     * Advance the Rotor Spinners then update the Rotors to match.
+     */
     private void updatePipeline() {
         advanceRotors();
 
@@ -818,11 +896,21 @@ public class Model {
         }
     }
 
+    /**
+     * Advance the Rotors and translate an index (numerical equivalent of the 
+     * letter) through the pipeline.
+     * @param index to translate.
+     * @return the translated index.
+     */
     public int translate(int index) {
         updatePipeline();
         return translatePipeline(index);
     }
 
+    /**
+     * Build the pipeline of Swappers (Rotors) including the identifiers for 
+     * offset updates and the direction of translation.
+     */
     private void buildPipeline() {
 
         pipeline.clear();
@@ -854,6 +942,11 @@ public class Model {
         pipeline.add(new Translation(OTHER, plugboard, Swapper.LEFT_TO_RIGHT));
     }
 
+    /**
+     * Lockdown all the settings ready for translation. This involves building 
+     * letter mappings as necessary, constructing needed Swappers, finalizing
+     * ring settings and building the pipeline.
+     */
     private void lockdownSettings() {
         setPlugboardMap();
         lockdownReflectorMap();
@@ -872,7 +965,12 @@ public class Model {
 
         buildPipeline();
     }
-    
+
+    /**
+     * Set the encipher state and lockdown all the data if we are about to 
+     * translate keys.
+     * @param state
+     */
     public void setEncipher(boolean state) {
         // System.out.println("setEncipher(" + state + ").");
         encipher = state;
