@@ -948,6 +948,9 @@ public class Model {
      * ring settings and building the pipeline.
      */
     private void lockdownSettings() {
+        sanitizePairs();
+        sanitizePlugs();
+
         setPlugboardMap();
         lockdownReflectorMap();
 
@@ -974,11 +977,8 @@ public class Model {
     public void setEncipher(boolean state) {
         // System.out.println("setEncipher(" + state + ").");
         encipher = state;
-        if (encipher) {
-            sanitizePairs();
-            sanitizePlugs();
+        if (encipher)
             lockdownSettings();
-        }
     }
 
     /**
