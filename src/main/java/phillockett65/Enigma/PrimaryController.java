@@ -687,6 +687,7 @@ public class PrimaryController {
 
         model.setEncipher(encipher);
         updateGUIState();
+        syncUI();
     }
 
     @FXML
