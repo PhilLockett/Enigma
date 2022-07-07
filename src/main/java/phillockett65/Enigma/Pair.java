@@ -42,9 +42,6 @@ public class Pair {
      * @return true if the pair is valid, false otherwise.
      */
     public boolean isValid() {
-        if (isEmpty())
-            return true;
-
         if (count() != 2)
             return false;
 

@@ -316,9 +316,6 @@ public class Model {
     public boolean isPairValid(int index) {
         Pair pair = pairs.get(index);
 
-        if (pair.isEmpty())
-            return false;
-
         if (!pair.isValid())
             return false;
 
@@ -340,7 +337,7 @@ public class Model {
      */
     private boolean isReconfigurableReflectorValid() {
         for (Pair pair : pairs)
-            if ((pair.isEmpty()) || (!pair.isValid()))
+            if (!pair.isValid())
                 return false;
 
         int empty = 0;
@@ -730,7 +727,7 @@ public class Model {
      */
     public boolean isPlugboardValid() {
         for (Pair pair : plugs)
-            if (!pair.isValid())
+        if ((!pair.isEmpty()) && (!pair.isValid()))
                 return false;
 
         for (int i = 0; i < plugboardLetterCounts.length; ++i)
