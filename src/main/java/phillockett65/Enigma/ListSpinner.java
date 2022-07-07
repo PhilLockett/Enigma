@@ -23,13 +23,12 @@
  */
 package phillockett65.Enigma;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.SpinnerValueFactory;
 
 public class ListSpinner {
 
-    private ObservableList<String> list = FXCollections.observableArrayList();
+    private ObservableList<String> list;
     private SpinnerValueFactory<String> SVF;
 
     public ListSpinner(ObservableList<String> list) {

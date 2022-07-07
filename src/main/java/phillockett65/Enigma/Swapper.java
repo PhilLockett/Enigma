@@ -60,11 +60,11 @@ public class Swapper {
      * Initialization support code.
      */
 
-    private boolean setReflect() {
     /**
      * Calculate if this is a reflector mapping.
      * @return true if the mapping is bi-directional.
      */
+    private boolean isReflect() {
 
         for (int i = 0; i < map.length; ++i) {
             final int c = map[i];
@@ -85,7 +85,7 @@ public class Swapper {
     public Swapper(String id, int[] map) {
         this.id = id;
         this.map = map;
-        reflect = setReflect();
+        reflect = isReflect();
 
         rightMap = new int[26];
         leftMap = new int[26];
