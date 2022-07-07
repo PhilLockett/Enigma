@@ -48,6 +48,32 @@ public class PrimaryController {
 
     private Model model;
 
+
+
+    /************************************************************************
+     * General support code.
+     */
+
+    private static final String ERROR = "error-text-field";
+
+    /**
+     * Use CSS to indicate if the contents of a TextField is valid.
+     * @param field the adjust appearance.
+     * @param valid status of TextField.
+     */
+    private void setValidTextField(TextField field, boolean valid) {
+
+        if (valid) {
+            field.getStyleClass().remove(ERROR);
+        } else {
+            if (!field.getStyleClass().contains(ERROR))
+                field.getStyleClass().add(ERROR);
+        }
+        
+    }
+
+
+
     /************************************************************************
      * Support code for the Initialization of the Controller.
      */
@@ -93,6 +119,34 @@ public class PrimaryController {
      */
     public void saveState() {
         DataStore.writeData(model);
+    }
+
+    /**
+     * Synchronise all controls with the model. This should be the last step 
+     * in the initialisation.
+     */
+    public void syncUI() {
+        reflectorChoicebox.setValue(model.getReflectorChoice());
+        reconfigurableCheckbox.setSelected(model.isReconfigurable());
+        for (int i = 0; i < pairs.size(); ++i) {
+            TextField pair = pairs.get(i);
+            pair.setText(model.getPairText(i));
+        }
+
+        wheel0Choicebox.setValue(model.getWheelChoice(0));
+        wheel1Choicebox.setValue(model.getWheelChoice(1));
+        wheel2Choicebox.setValue(model.getWheelChoice(2));
+        wheel3Choicebox.setValue(model.getWheelChoice(3));
+
+        fourthWheelCheckbox.setSelected(model.isFourthWheel());
+        useLettersCheckbox.setSelected(model.isUseLetters());
+        showStepsCheckbox.setSelected(model.isShow());
+
+        for (int i = 0; i < plugs.size(); ++i) {
+            TextField plug = plugs.get(i);
+            plug.setText(model.getPlugText(i));
+        }
+        encipherButton.setSelected(model.isEncipher());
     }
 
 
@@ -569,18 +623,6 @@ public class PrimaryController {
         }
     }
 
-    private static final String ERROR = "error-text-field";
-    private void setValidTextField(TextField field, boolean valid) {
-
-        if (valid) {
-            field.getStyleClass().remove(ERROR);
-        } else {
-            if (!field.getStyleClass().contains(ERROR))
-                field.getStyleClass().add(ERROR);
-        }
-        
-    }
-
     /**
      * Control whether it is possible to change the plugboard connections.
      * @param editable indicates if the plugboard connections are editable.
@@ -731,30 +773,6 @@ public class PrimaryController {
             if (current == index)
                 current = -1;
         }
-    }
-
-    public void syncUI() {
-        reflectorChoicebox.setValue(model.getReflectorChoice());
-        reconfigurableCheckbox.setSelected(model.isReconfigurable());
-        for (int i = 0; i < pairs.size(); ++i) {
-            TextField pair = pairs.get(i);
-            pair.setText(model.getPairText(i));
-        }
-
-        wheel0Choicebox.setValue(model.getWheelChoice(0));
-        wheel1Choicebox.setValue(model.getWheelChoice(1));
-        wheel2Choicebox.setValue(model.getWheelChoice(2));
-        wheel3Choicebox.setValue(model.getWheelChoice(3));
-
-        fourthWheelCheckbox.setSelected(model.isFourthWheel());
-        useLettersCheckbox.setSelected(model.isUseLetters());
-        showStepsCheckbox.setSelected(model.isShow());
-
-        for (int i = 0; i < plugs.size(); ++i) {
-            TextField plug = plugs.get(i);
-            plug.setText(model.getPlugText(i));
-        }
-        encipherButton.setSelected(model.isEncipher());
     }
 
 }
