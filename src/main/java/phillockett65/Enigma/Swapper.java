@@ -2,7 +2,7 @@
  *
  *  Copyright 2022 Philip Lockett.
  *
- *  This file is part of BaseFXML.
+ *  This file is part of Enigma.
  *
  *  Enigma is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -61,6 +61,10 @@ public class Swapper {
      */
 
     private boolean setReflect() {
+    /**
+     * Calculate if this is a reflector mapping.
+     * @return true if the mapping is bi-directional.
+     */
 
         for (int i = 0; i < map.length; ++i) {
             final int c = map[i];
@@ -73,6 +77,11 @@ public class Swapper {
         return true;
     }
 
+    /**
+     * Constructor.
+     * @param id of this mapping.
+     * @param map of the required translation.
+     */
     public Swapper(String id, int[] map) {
         this.id = id;
         this.map = map;
@@ -111,6 +120,14 @@ public class Swapper {
 
     public void setOffset(int value) {}
 
+    /**
+     * Translates (swaps) an index (numerical equivalent of the letter) to 
+     * another using the map.
+     * @param direction used by derived class.
+     * @param index to translate.
+     * @param show the translation step on the command line.
+     * @return the translated index.
+     */
     public int swap(int direction, int index, boolean show) {
         final int output = map[index];
 

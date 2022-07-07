@@ -2,7 +2,7 @@
  *
  *  Copyright 2022 Philip Lockett.
  *
- *  This file is part of BaseFXML.
+ *  This file is part of Enigma.
  *
  *  Enigma is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -53,6 +53,11 @@ public class DataStore implements Serializable {
     public DataStore() {
     }
 
+    /**
+     * Data exchange from the model to this DataStore.
+     * @param model contains the data.
+     * @return true if data successfully pulled from the model, false otherwise.
+     */
     public boolean pull(Model model) {
         boolean success = true;
 
@@ -83,6 +88,11 @@ public class DataStore implements Serializable {
         return success;
     }
 
+    /**
+     * Data exchange from this DataStore to the model.
+     * @param model contains the data.
+     * @return true if data successfully pushed to the model, false otherwise.
+     */
     public boolean push(Model model) {
         boolean success = true;
 
@@ -119,6 +129,12 @@ public class DataStore implements Serializable {
      * Support code for static public interface.
      */
 
+    /**
+     * Static method that instantiates a DataStore, populates it from the 
+     * model and writes it to disc.
+     * @param model contains the data.
+     * @return true if data successfully written to disc, false otherwise.
+     */
     public static boolean writeData(Model model) {
         boolean success = false;
 
@@ -140,6 +156,12 @@ public class DataStore implements Serializable {
         return success;
     }
 
+    /**
+     * Static method that instantiates a DataStore, populates it from disc 
+     * and writes it to the model.
+     * @param model contains the data.
+     * @return true if data successfully read from disc, false otherwise.
+     */
     public static boolean readData(Model model) {
         boolean success = false;
 
@@ -166,6 +188,9 @@ public class DataStore implements Serializable {
      * Support code for debug stuff.
      */
 
+    /**
+      * Print data store on the command line.
+      */
     private void dump() {
         // System.out.println("reflectorChoice = " + reflectorChoice);
         // System.out.println("reconfigurable = " + reconfigurable);

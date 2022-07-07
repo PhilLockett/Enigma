@@ -2,7 +2,7 @@
  *
  *  Copyright 2022 Philip Lockett.
  *
- *  This file is part of BaseFXML.
+ *  This file is part of Enigma.
  *
  *  Enigma is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

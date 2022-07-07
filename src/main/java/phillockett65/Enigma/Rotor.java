@@ -2,7 +2,7 @@
  *
  *  Copyright 2022 Philip Lockett.
  *
- *  This file is part of BaseFXML.
+ *  This file is part of Enigma.
  *
  *  Enigma is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -44,6 +44,12 @@ public class Rotor extends Swapper {
      * Initialization support code.
      */
 
+    /**
+     * Convert a String representation of the map to an integer array of 
+     * indices (numerical equivalent of the letter).
+     * @param cipher String representation of the mapping.
+     * @return array of indices.
+     */
     private static int[] buildIndices(String cipher) {
         int [] alan = new int[26];
 
@@ -55,6 +61,12 @@ public class Rotor extends Swapper {
         return alan;
     }
 
+    /**
+     * Convert a String representing 1 or more turnover points into an array 
+     * of flags.
+     * @param turnovers String representation of the turnover points.
+     * @return array of flags indicating turnover points.
+     */
     private boolean[] buildTurnover(String turnovers) {
         boolean [] turing = new boolean[26];
 
@@ -69,6 +81,11 @@ public class Rotor extends Swapper {
         return turing;
     }
 
+    /**
+     * Translate the turnover points to notch points which occur 1 letter 
+     * before the turnover point.
+     * @return array of flags indicating notch points.
+     */
     private boolean[] buildNotches() {
         boolean [] turing = new boolean[26];
 
@@ -80,6 +97,14 @@ public class Rotor extends Swapper {
         return turing;
     }
 
+    /**
+     * Constructor.
+     * @param id of this mapping.
+     * @param cipher String representation of the mapping.
+     * @param date rotor was introduced (for reference purposes).
+     * @param name of rotor group (for reference purposes).
+     * @param turnover list of letters
+     */
     public Rotor(String id, String cipher, String date, String name, String turnover) {
         super(id, buildIndices(cipher));
         this.cipher = cipher;
@@ -113,6 +138,14 @@ public class Rotor extends Swapper {
 
     public void setOffset(int value) { offset = value; }
 
+    /**
+     * Translates (swaps) an index (numerical equivalent of the letter) to 
+     * another using the map.
+     * @param direction of mapping. Eg A may map to J, but J may not map to A.
+     * @param index to translate.
+     * @param show the translation step on the command line.
+     * @return the translated index.
+     */
     public int swap(int direction, int index, boolean show) {
         int shift = (index + offset) % 26;
 

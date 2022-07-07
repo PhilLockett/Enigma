@@ -2,7 +2,7 @@
  *
  *  Copyright 2022 Philip Lockett.
  *
- *  This file is part of BaseFXML.
+ *  This file is part of Enigma.
  *
  *  Enigma is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,6 +21,11 @@
 /*
  * PrimaryController is the class that is responsible for centralizing control.
  * It is instantiated by the FXML loader creates the Model.
+ * 
+ * Each handler should always update the model with the changed data first, 
+ * then act on the new state of the model.
+ * 
+ * The order of the code should match the order of the layout when possible.
  */
 package phillockett65.Enigma;
 
@@ -83,6 +88,9 @@ public class PrimaryController {
         syncUI();
     }
 
+    /**
+     * Called by Application on shutdown.
+     */
     public void saveState() {
         DataStore.writeData(model);
     }
@@ -155,6 +163,9 @@ public class PrimaryController {
         checkConfigValid();
     }
 
+    /**
+     * Indicate error state of each reflector pair based on it's validity.
+     */
     private void checkReflector() {
         // System.out.println("checkReflector()");
 
@@ -164,6 +175,10 @@ public class PrimaryController {
         }
     }
 
+    /**
+     * Control whether it is possible to change the reflector pairs.
+     * @param editable indicates if the reflector pairs are editable.
+     */
     private void editablePairs(boolean editable) {
         // System.out.println("editablePairs(" + editable + ")");
 
@@ -171,6 +186,10 @@ public class PrimaryController {
             field.setEditable(editable);
     }
 
+    /**
+     * Control whether it is possible to change the reflector set-up.
+     * @param editable indicates if the reflector set-up is editable.
+     */
     private void editableReflector(boolean editable) {
         // System.out.println("editableReflector(" + editable + ")");
 
@@ -183,6 +202,10 @@ public class PrimaryController {
         reconfigurableCheckbox.setDisable(!editable);
     }
 
+    /**
+     * Switch between being able to select a hard-wired reflector or set-up a 
+     * reconfigurable reflector depending on isReconfigurable().
+     */
     private void setReconfigurable() {
         final boolean reconfigurable = model.isReconfigurable();
 
@@ -246,7 +269,11 @@ public class PrimaryController {
     @FXML
     private ChoiceBox<String> wheel3Choicebox;
 
-
+    /**
+     * Control whether it is possible to change the rotor selection. Note 
+     * wheel0Choicebox is controlled seperately in editableFourthWheel().
+     * @param editable indicates if the rotor selections are editable.
+     */
     private void editableWheelOrder(boolean editable) {
         // System.out.println("editableReflector(" + editable + ")");
 
@@ -307,6 +334,11 @@ public class PrimaryController {
     private Spinner<String> ringSetting3Spinner;
 
 
+    /**
+     * Control whether it is possible to change the ring settings. Note 
+     * ringSetting0Spinner is controlled seperately in editableFourthWheel().
+     * @param editable indicates if the ring settings are editable.
+     */
     private void editableRingSettings(boolean editable) {
         // System.out.println("editableRingSettings(" + editable + ")");
 
@@ -443,6 +475,11 @@ public class PrimaryController {
         model.setShow(showStepsCheckbox.isSelected());
     }
 
+    /**
+     * Control whether it is possible to select and change the fourth rotor 
+     * depending on the states of fourthWheelCheckbox and encipherButton.
+     * @param editable indicates if the ring settings are editable.
+     */
     private void editableFourthWheel() {
         final boolean fourthWheel = model.isFourthWheel();
         final boolean disable = fourthWheel ? model.isEncipher() : true;
@@ -520,6 +557,9 @@ public class PrimaryController {
         checkConfigValid();
     }
 
+    /**
+     * Indicate error state of each plugboard pair based on it's validity.
+     */
     private void checkPlugboard() {
         // System.out.println("checkPlugboard()");
 
@@ -541,6 +581,10 @@ public class PrimaryController {
         
     }
 
+    /**
+     * Control whether it is possible to change the plugboard connections.
+     * @param editable indicates if the plugboard connections are editable.
+     */
     private void editablePlugboard(boolean editable) {
         // System.out.println("editablePlugboard(" + editable + ")");
 
@@ -612,6 +656,11 @@ public class PrimaryController {
     }
 
     private boolean updateStatus() {
+    /**
+     * Update the config editability state of the GUI depending on whether we 
+     * are currently translating keys or not.
+     * @return
+     */
         final boolean encipher = model.isEncipher();
 
         // System.out.println("updateStatus(" + encipher + ")");
@@ -637,6 +686,9 @@ public class PrimaryController {
     }
 
     private void checkConfigValid() {
+    /**
+     * Synchronise the encipherButton state with the config validity.
+     */
         encipherButton.setDisable(!model.isConfigValid());
     }
 
@@ -650,6 +702,10 @@ public class PrimaryController {
     }
 
 
+    /**
+     * Called by the Application when a new key is pressed.
+     * @param keyCode key to be processed
+     */
     public void keyPress(KeyCode keyCode) {
         final boolean encipher = model.isEncipher();
 
@@ -663,6 +719,10 @@ public class PrimaryController {
         }
     }
 
+    /**
+     * Called by the Application when a current key is released.
+     * @param keyCode key to be processed
+     */
     public void keyRelease(KeyCode keyCode) {
         final boolean encipher = model.isEncipher();
 
