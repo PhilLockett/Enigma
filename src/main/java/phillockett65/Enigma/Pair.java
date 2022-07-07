@@ -32,11 +32,15 @@ public class Pair {
     public String get() { return letters; }
     public int count() { return letters.length(); }
     public char charAt(int index) { return letters.charAt(index); }
-    public boolean isCharAt(int index) { return Character.isAlphabetic(charAt(index)); }
     public int indexAt(int index) { return Rotor.charToIndex(charAt(index)); }
-
+    
     public boolean isEmpty() { return count() == 0; }
+    public boolean isCharAt(int index) { return Character.isAlphabetic(charAt(index)); }
 
+    /**
+     * Check the validity of the Pair.
+     * @return true if the pair is valid, false otherwise.
+     */
     public boolean isValid() {
         if (isEmpty())
             return true;
@@ -56,6 +60,9 @@ public class Pair {
         return true;
     }
 
+    /**
+     * Perform clean up on the pair.
+     */
     public void sanitize() {
         letters = letters.toUpperCase();
     }

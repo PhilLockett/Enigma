@@ -31,37 +31,24 @@ public class ListSpinner {
     private ObservableList<String> list;
     private SpinnerValueFactory<String> SVF;
 
+    /**
+     * Constructor.
+     * @param list of Strings to be displayed on the spinner.
+     */
     public ListSpinner(ObservableList<String> list) {
         this.list = list;
         SVF = new SpinnerValueFactory.ListSpinnerValueFactory<String>(list);
     }
 
-    public ObservableList<String> getList() {
-        return list;
-    }
+    public ObservableList<String> getList() { return list; }
+    public SpinnerValueFactory<String> getSVF() { return SVF; }
 
-    public SpinnerValueFactory<String> getSVF() {
-        return SVF;
-    }
+    public String getCurrent() { return SVF.getValue(); }
+    public int getIndex() { return list.indexOf(getCurrent()); }
 
-    public String getCurrent() {
-        return SVF.getValue();
-    }
+    public void setCurrent(String value) { SVF.setValue(value); }
+    public void setIndex(int value) { SVF.setValue(list.get(value)); }
 
-    public int getIndex() {
-        return list.indexOf(getCurrent());
-    }
-
-    public void setCurrent(String value) {
-        SVF.setValue(value);
-    }
-
-    public void setIndex(int value) {
-        SVF.setValue(list.get(value));
-    }
-
-    public void increment(int steps) {
-        SVF.increment(steps);
-    }
+    public void increment(int steps) { SVF.increment(steps); }
 
 }
