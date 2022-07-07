@@ -165,7 +165,7 @@ public class PrimaryController {
     void reconfigurableCheckboxActionPerformed(ActionEvent event) {
         model.setReconfigurable(reconfigurableCheckbox.isSelected());
         setReconfigurable();
-        checkConfigValid();
+        syncEncipherButton();
     }
 
     @FXML
@@ -214,7 +214,7 @@ public class PrimaryController {
         model.setPairText(field.getId(), field.getText());
 
         checkReflector();
-        checkConfigValid();
+        syncEncipherButton();
     }
 
     /**
@@ -608,7 +608,7 @@ public class PrimaryController {
         model.setPlugText(field.getId(), field.getText());
         
         checkPlugboard();
-        checkConfigValid();
+        syncEncipherButton();
     }
 
     /**
@@ -669,9 +669,7 @@ public class PrimaryController {
      * Support code for "Translation" panel.
      */
 
-    final String mainMessage = "Configure Settings";
-
-    private int current = -1;
+    private int currentKey = -1;
 
     @FXML
     private ToggleButton encipherButton;
@@ -688,7 +686,7 @@ public class PrimaryController {
         // System.out.println("encipherButtonActionPerformed(" + encipher + ")");
 
         model.setEncipher(encipher);
-        updateStatus();
+        updateGUIState();
     }
 
     @FXML
@@ -697,12 +695,12 @@ public class PrimaryController {
         syncUI();
     }
 
-    private boolean updateStatus() {
     /**
      * Update the config editability state of the GUI depending on whether we 
      * are currently translating keys or not.
      * @return
      */
+    private boolean updateGUIState() {
         final boolean encipher = model.isEncipher();
 
         // System.out.println("updateStatus(" + encipher + ")");
@@ -721,16 +719,16 @@ public class PrimaryController {
             encipherButton.setText("Press to Start Translation");
             encipherButton.setTooltip(new Tooltip("Press to use current settings and translate letters"));
 
-            mainLabel.setText(mainMessage);
+            mainLabel.setText("Configure Settings");
         }
 
         return encipher;
     }
 
-    private void checkConfigValid() {
     /**
      * Synchronise the encipherButton state with the config validity.
      */
+    private void syncEncipherButton() {
         encipherButton.setDisable(!model.isConfigValid());
     }
 
@@ -738,8 +736,8 @@ public class PrimaryController {
      * Initialize "Translation" panel.
      */
     private void initializeEncipher() {
-        checkConfigValid();
-        encipherButton.setSelected(updateStatus());
+        syncEncipherButton();
+        encipherButton.setSelected(updateGUIState());
         resetButton.setTooltip(new Tooltip("Click to return all settings to the defaults"));
     }
 
@@ -752,9 +750,9 @@ public class PrimaryController {
         final boolean encipher = model.isEncipher();
 
         if (encipher) {
-            if (current == -1) {
-                current = Swapper.stringToIndex(keyCode.getChar());
-                final int index = model.translate(current);
+            if (currentKey == -1) {
+                currentKey = Swapper.stringToIndex(keyCode.getChar());
+                final int index = model.translate(currentKey);
 
                 mainLabel.setText(keyCode.getChar() + "->" + Rotor.indexToString(index));
             }
@@ -770,8 +768,8 @@ public class PrimaryController {
 
         if (encipher) {
             final int index = Swapper.stringToIndex(keyCode.getChar());
-            if (current == index)
-                current = -1;
+            if (currentKey == index)
+                currentKey = -1;
         }
     }
 
