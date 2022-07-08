@@ -803,40 +803,40 @@ public class Model {
 
 
     /**
-     * Advances the right rotor then checks the other rotors. The notch point 
-     * of the middle rotor is used to check for a step of the left rotor and a 
-     * double step of the middle rotor. The turnover point of the right rotor 
-     * is used to check for a step of the middle rotor
+     * Advances the spinner of the right rotor then checks the other rotors. 
+     * The notch point of the middle rotor is used to check for a step of the 
+     * left rotor and a double step of the middle rotor. The turnover point of 
+     * the right rotor is used to check for a step of the middle rotor
      */
     private void advanceRotors() {
-        // Normal step of right rotor.
+        // Normal step of the spinner of the right rotor.
         incrementRotorOffset(RIGHT, 1);
 
         Rotor rotor = getRotor(rotors, getWheelChoice(MIDDLE));
         if (rotor.isNotchPoint(getRotorIndex(MIDDLE))) {
-            // Double step of middle rotor, normal step of left rotor.
+            // Double step of the spinner of the middle rotor, normal step of 
+            // the spinner of the left rotor.
             incrementRotorOffset(MIDDLE, 1);
             incrementRotorOffset(LEFT, 1);
         }
 
         rotor = getRotor(rotors, getWheelChoice(RIGHT));
         if (rotor.isTurnoverPoint(getRotorIndex(RIGHT))) {
-            // Right rotor takes middle rotor one step further.
+            // The right rotor takes the spinner of the middle rotor one step 
+            // further.
             incrementRotorOffset(MIDDLE, 1);
         }
     }
 
 
     /**
-     * Translation is a class that helps manage the offsets of the Swappers 
-     * and Rotors and is used in the construction of the pipeline to maintain 
-     * direction.
+     * Translation is a class that is used in the construction of the pipeline 
+     * to maintain direction and helps manage the offsets of the Rotors.
      */
     private class Translation {
         private final int pos;
         private final Swapper swapper;
         private final int dir;
-
 
         public Translation(int id, Swapper swapper, int dir) {
             this.pos = id;
@@ -844,6 +844,12 @@ public class Model {
             this.dir = dir;
         }
 
+        /**
+         * Update the offset of this swapper only if target matches pos.
+         * @param target position to match with this pos.
+         * @param offset to set this offset to.
+         * @return true if the offset is updated, false otherwise.
+         */
         public boolean conditionallyUpdate(int target, int offset) {
             if (target == pos) {
                 swapper.setOffset(offset);
@@ -854,6 +860,12 @@ public class Model {
             return false;
         }
     
+        /**
+         * Translates an index (numerical equivalent of the letter) to another 
+         * using this directional Swapper (Rotor).
+         * @param index to translate.
+         * @return the translated index.
+         */
         public int translate(int index) {
             return swapper.swap(dir, index, isShow());
         }	
