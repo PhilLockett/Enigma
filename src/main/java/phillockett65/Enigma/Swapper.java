@@ -127,13 +127,13 @@ public class Swapper {
     /**
      * Translates (swaps) an index (numerical equivalent of the letter) to 
      * another using the map.
-     * @param direction used by derived class.
+     * @param direction of mapping.
      * @param index to translate.
      * @param show the translation step on the command line.
      * @return the translated index.
      */
     public int swap(int direction, int index, boolean show) {
-        final int output = map[index];
+        final int output = (direction == RIGHT_TO_LEFT) ? rightToLeft(index) : leftToRight(index);
 
         if (show)
             System.out.print(id + "(" + Rotor.indexToString(index) + "->" + Rotor.indexToString(output) + ")  ");
