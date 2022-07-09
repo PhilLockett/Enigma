@@ -498,15 +498,7 @@ public class Model {
      * Align ringSettingsList with useLetters state.
      */
     private void switchRingSettingsList() {
-
-        int[] indices = new int[ROTOR_COUNT];
-        for (int i = 0; i < ROTOR_COUNT; ++i)
-            indices[i] = getRingIndex(i);
-
         setList(ringSettingsList);
-
-        for (int i = 0; i < ROTOR_COUNT; ++i)
-            setRingIndex(i, indices[i]);
     }
 
     /**
@@ -544,15 +536,7 @@ public class Model {
      * Align rotorOffsetsList with useLetters state.
      */
     private void switchRotorOffsetsList() {
-
-        int[] indices = new int[ROTOR_COUNT];
-        for (int i = 0; i < ROTOR_COUNT; ++i)
-            indices[i] = getRotorIndex(i);
-
         setList(rotorOffsetsList);
-
-        for (int i = 0; i < ROTOR_COUNT; ++i)
-            setRotorIndex(i, indices[i]);
     }
 
     /**
