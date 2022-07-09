@@ -21,8 +21,8 @@
 /*
  * Rotor is a class that extends Swapper and captures the details of a rotor 
  * including the ring setting which is set post instantiation and the rotation
- * (offset) which is dynamically updated in normal use. Note; the notch 
- * immediately preceeds the turnover.
+ * (offset) which is dynamically updated in normal use. Note, the turnover point
+ * immediately follows the notch point.
  */
 package phillockett65.Enigma;
 

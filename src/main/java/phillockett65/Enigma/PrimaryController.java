@@ -58,7 +58,7 @@ public class PrimaryController {
 
     /**
      * Use CSS to indicate if the contents of a TextField is valid.
-     * @param field the adjust appearance.
+     * @param field to adjust the appearance of.
      * @param valid status of TextField.
      */
     private void setValidTextField(TextField field, boolean valid) {
@@ -698,8 +698,8 @@ public class PrimaryController {
 
     /**
      * Update the config editability state of the GUI depending on whether we 
-     * are currently translating keys or not.
-     * @return
+     * are currently translating letters or not.
+     * @return true if we are currently translating letters, false otherwise.
      */
     private boolean updateGUIState() {
         final boolean encipher = model.isEncipher();
@@ -727,7 +727,7 @@ public class PrimaryController {
     }
 
     /**
-     * Synchronise the encipherButton state with the config validity.
+     * Only allow the encipherButton to be selected if the config is valid.
      */
     private void syncEncipherButton() {
         encipherButton.setDisable(!model.isConfigValid());

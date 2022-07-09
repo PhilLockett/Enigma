@@ -20,6 +20,11 @@
 
 /*
  * ListSpinner is a Spinner wrapper class for an ObservableList of Strings.
+ * It maintains a reference to the observable list of strings that is used to 
+ * populate the spinner value factory of strings. If any of all of the Strings 
+ * in the observable list are changed externally, the spinner value factory 
+ * automatically changes to reflect this. However if the number of items in 
+ * the list is changed the behaviour is currently undefined.
  */
 package phillockett65.Enigma;
 
