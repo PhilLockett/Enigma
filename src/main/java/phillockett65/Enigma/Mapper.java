@@ -19,7 +19,7 @@
  */
 
 /*
- * Swapper is a class that captures a directional mapping. For example, for 
+ * Mapper is a class that captures a directional mapping. For example, for 
  * Rotor I from Enigma I, the letter A maps to E, but E maps to L. The A to E
  * mapping is classed a RIGHT_TO_LEFT mapping. The E to L mapping is classed a 
  * LEFT_TO_RIGHT mapping. If these are the same then it is a Reflector mapping 
@@ -29,7 +29,7 @@ package phillockett65.Enigma;
 
 import java.util.Arrays;
 
-public class Swapper {
+public class Mapper {
 
     public final static int RIGHT_TO_LEFT = 1;
     public final static int LEFT_TO_RIGHT = 2;
@@ -86,7 +86,7 @@ public class Swapper {
      * @param id of this mapping.
      * @param map of the required translation.
      */
-    public Swapper(String id, int[] map) {
+    public Mapper(String id, int[] map) {
         this.id = id;
         this.map = map;
         reflect = isReflect();

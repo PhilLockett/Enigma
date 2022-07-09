@@ -19,7 +19,7 @@
  */
 
 /*
- * Rotor is a class that extends Swapper and captures the details of a rotor 
+ * Rotor is a class that extends Mapper and captures the details of a rotor 
  * including the ring setting which is set post instantiation and the rotation
  * (offset) which is dynamically updated in normal use. Note, the turnover point
  * immediately follows the notch point.
@@ -28,7 +28,7 @@ package phillockett65.Enigma;
 
 import java.util.Arrays;
 
-public class Rotor extends Swapper {
+public class Rotor extends Mapper {
     private final String cipher;
     private final String date;
     private final String name;

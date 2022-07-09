@@ -272,7 +272,7 @@ public class Model {
     private int[] reflectorLetterCounts;
     private int[] reconfigurableReflectorMap;
     private int[] reflectorMap;
-    private Swapper reflector;
+    private Mapper reflector;
 
     private ArrayList<Pair> pairs = new ArrayList<Pair>(PAIR_COUNT);
 
@@ -667,7 +667,7 @@ public class Model {
     
     private int[] plugboardLetterCounts;
     private int[] plugboardMap;
-    private Swapper plugboard;
+    private Mapper plugboard;
 
     private ArrayList<Pair> plugs = new ArrayList<Pair>(PLUG_COUNT);
 
@@ -835,24 +835,24 @@ public class Model {
      */
     private class Translation {
         private final int pos;
-        private final Swapper swapper;
+        private final Mapper mapper;
         private final int dir;
 
-        public Translation(int id, Swapper swapper, int dir) {
+        public Translation(int id, Mapper mapper, int dir) {
             this.pos = id;
-            this.swapper = swapper;
+            this.mapper = mapper;
             this.dir = dir;
         }
 
         /**
-         * Update the offset of this swapper only if target matches pos.
+         * Update the offset of this mapper only if target matches pos.
          * @param target position to match with this pos.
          * @param offset to set this offset to.
          * @return true if the offset is updated, false otherwise.
          */
         public boolean conditionallyUpdate(int target, int offset) {
             if (target == pos) {
-                swapper.setOffset(offset);
+                mapper.setOffset(offset);
 
                 return true;
             }
@@ -862,19 +862,19 @@ public class Model {
     
         /**
          * Translates an index (numerical equivalent of the letter) to another 
-         * using this directional Swapper (Rotor).
+         * using this directional Mapper (Rotor).
          * @param index to translate.
          * @return the translated index.
          */
         public int translate(int index) {
-            return swapper.swap(dir, index, isShow());
+            return mapper.swap(dir, index, isShow());
         }	
 
     }
 
     /**
      * Translates an index (numerical equivalent of the letter) to another for 
-     * every Swapper in the pipeline.
+     * every Mapper in the pipeline.
      * @param index to translate.
      * @return the translated index.
      */
@@ -917,7 +917,7 @@ public class Model {
     }
 
     /**
-     * Build the pipeline of Swappers (Rotors) including the identifiers for 
+     * Build the pipeline of Mappers (Rotors) including the identifiers for 
      * offset updates and the direction of translation.
      */
     private void buildPipeline() {
@@ -930,30 +930,30 @@ public class Model {
         Rotor middle = getRotor(rotors, getWheelChoice(MIDDLE));
         Rotor right = getRotor(rotors, getWheelChoice(RIGHT));
 
-        pipeline.add(new Translation(OTHER, plugboard, Swapper.RIGHT_TO_LEFT));
+        pipeline.add(new Translation(OTHER, plugboard, Mapper.RIGHT_TO_LEFT));
 
         if (fourthWheel)
-            pipeline.add(new Translation(SLOW, slow, Swapper.RIGHT_TO_LEFT));
+            pipeline.add(new Translation(SLOW, slow, Mapper.RIGHT_TO_LEFT));
 
-        pipeline.add(new Translation(RIGHT, right, Swapper.RIGHT_TO_LEFT));
-        pipeline.add(new Translation(MIDDLE, middle, Swapper.RIGHT_TO_LEFT));
-        pipeline.add(new Translation(LEFT, left, Swapper.RIGHT_TO_LEFT));
+        pipeline.add(new Translation(RIGHT, right, Mapper.RIGHT_TO_LEFT));
+        pipeline.add(new Translation(MIDDLE, middle, Mapper.RIGHT_TO_LEFT));
+        pipeline.add(new Translation(LEFT, left, Mapper.RIGHT_TO_LEFT));
 
-        pipeline.add(new Translation(OTHER, reflector, Swapper.RIGHT_TO_LEFT));
+        pipeline.add(new Translation(OTHER, reflector, Mapper.RIGHT_TO_LEFT));
 
-        pipeline.add(new Translation(LEFT, left, Swapper.LEFT_TO_RIGHT));
-        pipeline.add(new Translation(MIDDLE, middle, Swapper.LEFT_TO_RIGHT));
-        pipeline.add(new Translation(RIGHT, right, Swapper.LEFT_TO_RIGHT));
+        pipeline.add(new Translation(LEFT, left, Mapper.LEFT_TO_RIGHT));
+        pipeline.add(new Translation(MIDDLE, middle, Mapper.LEFT_TO_RIGHT));
+        pipeline.add(new Translation(RIGHT, right, Mapper.LEFT_TO_RIGHT));
 
         if (fourthWheel)
-            pipeline.add(new Translation(SLOW, slow, Swapper.LEFT_TO_RIGHT));
+            pipeline.add(new Translation(SLOW, slow, Mapper.LEFT_TO_RIGHT));
 
-        pipeline.add(new Translation(OTHER, plugboard, Swapper.LEFT_TO_RIGHT));
+        pipeline.add(new Translation(OTHER, plugboard, Mapper.LEFT_TO_RIGHT));
     }
 
     /**
      * Lockdown all the settings ready for translation. This involves building 
-     * letter mappings as necessary, constructing needed Swappers, finalizing
+     * letter mappings as necessary, constructing needed Mappers, finalizing
      * ring settings and building the pipeline.
      */
     private void lockdownSettings() {
@@ -963,8 +963,8 @@ public class Model {
         setPlugboardMap();
         lockdownReflectorMap();
 
-        plugboard = new Swapper("Plugboard", plugboardMap);
-        reflector = new Swapper("Reflector", reflectorMap);
+        plugboard = new Mapper("Plugboard", plugboardMap);
+        reflector = new Mapper("Reflector", reflectorMap);
 
         Rotor rotor;
         for (int i = 0; i < ROTOR_COUNT; ++i) {

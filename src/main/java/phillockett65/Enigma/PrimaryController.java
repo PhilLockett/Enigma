@@ -752,7 +752,7 @@ public class PrimaryController {
 
         if (encipher) {
             if (currentKey == -1) {
-                currentKey = Swapper.stringToIndex(keyCode.getChar());
+                currentKey = Mapper.stringToIndex(keyCode.getChar());
                 final int index = model.translate(currentKey);
 
                 mainLabel.setText(keyCode.getChar() + "->" + Rotor.indexToString(index));
@@ -768,7 +768,7 @@ public class PrimaryController {
         final boolean encipher = model.isEncipher();
 
         if (encipher) {
-            final int index = Swapper.stringToIndex(keyCode.getChar());
+            final int index = Mapper.stringToIndex(keyCode.getChar());
             if (currentKey == index)
                 currentKey = -1;
         }
