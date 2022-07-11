@@ -47,7 +47,7 @@ plugboard connections etc.) are saved to "Settings.dat" when the application
 is shutdown. The next time Enigma is executed, these settings are loaded ready 
 to continue from where it left off.
 
-###Reflector Set-Up
+### Reflector Set-Up
 The choice box allows standard pre-configured reflectors to be selected. 
 Alternatively the check box allows for a reconfigurable reflector to be used.
 Twelve loop-back wired pairs must be defined using the text boxes. When all 
@@ -55,7 +55,7 @@ Twelve are defined and each letter is used only once, the reflector is
 considered valid. The thirteenth pair is assumed from the two remaining 
 unused letters.
 
-###Rotor Set-Up
+### Rotor Set-Up
 By default Enigma functions as a 3 Rotor machine, allowing the Left, Middle 
 and Right Rotors to be defined. The 'Fourth Rotor' check box, when selected, 
 brings in the Fourth Rotor.
@@ -67,25 +67,25 @@ and 'Rotor Offsets' spinners for convenience.
 To see all the individual translation steps displayed on the command line
 select the 'Show Steps' check box.
 
-####Rotor Selection
+#### Rotor Selection
 The choice boxes allow different Rotors to be selected for each of the 
 positions. No restrictions are placed on the selection so combinations 
 can be selected that may not be available on the real machine.
 
-####Ring Settings
+#### Ring Settings
 The spinners allow the ring settings for each rotor to be set.
 
-####Rotor Offsets
+#### Rotor Offsets
 The spinners allow the initial rotor offsets for each rotor to be set. The
 Rotors advance in a predefined orderly manner with each key press before 
 translation.
 
-###Plugboard Connections
+### Plugboard Connections
 Zero or more swap-over pairs can be configured. The letters must be in pairs 
 and each letter can be used once at most for the plugboard configuration to be 
 considered valid.
 
-###Translation
+### Translation
 The toggle button is only available when the settings are valid. The toggle 
 button switches between allowing settings to be changed and translating key 
 presses.
