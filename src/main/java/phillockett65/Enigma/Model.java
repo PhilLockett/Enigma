@@ -125,9 +125,6 @@ public class Model {
         // System.out.println("Model initialized.");
 
         initializeReflector();
-        initializeWheelOrder();
-        initializeRingSettings();
-        initializeRotorOffsets();
         initializeRotorSetup();
         initializePlugboardConnections();
         initializeEncipher();
@@ -443,121 +440,23 @@ public class Model {
 
 
     /************************************************************************
-     * Support code for "Rotor Selection" panel.
-     */
-
-    ObservableList<String> wheelList = FXCollections.observableArrayList();
-
-    public ObservableList<String> getWheelList() { return wheelList; }
-
-    public String getWheelChoice(int index) { return rotorStates.get(index).getWheelChoice(); }
-    public void setWheelChoice(int index, String choice) { rotorStates.get(index).setWheelChoice(choice); }
-
-
-    /**
-     * Construct the list of rotor names.
-     */
-    private void fillWheelList() {
-        wheelList.clear();
-
-        for (Rotor rotor : rotors)
-            wheelList.add(rotor.getId());
-    }
-
-    /**
-     * Initialize "Rotor Selection" panel.
-     */
-    private void initializeWheelOrder() {
-        fillWheelList();
-    }
-
-
-
-    /************************************************************************
-     * Support code for "Ring Settings" panel.
-     */
-
-    ObservableList<String> ringSettingsList = FXCollections.observableArrayList();
-
-    public SpinnerValueFactory<String> getRingSettingSVF(int index) { return rotorStates.get(index).getRingSettingSVF(); }
-    public String getRingSetting(int index) { return rotorStates.get(index).getRingSetting(); }
-    public int getRingIndex(int index) { return rotorStates.get(index).getRingIndex(); }
-    public void setRingSetting(int index, String value) { rotorStates.get(index).setRingSetting(value); }
-    public void setRingIndex(int index, int value) { rotorStates.get(index).setRingIndex(value); }
-    public void incrementRingSetting(int index, int step) { rotorStates.get(index).incrementRingSetting(step); }
-
-
-    /**
-     * Align ringSettingsList with useLetters state.
-     */
-    private void switchRingSettingsList() {
-        setList(ringSettingsList);
-    }
-
-    /**
-     * Construct a new ringSettingsList.
-     */
-    private void fillRingSettingsList() {
-        ringSettingsList.clear();
-        addList(ringSettingsList);
-    }
-
-    /**
-     * Initialize "Ring Settings" panel.
-     */
-    private void initializeRingSettings() {
-        fillRingSettingsList();
-    }
-
-
-
-    /************************************************************************
-     * Support code for "Rotor Offsets" panel.
-     */
-
-    ObservableList<String> rotorOffsetsList = FXCollections.observableArrayList();
-
-    public SpinnerValueFactory<String> getRotorOffsetSVF(int index) { return rotorStates.get(index).getRotorOffsetSVF(); }
-    public String getRotorOffset(int index) { return rotorStates.get(index).getRotorOffset(); }
-    public int getRotorIndex(int index) { return rotorStates.get(index).getRotorIndex(); }
-    public void setRotorOffset(int index, String value) { rotorStates.get(index).setRotorOffset(value); }
-    public void setRotorIndex(int index, int value) { rotorStates.get(index).setRotorIndex(value); }
-    public void incrementRotorOffset(int index, int step) { rotorStates.get(index).incrementRotorOffset(step); }
-
-
-    /**
-     * Align rotorOffsetsList with useLetters state.
-     */
-    private void switchRotorOffsetsList() {
-        setList(rotorOffsetsList);
-    }
-
-    /**
-     * Construct a new rotorOffsetsList.
-     */
-    private void fillRotorOffsetsList() {
-        rotorOffsetsList.clear();
-        addList(rotorOffsetsList);
-    }
-
-    /**
-     * Initialize "Rotor Offsets" panel.
-     */
-    private void initializeRotorOffsets() {
-        fillRotorOffsetsList();
-    }
-
-
-
-    /************************************************************************
      * Support code for "Rotor Set-Up" panel.
      */
+
+    private ObservableList<String> wheelList = FXCollections.observableArrayList();
+    private ObservableList<String> ringSettingsList = FXCollections.observableArrayList();
+    private ObservableList<String> rotorOffsetsList = FXCollections.observableArrayList();
 
     private ArrayList<RotorState> rotorStates = new ArrayList<RotorState>(ROTOR_COUNT);
 
     private boolean fourthWheel = false;
     private boolean useLetters = true;
     private boolean show = false;
+
+
+    public ObservableList<String> getWheelList() { return wheelList; }
+    public SpinnerValueFactory<String> getRingSettingSVF(int index) { return getState(index).getRingSettingSVF(); }
+    public SpinnerValueFactory<String> getRotorOffsetSVF(int index) { return getState(index).getRotorOffsetSVF(); }
 
     public int getRotorStateCount() { return rotorStates.size(); }
 
@@ -571,14 +470,15 @@ public class Model {
      */
     public void setUseLetters(boolean state) {
         useLetters = state;
-        switchRingSettingsList();
-        switchRotorOffsetsList();
+        setList(ringSettingsList);
+        setList(rotorOffsetsList);
     }
 
     public boolean isUseLetters() { return useLetters; }
     
     public boolean isShow() { return show; }
     public void setShow(boolean state) { show = state; }
+
 
     /**
      * RotorState is a class that captures the choice of Rotor, the ring 
@@ -589,10 +489,10 @@ public class Model {
         private ListSpinner ringSetting;
         private ListSpinner offset;
 
-        public RotorState(String wheelChoice, ListSpinner ringSetting, ListSpinner offset) {
+        public RotorState(String wheelChoice, ObservableList<String> ringSettingsList, ObservableList<String> rotorOffsetsList) {
             this.wheelChoice = wheelChoice;
-            this.ringSetting = ringSetting;
-            this.offset = offset;
+            this.ringSetting = new ListSpinner(ringSettingsList); 
+            this.offset = new ListSpinner(rotorOffsetsList);;
         }
 
         public String getWheelChoice() { return wheelChoice; }
@@ -616,24 +516,43 @@ public class Model {
         
     }
 
-    /**
-     * Fills the list of rotor states with new instances of RotorState.
-     */
-    private void fillRotorStates() {
-        final String first = wheelList.get(0);
+    private RotorState getState(int index) { return rotorStates.get(index); }
 
-        for (int i = 0; i < ROTOR_COUNT; ++i) {
-            rotorStates.add(new RotorState(first, 
-                new ListSpinner(ringSettingsList), 
-                new ListSpinner(rotorOffsetsList)));
-        }
-    }
+    public String getWheelChoice(int index) { return getState(index).getWheelChoice(); }
+    public void setWheelChoice(int index, String choice) { getState(index).setWheelChoice(choice); }
+
+    public String getRingSetting(int index) { return getState(index).getRingSetting(); }
+    public int getRingIndex(int index) { return getState(index).getRingIndex(); }
+    public void setRingSetting(int index, String value) { getState(index).setRingSetting(value); }
+    public void setRingIndex(int index, int value) { getState(index).setRingIndex(value); }
+    public void incrementRingSetting(int index, int step) { getState(index).incrementRingSetting(step); }
+
+    public String getRotorOffset(int index) { return getState(index).getRotorOffset(); }
+    public int getRotorIndex(int index) { return getState(index).getRotorIndex(); }
+    public void setRotorOffset(int index, String value) { getState(index).setRotorOffset(value); }
+    public void setRotorIndex(int index, int value) { getState(index).setRotorIndex(value); }
+    public void incrementRotorOffset(int index, int step) { getState(index).incrementRotorOffset(step); }
+
 
     /**
      * Initialize "Rotor Set-Up".
      */
     private void initializeRotorSetup() {
-        fillRotorStates();
+        // Initialize "Rotor Selection" panel.
+        for (Rotor rotor : rotors)
+            wheelList.add(rotor.getId());
+
+        // Initialize "Ring Settings" panel.
+        addList(ringSettingsList);
+
+        // Initialize "Rotor Offsets" panel.
+        addList(rotorOffsetsList);
+
+        // Initialize "Rotor Set-Up".
+        final String first = wheelList.get(0);
+
+        for (int i = 0; i < ROTOR_COUNT; ++i)
+            rotorStates.add(new RotorState(first, ringSettingsList, rotorOffsetsList));
     }
 
 
