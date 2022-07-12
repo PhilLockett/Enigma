@@ -39,6 +39,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyCode;
@@ -302,7 +303,22 @@ public class PrimaryController {
             pair.setTooltip(new Tooltip("Configure unique loop-back wiring pair"));
 
             setValidTextField(pair, model.isPairValid(i));
+
+            pair.setTextFormatter(new TextFormatter<>(change -> {
+
+                if (change.isAdded()) {
+                    if (change.getText().matches("[a-z]*")) {
+                        String text = change.getText().toUpperCase();
+                        change.setText(text);
+                    } else if (!change.getText().matches("[A-Z]*")) {
+                        return null;
+                    }
+                }
+
+                return change;
+            }));
         }
+
     }
 
 
@@ -660,6 +676,20 @@ public class PrimaryController {
             plug.setTooltip(new Tooltip("Configure plugboard wiring pair"));
 
             setValidTextField(plug, model.isPlugValid(i));
+
+            plug.setTextFormatter(new TextFormatter<>(change -> {
+
+                if (change.isAdded()) {
+                    if (change.getText().matches("[a-z]*")) {
+                        String text = change.getText().toUpperCase();
+                        change.setText(text);
+                    } else if (!change.getText().matches("[A-Z]*")) {
+                        return null;
+                    }
+                }
+
+                return change;
+            }));
         }
     }
 

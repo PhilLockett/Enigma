@@ -296,14 +296,6 @@ public class Model {
         countLetterUsage(reflectorLetterCounts, pairs);
     }
 
-    /**
-     * Sanitize all wired pairs.
-     */
-    public void sanitizePairs() {
-        for (Pair pair : pairs)
-            pair.sanitize();
-    }
-
     public int getPairCount() { return pairs.size(); }
     public String getPairText(int index)	{ return pairs.get(index).get(); }
     public int getPairCount(int index)		{ return pairs.get(index).count(); }
@@ -667,14 +659,6 @@ public class Model {
         countLetterUsage(plugboardLetterCounts, plugs);
     }
 
-    /**
-     * Sanitize all wired plugs.
-     */
-    public void sanitizePlugs() {
-        for (Pair pair : plugs)
-            pair.sanitize();
-    }
-
     public int getPlugCount() { return plugs.size(); }
     public String getPlugText(int index)	{ return plugs.get(index).get(); }
     public int getPlugCount(int index)		{ return plugs.get(index).count(); }
@@ -941,9 +925,6 @@ public class Model {
      * ring settings and building the pipeline.
      */
     private void lockdownSettings() {
-        sanitizePairs();
-        sanitizePlugs();
-
         setPlugboardMap();
         lockdownReflectorMap();
 
