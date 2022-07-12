@@ -900,21 +900,21 @@ public class Model {
 
         pipeline.add(new Translation(OTHER, plugboard, Mapper.RIGHT_TO_LEFT));
 
-        if (fourthWheel)
-            pipeline.add(new Translation(SLOW, slow, Mapper.RIGHT_TO_LEFT));
-
         pipeline.add(new Translation(RIGHT, right, Mapper.RIGHT_TO_LEFT));
         pipeline.add(new Translation(MIDDLE, middle, Mapper.RIGHT_TO_LEFT));
         pipeline.add(new Translation(LEFT, left, Mapper.RIGHT_TO_LEFT));
 
+        if (fourthWheel)
+            pipeline.add(new Translation(SLOW, slow, Mapper.RIGHT_TO_LEFT));
+
         pipeline.add(new Translation(OTHER, reflector, Mapper.RIGHT_TO_LEFT));
+
+        if (fourthWheel)
+            pipeline.add(new Translation(SLOW, slow, Mapper.LEFT_TO_RIGHT));
 
         pipeline.add(new Translation(LEFT, left, Mapper.LEFT_TO_RIGHT));
         pipeline.add(new Translation(MIDDLE, middle, Mapper.LEFT_TO_RIGHT));
         pipeline.add(new Translation(RIGHT, right, Mapper.LEFT_TO_RIGHT));
-
-        if (fourthWheel)
-            pipeline.add(new Translation(SLOW, slow, Mapper.LEFT_TO_RIGHT));
 
         pipeline.add(new Translation(OTHER, plugboard, Mapper.LEFT_TO_RIGHT));
     }
