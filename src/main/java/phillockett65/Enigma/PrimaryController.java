@@ -742,7 +742,7 @@ public class PrimaryController {
     private boolean updateGUIState() {
         final boolean encipher = model.isEncipher();
 
-        // System.out.println("updateStatus(" + encipher + ")");
+        // System.out.println("updateGUIState(" + encipher + ")");
         editableReflector(!encipher);
         editableWheelOrder(!encipher);
         editableRingSettings(!encipher);
