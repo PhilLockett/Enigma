@@ -727,6 +727,14 @@ public class PrimaryController {
     }
 
     /**
+     * Control whether it is possible to reset the settings.
+     * @param editable indicates if the reset button is available.
+     */
+    private void editableTranslation(boolean editable) {
+        resetButton.setDisable(!editable);
+    }
+
+    /**
      * Update the config editability state of the GUI depending on whether we 
      * are currently translating letters or not.
      * @return true if we are currently translating letters, false otherwise.
@@ -740,6 +748,7 @@ public class PrimaryController {
         editableRingSettings(!encipher);
         editablePlugboard(!encipher);
         editableFourthWheel();
+        editableTranslation(!encipher);
 
         if (encipher) {
             encipherButton.setText("Press to Change Settings");
