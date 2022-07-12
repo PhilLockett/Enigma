@@ -410,9 +410,10 @@ public class Model {
     }
 
     /**
-     * Assign the active reflector map to the global variable reflectorMap.
+     * Ascertain the active reflector map and assign to the global variable 
+     * reflectorMap.
      */
-    private void lockdownReflectorMap() {
+    private void lockdownReflector() {
         reflectorMap = getReflectorMap();
     }
 
@@ -724,6 +725,13 @@ public class Model {
     }
 
     /**
+     * Lockdown the plugboardMap.
+     */
+    private void lockdownPlugboard() {
+        setPlugboardMap();
+    }
+
+    /**
      * Initialize "Plugboard Connections" panel.
      */
     private void initializePlugboardConnections() {
@@ -925,8 +933,8 @@ public class Model {
      * ring settings and building the pipeline.
      */
     private void lockdownSettings() {
-        setPlugboardMap();
-        lockdownReflectorMap();
+        lockdownPlugboard();
+        lockdownReflector();
 
         plugboard = new Mapper("Plugboard", plugboardMap);
         reflector = new Mapper("Reflector", reflectorMap);
