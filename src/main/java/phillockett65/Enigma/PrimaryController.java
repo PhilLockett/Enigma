@@ -40,6 +40,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.control.TitledPane;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyCode;
@@ -97,9 +98,6 @@ public class PrimaryController {
         model.initialize();
 
         initializeReflector();
-        initializeWheelOrder();
-        initializeRingSettings();
-        initializeRotorOffsets();
         initializeRotorSetup();
         initializePlugboardConnections();
         initializeEncipher();
@@ -156,6 +154,9 @@ public class PrimaryController {
      * Support code for "Reflector Set-Up" panel.
      */
 
+    @FXML
+    private TitledPane reflectorSetUpTitledPane;
+  
     @FXML
     private ChoiceBox<String> reflectorChoicebox;
 
@@ -272,6 +273,7 @@ public class PrimaryController {
      * Initialize "Reflector" panel.
      */
     private void initializeReflector() {
+        reflectorSetUpTitledPane.setTooltip(new Tooltip("Select which Reflector (reversing drum) to use"));
         reconfigurableCheckbox.setSelected(model.isReconfigurable());
         reconfigurableCheckbox.setTooltip(new Tooltip("Select to set up and use a reconfigurable Reflector"));
         setReconfigurable();
@@ -318,7 +320,6 @@ public class PrimaryController {
                 return change;
             }));
         }
-
     }
 
 
@@ -326,6 +327,9 @@ public class PrimaryController {
      /************************************************************************
      * Support code for "Rotor Selection" panel.
      */
+
+    @FXML
+    private TitledPane rotorSelectionTitledPane;
 
     @FXML
     private ChoiceBox<String> wheel0Choicebox;
@@ -358,6 +362,8 @@ public class PrimaryController {
      * Initialize "Rotor Selection" panel.
      */
     private void initializeWheelOrder() {
+        rotorSelectionTitledPane.setTooltip(new Tooltip("Select the Rotors to use"));
+
         wheel0Choicebox.setItems(model.getWheelList());
         wheel1Choicebox.setItems(model.getWheelList());
         wheel2Choicebox.setItems(model.getWheelList());
@@ -392,6 +398,9 @@ public class PrimaryController {
      */
 
     @FXML
+    private TitledPane ringSettingsTitledPane;
+
+    @FXML
     private Spinner<String> ringSetting0Spinner;
 
     @FXML
@@ -421,6 +430,8 @@ public class PrimaryController {
      * Initialize "Ring Settings" panel.
      */
     private void initializeRingSettings() {
+        ringSettingsTitledPane.setTooltip(new Tooltip("Select Ring Setting (internal wiring offset) for the Rotors"));
+
         ringSetting0Spinner.setValueFactory(model.getRingSettingSVF(0));
         ringSetting1Spinner.setValueFactory(model.getRingSettingSVF(1));
         ringSetting2Spinner.setValueFactory(model.getRingSettingSVF(2));
@@ -464,6 +475,9 @@ public class PrimaryController {
      */
 
     @FXML
+    private TitledPane rotorOffsetsTitledPane;
+
+    @FXML
     private Spinner<String> rotorOffset0Spinner;
 
     @FXML
@@ -479,6 +493,8 @@ public class PrimaryController {
      * Initialize "Rotor Offsets" panel.
      */
     private void initializeRotorOffsets() {
+        rotorOffsetsTitledPane.setTooltip(new Tooltip("Select initial starting position for the selected Rotors"));
+
         rotorOffset0Spinner.setValueFactory(model.getRotorOffsetSVF(0));
         rotorOffset1Spinner.setValueFactory(model.getRotorOffsetSVF(1));
         rotorOffset2Spinner.setValueFactory(model.getRotorOffsetSVF(2));
@@ -522,6 +538,9 @@ public class PrimaryController {
      */
 
     @FXML
+    private TitledPane rotorSetUpTitledPane;
+ 
+    @FXML
     private CheckBox fourthWheelCheckbox;
 
     @FXML
@@ -563,10 +582,15 @@ public class PrimaryController {
      * Initialize "Rotor Set-Up".
      */
     private void initializeRotorSetup() {
-        fourthWheelCheckbox.setTooltip(new Tooltip("Select to use a fourth Rotor"));
-        useLettersCheckbox.setTooltip(new Tooltip("Select to set use Letters instead of numbers on the Rotors"));
-        showStepsCheckbox.setTooltip(new Tooltip("Select to show individual translation steps"));
 
+        initializeWheelOrder();
+        initializeRingSettings();
+        initializeRotorOffsets();
+
+        rotorSetUpTitledPane.setTooltip(new Tooltip("Select and set up the Rotors (wheels / drums)"));
+        fourthWheelCheckbox.setTooltip(new Tooltip("Select to use a fourth Rotor"));
+        useLettersCheckbox.setTooltip(new Tooltip("Select to use Letters instead of numbers on the Rotors"));
+        showStepsCheckbox.setTooltip(new Tooltip("Select to show individual translation steps"));
     }
 
 
@@ -574,6 +598,9 @@ public class PrimaryController {
     /************************************************************************
      * Support code for "Plugboard Connections" panel.
      */
+
+    @FXML
+    private TitledPane plugboardConnectionsTitledPane;
 
     @FXML
     private TextField plug0;
@@ -654,6 +681,8 @@ public class PrimaryController {
      * Initialize "Plugboard Connections" panel.
      */
     private void initializePlugboardConnections() {
+
+        plugboardConnectionsTitledPane.setTooltip(new Tooltip("Configure the Plugboard using unique wiring pairs"));
 
         plugs.add(plug0);
         plugs.add(plug1);
@@ -757,7 +786,7 @@ public class PrimaryController {
             mainLabel.setText("");
         } else {
             encipherButton.setText("Press to Start Translation");
-            encipherButton.setTooltip(new Tooltip("Press to use current settings and translate letters"));
+            encipherButton.setTooltip(new Tooltip("Press to translate letters using the current settings"));
 
             mainLabel.setText("Configure Settings");
         }
@@ -778,7 +807,7 @@ public class PrimaryController {
     private void initializeEncipher() {
         syncEncipherButton();
         encipherButton.setSelected(updateGUIState());
-        resetButton.setTooltip(new Tooltip("Click to return all settings to the defaults"));
+        resetButton.setTooltip(new Tooltip("Click to return all settings to the default values"));
     }
 
 

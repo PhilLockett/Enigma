@@ -19,7 +19,7 @@
 
 <VBox alignment="CENTER" prefHeight="777.0" prefWidth="450.0" spacing="20.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="phillockett65.Enigma.PrimaryController">
    <children>
-      <TitledPane collapsible="false" layoutX="30.0" layoutY="403.0" text="Reflector Set-Up">
+      <TitledPane fx:id="reflectorSetUpTitledPane" collapsible="false" layoutX="30.0" layoutY="403.0" text="Reflector Set-Up">
          <content>
             <GridPane hgap="10.0" vgap="10.0">
                <columnConstraints>
@@ -54,11 +54,11 @@
             </GridPane>
          </content>
       </TitledPane>
-      <TitledPane collapsible="false" text="Rotor Set-Up">
+      <TitledPane fx:id="rotorSetUpTitledPane" collapsible="false" text="Rotor Set-Up">
          <content>
             <VBox spacing="4.0">
                <children>
-                  <TitledPane collapsible="false" text="Rotor Selection">
+                  <TitledPane fx:id="rotorSelectionTitledPane" collapsible="false" text="Rotor Selection">
                      <content>
                         <VBox spacing="10.0">
                            <children>
@@ -74,7 +74,7 @@
                         </VBox>
                      </content>
                   </TitledPane>
-                  <TitledPane collapsible="false" text="Ring Settings">
+                  <TitledPane fx:id="ringSettingsTitledPane" collapsible="false" text="Ring Settings">
                      <content>
                         <VBox spacing="10.0">
                            <children>
@@ -90,7 +90,7 @@
                         </VBox>
                      </content>
                   </TitledPane>
-                  <TitledPane collapsible="false" text="Rotor Offsets">
+                  <TitledPane fx:id="rotorOffsetsTitledPane" collapsible="false" text="Rotor Offsets">
                      <content>
                         <VBox spacing="10.0">
                            <children>
@@ -117,7 +117,7 @@
             </VBox>
          </content>
       </TitledPane>
-      <TitledPane collapsible="false" text="Plugboard Connections">
+      <TitledPane fx:id="plugboardConnectionsTitledPane" collapsible="false" text="Plugboard Connections">
          <content>
             <GridPane hgap="10.0" vgap="10.0">
               <columnConstraints>
