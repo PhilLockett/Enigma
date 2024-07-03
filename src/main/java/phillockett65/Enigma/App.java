@@ -46,7 +46,6 @@ public class App extends Application {
         Parent root = fxmlLoader.load();
 
         Scene scene = new Scene(root);
-        scene.getStylesheets().add(App.class.getResource("application.css").toExternalForm());
 
         stage.setTitle("Enigma");
         stage.setOnCloseRequest(e -> Platform.exit());
